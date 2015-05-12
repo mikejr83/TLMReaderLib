@@ -1,6 +1,6 @@
-package com.monstarmike.tlmreader.dataentry;
+package com.monstarmike.tlmreader.datablock;
 
-public abstract class Entry {
+public abstract class Block {
 
 	byte[] rawTimestamp;
 	byte rawDataType;

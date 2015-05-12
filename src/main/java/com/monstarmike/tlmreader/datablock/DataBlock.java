@@ -1,6 +1,6 @@
-package com.monstarmike.tlmreader.dataentry;
+package com.monstarmike.tlmreader.datablock;
 
-public class DataEntry extends Entry {
+public class DataBlock extends Block {
 
 	@Override
 	public int getSize() {

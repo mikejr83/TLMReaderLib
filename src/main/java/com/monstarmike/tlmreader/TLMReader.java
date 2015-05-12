@@ -1,5 +1,13 @@
 package com.monstarmike.tlmreader;
 
-public class TLMReader {
+import java.util.ArrayList;
 
+import com.monstarmike.tlmreader.datablock.Block;
+
+public class TLMReader {
+	ArrayList<Block> blocks;
+	
+	public TLMReader() {
+		
+	}
 }
