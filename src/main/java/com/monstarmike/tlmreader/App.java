@@ -12,7 +12,7 @@ public class App
     {
         TLMReader reader = new TLMReader();
         try {
-			reader.Read("/home/mgardner/Desktop/2015-05-11.TLM");
+			reader.Read("src/test/data/2015 - FSS 2 - day 2.TLM");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
