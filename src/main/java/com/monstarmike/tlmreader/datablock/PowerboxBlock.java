@@ -1,5 +1,9 @@
 package com.monstarmike.tlmreader.datablock;
 
+import java.util.Arrays;
+
+import com.monstarmike.tlmreader.util.PrimitiveUtils;
+
 public class PowerboxBlock extends DataBlock {
 
 	/*
@@ -16,9 +20,50 @@ public class PowerboxBlock extends DataBlock {
 	 * but not set the value.
 	 */
 
-	public PowerboxBlock(byte[] rawData) {
-		super(rawData);
-		// TODO Auto-generated constructor stub
+	Short voltageOne = null, voltageTwo = null, capacityOne = null,
+			capacityTwo = null;
+
+	public double get_voltageOne() {
+		if (this.voltageOne == null) {
+			this.voltageOne = new Short(PrimitiveUtils.toShort(Arrays
+					.copyOfRange(this.rawData, 6, 8)));
+		}
+		return this.voltageOne * 0.01;
 	}
 
+	public double get_voltageTwo() {
+		if (this.voltageTwo == null) {
+			this.voltageTwo = new Short(PrimitiveUtils.toShort(Arrays
+					.copyOfRange(this.rawData, 8, 10)));
+		}
+		return this.voltageTwo * 0.01;
+	}
+
+	public double get_capacityOne() {
+		if (this.capacityOne == null) {
+			this.capacityOne = new Short(PrimitiveUtils.toShort(Arrays
+					.copyOfRange(this.rawData, 10, 12)));
+		}
+		return this.capacityOne;
+	}
+
+	public double get_capacityTwo() {
+		if (this.capacityTwo == null) {
+			this.capacityTwo = new Short(PrimitiveUtils.toShort(Arrays
+					.copyOfRange(this.rawData, 12, 14)));
+		}
+		return this.capacityTwo;
+	}
+
+	public PowerboxBlock(byte[] rawData) {
+		super(rawData);
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "V1: " + this.get_voltageOne() + " Capacity 1: "
+				+ this.get_capacityOne() + " - V2: " + this.get_voltageTwo()
+				+ " Capacity 2: " + this.get_capacityTwo();
+	}
 }

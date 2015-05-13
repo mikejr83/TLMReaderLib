@@ -14,6 +14,14 @@ public abstract class DataBlock extends Block {
 			//unknown
 			break;
 			
+		case 0x01:
+			// voltmeter - appears to be legacy.
+			break;
+			
+		case 0x02:
+			// temperature - appears to be legacy.
+			break;
+			
 		case 0x03:
 			// current (amperage) usage
 			block = new CurrentBlock(bytes);
@@ -23,13 +31,10 @@ public abstract class DataBlock extends Block {
 			// powerbox
 			block = new PowerboxBlock(bytes);
 			break;
-			
-		case 16:
-			//gps
-			break;
-			
+		
 		case 0x11:
-			//airspeed? 
+			// airspeed
+			block = new AirspeedBlock(bytes);
 			break;
 			
 		case 0x12:
@@ -38,7 +43,8 @@ public abstract class DataBlock extends Block {
 			break;
 			
 		case 0x14:
-			//G-Force
+			//gps
+			block = new GForceBlock(bytes);
 			break;
 			
 		case 126:

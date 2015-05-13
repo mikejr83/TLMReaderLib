@@ -21,11 +21,16 @@ public class CurrentBlock extends DataBlock {
 			this.current = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
 					this.rawData, 6, 8)));
 		}
-		
+
 		return this.current * 0.1967;
 	}
 
 	public CurrentBlock(byte[] rawData) {
 		super(rawData);
+	}
+
+	@Override
+	public String toString() {
+		return new Double(this.get_Current()).toString();
 	}
 }
