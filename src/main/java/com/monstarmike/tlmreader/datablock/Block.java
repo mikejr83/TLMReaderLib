@@ -5,7 +5,7 @@ public abstract class Block {
 	byte[] rawTimestamp;
 	byte rawDataType;
 	byte rawFlag;
-	byte rawData;
+	byte[] rawData;
 	
 	public abstract int getSize();
 	
@@ -28,5 +28,7 @@ public abstract class Block {
 		this.rawFlag = rawFlag;
 	}
 	
-	
+	public Block(byte[] rawData) {
+		this.rawData = rawData;
+	}
 }

@@ -8,4 +8,7 @@ public class DataBlock extends Block {
 		return 20;
 	}
 
+	public DataBlock(byte[] rawData) {
+		super(rawData);
+	}
 }
