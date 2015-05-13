@@ -2,6 +2,8 @@
 
 ## Spektrum TLM File Reader/Decoder Library
 
+This project is designed to provide a Java library to read TLM byte data output by Spektrum DX8 and DX18 transmitters into a usable format. [Please see this RC Groups thread for more information](http://www.rcgroups.com/forums/showthread.php?t=1725173).
+
 Updates coming soon!
 
 ## Documentation

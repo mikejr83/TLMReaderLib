@@ -1,12 +1,12 @@
 # TLM Byte Format
 
-The following is taken from the first post of this [RCGroups thread](http://www.rcgroups.com/forums/showpost.php?p=22631966). This page currently reflects the data in the [first post](http://www.rcgroups.com/forums/showpost.php?p=22631966&postcount=1) and is just a copy and paste job at the moment. There is a large amount of data in this thread dealing with the decoding of this file. This page combine all the knowledge shared by posters in the thread into one set of rules for decoding the TLM file.
+The following is taken from the first post of this [RCGroups thread](http://www.rcgroups.com/forums/showthread.php?t=1725173). This page currently reflects the data in the [first post](http://www.rcgroups.com/forums/showpost.php?p=22631966&postcount=1) and is just a copy and paste job at the moment. There is a large amount of data in this thread dealing with the decoding of this file. This page combine all the knowledge shared by posters in the thread into one set of rules for decoding the TLM file.
 
 **Contributors**
 Without these individuals this information would not be possible. A tremendous thanks goes to each of them.
 
-* [KimDK - Kim](http://www.rcgroups.com/forums/member.php?u=432295) - OP of the RCGroups thread and has provided much of the legwork decoding the TLM file.
-* [AndyKunz - Andy]() - Spektrum Dev member. Represents a great liaison between the community and Spektrum. *Not necessarily a contributor, but provides as much help as he is allowed.* 
+* [KimDK](http://www.rcgroups.com/forums/member.php?u=432295) - OP of the RCGroups thread and has provided much of the legwork decoding the TLM file.
+* [AndyKunz](http://www.rcgroups.com/forums/member.php?u=5584) - Spektrum Dev member. Represents a great liaison between the community and Spektrum. *Not necessarily a contributor, but provides as much help as he is allowed.* 
 
 *Note: The following has not yet been formatted for markdown. Please view the raw file or RCGroups thread until this can be formatted correctly.*
 
