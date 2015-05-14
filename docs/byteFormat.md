@@ -3,61 +3,143 @@
 The following is taken from the first post of this [RCGroups thread](http://www.rcgroups.com/forums/showthread.php?t=1725173). This page currently reflects the data in the [first post](http://www.rcgroups.com/forums/showpost.php?p=22631966&postcount=1) and is just a copy and paste job at the moment. There is a large amount of data in this thread dealing with the decoding of this file. This page combine all the knowledge shared by posters in the thread into one set of rules for decoding the TLM file.
 
 **Contributors**
+
 Without these individuals this information would not be possible. A tremendous thanks goes to each of them.
-
 * [KimDK](http://www.rcgroups.com/forums/member.php?u=432295) - OP of the RCGroups thread and has provided much of the legwork decoding the TLM file.
-* [AndyKunz](http://www.rcgroups.com/forums/member.php?u=5584) - Spektrum Dev member. Represents a great liaison between the community and Spektrum. *Not necessarily a contributor, but provides as much help as he is allowed.* 
+* [AndyKunz](http://www.rcgroups.com/forums/member.php?u=5584) - Spektrum Dev member. Represents a great liaison between the community and Spektrum. *Not necessarily a contributor, but provides as much help as he is allowed. *
 
-*Note: The following has not yet been formatted for markdown. Please view the raw file or RCGroups thread until this can be formatted correctly.*
+## Basic Block Structure
 
-Data block start with:
-1 Time stamp Low byte
-2 Time stamp
-3 Time stamp
-4 Time stamp high byte
-5 Data type 00,16,17,7E,7F 
-6 ? 
+All blocks start with:
 
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0           | Timestamp low byte |
+| 1           | Timestamp |
+| 2           | Timestamp |
+| 3           | Timestamp high byte |
+| 4           | Data type (00,16,17,7E,7F - appears to be the sensor "address") |
+| 5           | ?? |
 
-If Time stamp = FFFFFFFF then it is a header 
-Length of is 36 Byte
-If 5 and 6 is equal then it is header Data
-If 6 is 00 then it is name info
+The first four bytes will **always** be timestamp data.
 
+## Header Blocks
 
+If timestamp, the first four bytes are `FF FF FF FF` then it is a header block.
+
+The length of any header block is 36 bytes.
+
+### Header Data vs. Header Name Info
+If 0x04 and 0x05 are equal then it is header data. If 0x05 is 00 then it is name info.
+
+*Note: I'm unsure of the above as I'm not really understanding what the data is telling me when compared to the original thread.*
+
+## Data Blocks
 
 Then it repreat a 20 byte block:
 
-1 Time stamp Low byte
-2 Time stamp
-3 Time stamp
-4 Time stamp high byte
-5 Data type 00,16,17,7E,7F 
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0           | Timestamp low byte |
+| 1           | Timestamp |
+| 2           | Timestamp |
+| 3           | Timestamp high byte |
+| 4           | Data type (00,16,17,7E,7F - appears to be the sensor "address") |
+| 5           | ?? |
 
-Data type = 00
+### Voltage (Legacy)
+
+Data type value: 0x00
 ?
 
-Dat type = 16 
-1 serial number
-2 serial number
-3 serial number
-4 always 00
-5 16 (Data type)
-6 always 00
-7 not identified is low byte of next (decimal)
-8 not identified is high byte of previous (decimal)
-9 1/100th of a degree second latitude (decimal)
-10 degree seconds latitude (decimal)
-11 degree minutes latitude (decimal)
-12 degrees latitude (decimal)
-13 1/100th of a degree second longitude (decimal)
-14 degree seconds longitude (decimal)
-15 degree minutes longitude (decimal)
-16 degrees longitude (decimal)
-17 1/10th of degree heading (decimal)
-18 degrees heading first two numbers (decimal)
-19 always 08
-20 always 3B
+### Temperature (Legacy)
+
+Data type value: 0x01
+
+### Altitude
+
+Data type value: 0x12
+
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0           | Timestamp low byte |
+| 1           | Timestamp |
+| 2           | Timestamp |
+| 3           | Timestamp high byte |
+| 4           | Data type |
+| 5           | ?? |
+| 6           | Altitude (High Byte) |
+| 7           | Altitude (Low Byte) |
+| 8           | ?? | 
+| 9           | ?? |
+| 10          | ?? |
+| 11          | ?? |
+| 12          | ?? |
+| 13          | ?? |
+| 14          | ?? |
+| 15          | ?? |
+| 16          | ?? |
+| 17          | ?? |
+| 18          | ?? |
+| 19          | ?? |
+
+The format is in integer and is in 0.1m increments. 1004 = 100.4 meters.
+
+### G-Force
+
+Data type value: 0x14
+
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0           | Timestamp low byte |
+| 1           | Timestamp |
+| 2           | Timestamp |
+| 3           | Timestamp high byte |
+| 4           | Data type |
+| 5           | ?? |
+| 6           | X (High Byte) |
+| 7           | X (Low Byte) |
+| 8           | Y (High Byte) | 
+| 9           | Y (Low Byte) |
+| 10          | Z (High Byte) |
+| 11          | Z (Low Byte) |
+| 12          | X-max (High Byte) |
+| 13          | X-max (Low Byte) |
+| 14          | Y-max (High Byte) |
+| 15          | Y-max (Low Byte) |
+| 16          | Z-max (High Byte) |
+| 17          | Z-max (Low Byte) |
+| 18          | Z-min (High Byte) |
+| 19          | Z-min (Low Byte) |
+
+### GPS - Second Block
+
+Data type value: 0x16.
+
+This will be the second GPS block.
+
+| Byte Offset | Description |
+| ----------- | ----------- |
+| 0           | serial number |
+| 1           | serial number |
+| 2           | serial number |
+| 3           | always 00 |
+| 4           | 0x16 (Data type) |
+| 5           | always 00 |
+| 6           | not identified is low byte of next (decimal) |
+| 7           | not identified is high byte of previous (decimal)
+| 8           | 1/100th of a degree second latitude (decimal) |
+| 9           | degree seconds latitude (decimal) |
+| 10          | degree minutes latitude (decimal) |
+| 11          | degrees latitude (decimal) |
+| 12          | 1/100th of a degree second longitude (decimal) |
+| 13          | degree seconds longitude (decimal) |
+| 14          | degree minutes longitude (decimal) |
+| 15          | degrees longitude (decimal) |
+| 16          | 1/10th of degree heading (decimal)|
+| 17          | degrees heading first two numbers (decimal) |
+| 18          | always 08 |
+| 19          | always 3B |
 
 so to get decimal degrees calculate:
 
@@ -68,92 +150,96 @@ heading ={18}*10 +{17}/10
 Offset to google maps seems to be 
 lat= lat-0,003655 lon= lon-0,004572 
 
+### GPS - First Block
 
+Data type value: 0x17
 
-Data type = 17
-6 ?
-7 Speed High
-8 Speed Low
-9 ? May be max speed High
-10 ? May be max speed Low
-11 ?
-12 ?
-13 ?
-14 ?
-15 ?
-16 ?
-17 ?
-18 ?
-19 ?
-20 ?
+This will be the first GPS block.
 
-Data type = 18
-6 ?
-7 Altitude High
-8 Altitude Low the format is in intiger and is in 0.1m
-9 ? 
-10 ?
-11 ?
-12 ?
-13 ?
-14 ?
-15 ?
-16 ?
-17 ?
-18 ?
-19 ?
-20 ?
+| Byte Offset | Description |
+| ----------- | ----------- |
+| 0           | serial number |
+| 1           | serial number |
+| 2           | serial number |
+| 3           | always 00 |
+| 4           | 0x16 (Data type) |
+| 5           | ?|
+| 6           | Speed (High Byte) |
+| 7           | Speed (Low Byte) |
+| 8           | ? May be max speed (High Byte) |
+| 9           | ? May be max speed (Low Byte) |
+| 10          | ?? |
+| 11          | ?? |
+| 12          | ?? |
+| 13          | ?? |
+| 14          | ?? |
+| 15          | ?? |
+| 16          | ?? |
+| 17          | ?? |
+| 18          | ?? |
+| 19          | ?? |
 
-Data type = 20
-6 ?
-7 x High 
-8 x Low
-9 y High
-10 y Low
-11 z High
-12 z Low
-13 x max High 
-14 x max Low 
-15 y max High 
-16 y max Low 
-17 z max High 
-18 z max Low 
-19 z min High
-20 z min Low
+### Standard Telemetry
 
-Data type = 126
-6 ?
-7 RPM High
-8 RPM Low RPM = (RPM low + (RPM High * 256)) * count of Poles
-9 Volt High 
-10 Volt Low V = (Volt low + (Volt High * 256)) / 100
-11 Temp High
-12 Temp Low F = Temp low + (Temp high * 256) C = ((Temp low + (Temp high * 256)) - 32) / 1,8
-13 ?
-14 ?
-15 ?
-16 ?
-17 ?
-18 ?
-19 ?
-20 ?
+Data type value: 0x7E
 
-Data type = 127
-6 ?
-7 A High 
-8 A Low 
-9 B High
-10 B Low
-11 L High 
-12 L Low 
-13 R High
-14 R Low
-15 Frame loss High 
-16 Frame loss Low 
-17 Holds High
-18 Holds Low
-19 Tranciver Volt High
-20 Tranciver Volt Low V = (Tranciver Volt Low + (Tranciver Volt High * 256)) / 100
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0           | Timestamp low byte |
+| 1           | Timestamp |
+| 2           | Timestamp |
+| 3           | Timestamp high byte |
+| 4           | Data type |
+| 5           | ?? |
+| 6           | RPM (High Byte) |
+| 7           | RPM (Low Byte) |
+| 8           | Volt (High Byte) | 
+| 9           | Volt (Low Byte) |
+| 10          | Temp (High Byte) |
+| 11          | Temp (Low Byte) |
+| 12          | ?? |
+| 13          | ?? |
+| 14          | ?? |
+| 15          | ?? |
+| 16          | ?? |
+| 17          | ?? |
+| 18          | ?? |
+| 19          | ?? |
+
+RPM = Value from sensor * count of poles.
+
+Volts = Value from sensor / 100. 489 = 4.89V
+
+Temperature is value measured in Celcius.
+
+### RX Telemetry
+
+Data type value: 0x7F
+
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0           | Timestamp low byte |
+| 1           | Timestamp |
+| 2           | Timestamp |
+| 3           | Timestamp high byte |
+| 4           | Data type |
+| 5           | ?? |
+| 6           | A (High Byte) |
+| 7           | A (Low Byte) |
+| 8           | B (High Byte) | 
+| 9           | B (Low Byte) |
+| 10          | L (High Byte) |
+| 11          | L (Low Byte) |
+| 12          | R (High Byte) |
+| 13          | R (Low Byte) |
+| 14          | Frame loss (High Byte) |
+| 15          | Frame loss (Low Byte) |
+| 16          | Holds (High Byte) |
+| 17          | Holds (Low Byte) |
+| 18          | Telemetry Unit's registered voltage (High Byte) |
+| 19          | Telemetry Unit's registered voltage (Low Byte) |
+
+Volts = Value from sensor / 100. 489 = 4.89V
 
 # Spektrum Telemetry Reverse Engineered
 
