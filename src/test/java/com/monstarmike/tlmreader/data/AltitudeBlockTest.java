@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.apache.commons.io.FileUtils;
-
+import com.google.common.io.Files;
 import com.monstarmike.tlmreader.datablock.AltitudeBlock;
 import com.monstarmike.tlmreader.datablock.DataBlock;
 
@@ -32,7 +31,7 @@ public class AltitudeBlockTest extends TestCase {
 		super(testName);
 
 		try {
-			this.theBytes = FileUtils.readFileToByteArray(new File(
+			this.theBytes = Files.toByteArray(new File(
 					"src/test/data/SensorData.bin"));
 		} catch (IOException e) {
 			System.out

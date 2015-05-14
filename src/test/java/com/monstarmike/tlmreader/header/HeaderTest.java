@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.apache.commons.io.FileUtils;
-
+import com.google.common.io.Files;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 
@@ -29,7 +28,7 @@ public class HeaderTest extends TestCase {
 		super(testName);
 
 		try {
-			this.theBytes = FileUtils.readFileToByteArray(new File(
+			this.theBytes = Files.toByteArray(new File(
 					"src/test/data/HeaderData.bin"));
 		} catch (IOException e) {
 			System.out.println("Yo, the header data needs to be in the src/test/data/HeaderData.bin file!");

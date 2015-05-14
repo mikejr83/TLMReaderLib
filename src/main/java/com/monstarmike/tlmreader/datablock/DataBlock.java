@@ -1,18 +1,12 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.util.Arrays;
-import java.util.Date;
-
-import com.monstarmike.tlmreader.util.PrimitiveUtils;
+import com.google.common.primitives.Ints;
 
 public abstract class DataBlock extends Block {
 
 	public int get_timestamp() {
-		byte[] timestampBytes = Arrays.copyOfRange(this.rawData, 0, 4);
-
-		org.apache.commons.lang.ArrayUtils.reverse(timestampBytes);
-		
-		return PrimitiveUtils.toInt(timestampBytes);
+		return Ints.fromBytes(this.rawData[3], this.rawData[2],
+				this.rawData[1], this.rawData[0]);
 	}
 
 	public DataBlock(byte[] rawData) {
