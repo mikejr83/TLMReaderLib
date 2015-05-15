@@ -1,8 +1,6 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.util.Arrays;
-
-import com.monstarmike.tlmreader.util.PrimitiveUtils;
+import com.google.common.primitives.Shorts;
 
 public class PowerboxBlock extends DataBlock {
 
@@ -25,32 +23,28 @@ public class PowerboxBlock extends DataBlock {
 
 	public double get_voltageOne() {
 		if (this.voltageOne == null) {
-			this.voltageOne = new Short(PrimitiveUtils.toShort(Arrays
-					.copyOfRange(this.rawData, 6, 8)));
+			this.voltageOne = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
 		}
 		return this.voltageOne * 0.01;
 	}
 
 	public double get_voltageTwo() {
 		if (this.voltageTwo == null) {
-			this.voltageTwo = new Short(PrimitiveUtils.toShort(Arrays
-					.copyOfRange(this.rawData, 8, 10)));
+			this.voltageTwo = Shorts.fromBytes(this.rawData[8], this.rawData[9]);
 		}
 		return this.voltageTwo * 0.01;
 	}
 
 	public double get_capacityOne() {
 		if (this.capacityOne == null) {
-			this.capacityOne = new Short(PrimitiveUtils.toShort(Arrays
-					.copyOfRange(this.rawData, 10, 12)));
+			this.capacityOne = Shorts.fromBytes(this.rawData[10], this.rawData[11]);
 		}
 		return this.capacityOne;
 	}
 
 	public double get_capacityTwo() {
 		if (this.capacityTwo == null) {
-			this.capacityTwo = new Short(PrimitiveUtils.toShort(Arrays
-					.copyOfRange(this.rawData, 12, 14)));
+			this.capacityTwo = Shorts.fromBytes(this.rawData[12], this.rawData[13]);
 		}
 		return this.capacityTwo;
 	}

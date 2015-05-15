@@ -1,8 +1,6 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.util.Arrays;
-
-import com.monstarmike.tlmreader.util.PrimitiveUtils;
+import com.google.common.primitives.Shorts;
 
 public class GForceBlock extends DataBlock {
 	/*
@@ -18,54 +16,56 @@ public class GForceBlock extends DataBlock {
 	 * set for Z-axis from -40g to 40g
 	 */
 
-	Short x = null, y = null, z = null, maxX = null, maxY = null, maxZ = null;
+	Short x = null, y = null, z = null, maxX = null, maxY = null, maxZ = null,
+			minZ = null;
 
 	public short get_x() {
 		if (this.x == null) {
-			this.x = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
-					this.rawData, 6, 8)));
+			this.x = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
 		}
 		return this.x;
 	}
-	
+
 	public short get_y() {
 		if (this.y == null) {
-			this.y = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
-					this.rawData, 8, 10)));
+			this.y = Shorts.fromBytes(this.rawData[8], this.rawData[9]);
 		}
 		return this.y;
 	}
-	
+
 	public short get_z() {
 		if (this.z == null) {
-			this.z = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
-					this.rawData, 10, 12)));
+			this.z = Shorts.fromBytes(this.rawData[10], this.rawData[11]);
 		}
 		return this.z;
 	}
-	
+
 	public short get_maxX() {
 		if (this.maxX == null) {
-			this.maxX = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
-					this.rawData, 12, 14)));
+			this.maxX = Shorts.fromBytes(this.rawData[12], this.rawData[13]);
 		}
 		return this.maxX;
 	}
-	
+
 	public short get_maxY() {
 		if (this.maxY == null) {
-			this.maxY = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
-					this.rawData, 14, 16)));
+			this.maxY = Shorts.fromBytes(this.rawData[14], this.rawData[15]);
 		}
 		return this.maxY;
 	}
-	
+
 	public short get_maxZ() {
 		if (this.maxZ == null) {
-			this.maxZ = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
-					this.rawData, 16, 18)));
+			this.maxZ = Shorts.fromBytes(this.rawData[16], this.rawData[17]);
 		}
 		return this.maxZ;
+	}
+
+	public short get_minZ() {
+		if (this.minZ == null) {
+			this.minZ = Shorts.fromBytes(this.rawData[18], this.rawData[19]);
+		}
+		return this.minZ;
 	}
 
 	public GForceBlock(byte[] rawData) {

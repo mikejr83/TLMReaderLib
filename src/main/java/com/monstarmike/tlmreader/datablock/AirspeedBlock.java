@@ -1,8 +1,6 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.util.Arrays;
-
-import com.monstarmike.tlmreader.util.PrimitiveUtils;
+import com.google.common.primitives.Shorts;
 
 public class AirspeedBlock extends DataBlock {
 
@@ -18,8 +16,7 @@ public class AirspeedBlock extends DataBlock {
 
 	public short get_airspeed() {
 		if (this.airspeed == null) {
-			this.airspeed = new Short(PrimitiveUtils.toShort(Arrays
-					.copyOfRange(this.rawData, 6, 8)));
+			this.airspeed = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
 		}
 		
 		return this.airspeed;

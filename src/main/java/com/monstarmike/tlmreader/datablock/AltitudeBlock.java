@@ -1,8 +1,6 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.util.Arrays;
-
-import com.monstarmike.tlmreader.util.PrimitiveUtils;
+import com.google.common.primitives.Shorts;
 
 public final class AltitudeBlock extends DataBlock {
 	/*
@@ -18,9 +16,8 @@ public final class AltitudeBlock extends DataBlock {
 
 	public short get_altitudeInTenthsOfAMeter() {
 		if (this.altitudeInTenthsOfAMeter == null)
-			this.altitudeInTenthsOfAMeter = new Short(
-					PrimitiveUtils.toShort(Arrays.copyOfRange(this.rawData, 6,
-							8)));
+			this.altitudeInTenthsOfAMeter = Shorts.fromBytes(this.rawData[6],
+					this.rawData[7]);
 
 		return this.altitudeInTenthsOfAMeter;
 	}
