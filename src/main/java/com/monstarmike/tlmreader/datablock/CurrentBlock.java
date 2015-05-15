@@ -28,6 +28,6 @@ public class CurrentBlock extends DataBlock {
 
 	@Override
 	public String toString() {
-		return new Double(this.get_Current()).toString();
+		return super.toString() + " - " + new Double(this.get_Current()).toString();
 	}
 }

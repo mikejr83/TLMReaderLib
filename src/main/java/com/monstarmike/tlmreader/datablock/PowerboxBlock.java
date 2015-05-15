@@ -56,7 +56,7 @@ public class PowerboxBlock extends DataBlock {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "V1: " + this.get_voltageOne() + " Capacity 1: "
+		return super.toString() + " - V1: " + this.get_voltageOne() + " Capacity 1: "
 				+ this.get_capacityOne() + " - V2: " + this.get_voltageTwo()
 				+ " Capacity 2: " + this.get_capacityTwo();
 	}
