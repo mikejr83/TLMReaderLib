@@ -24,10 +24,6 @@ public class TLMReader {
 		byte[] theBytes = Files.toByteArray(new File(path));
 		
 		this.Read(theBytes);
-		
-		for(Flight f : this.flights) {
-			System.out.println(f);
-		}
 	}
 	
 	public void Read(byte[] bytes) {
