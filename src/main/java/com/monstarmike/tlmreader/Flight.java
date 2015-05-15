@@ -1,6 +1,7 @@
 package com.monstarmike.tlmreader;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;
@@ -12,7 +13,7 @@ import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderDataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 
-public class Flight {
+public class Flight implements Iterable<Block> {
 	ArrayList<Block> data;
 	ArrayList<HeaderBlock> headerData;
 	ArrayList<DataBlock> dataBlockData;
@@ -71,5 +72,9 @@ public class Flight {
 
 		return this.modelName + " duration: "
 				+ formatter.print(this.get_duration().toPeriod());
+	}
+
+	public Iterator<Block> iterator() {
+		return this.data.iterator();
 	}
 }

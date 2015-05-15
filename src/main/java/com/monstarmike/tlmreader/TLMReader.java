@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import com.google.common.io.Files;
-
 import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderDataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 
-public class TLMReader {
+public class TLMReader implements Iterable<Flight> {
 	ArrayList<Flight> flights;
 	
 	public TLMReader() {
@@ -49,5 +49,9 @@ public class TLMReader {
 				i += 20;	
 			}
 		}
+	}
+
+	public Iterator<Flight> iterator() {
+		return this.flights.iterator();
 	}
 }
