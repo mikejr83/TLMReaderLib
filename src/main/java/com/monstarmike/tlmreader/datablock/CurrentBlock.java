@@ -1,8 +1,6 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.util.Arrays;
-
-import com.monstarmike.tlmreader.util.PrimitiveUtils;
+import com.google.common.primitives.Shorts;
 
 public class CurrentBlock extends DataBlock {
 	/*
@@ -18,8 +16,7 @@ public class CurrentBlock extends DataBlock {
 
 	public double get_Current() {
 		if (this.current == null) {
-			this.current = new Short(PrimitiveUtils.toShort(Arrays.copyOfRange(
-					this.rawData, 6, 8)));
+			this.current = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
 		}
 
 		return this.current * 0.1967;
