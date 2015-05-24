@@ -54,11 +54,13 @@ public abstract class DataBlock extends Block {
 			break;
 
 		case 126:
-
+			// rpm, temperature, rx volts
+			block = new StandardBlock(bytes);
 			break;
 
 		case 127:
-
+			// signal info
+			block = new RXBlock(bytes);
 			break;
 		}
 		return block;
