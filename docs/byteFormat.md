@@ -243,6 +243,259 @@ Data type value: 0x7F
 
 Volts = Value from sensor / 100. 489 = 4.89V
 
+# Spektrum DX8 and DX18 SD log file format - update by RevinKevin
+
+[](http://www.rcgroups.com/forums/showpost.php?p=23133050&postcount=86) 
+
+I thought it worth an update on the Format of the SPEKTRUM.TLM file:
+
+All values in brackets are in Hex
+Square Brackets [] are referenced to zero for Engineers like me.
+I have also included the format of the data (Hex or Decimal) Hex values have to be converted to Decimal for any of the formulas to work.
+
+
+There are two distinct parts of the File
+The first part is information gathered from the Transmitter.
+The Second part is information gathered from the Telemetry Unit
+
+First Part TX Block
+Information gathered from the Transmitter.
+
+TX block starts with:
+
+1 [00] 255(FF)
+2 [01] 255(FF)
+3 [02] 255(FF)
+4 [03] 255(FF)
+5 [04] Model Number (Value + 1) (hex)
+6 [05] Model Type 00 = Fixed Wing, 01 = Helicopter
+7 [06] BIND info 01=DSM2 6000 RX, 02=DSM2 8000 RX, 03=DSMX 8000 RX, 04=DMSX 6000 RX 
+8 [07] Unknown 
+9 [08] Unknown 
+10[09] Unknown 
+11[0A] Unknown
+12[0B] Unknown
+13[0C] to 23[16] Model Name terminated by 00
+24[17] to 36[23] Not Used (But contains Data left in buffer)
+
+This is followed by up to 7 Entry's depending on what options are selected in the Telemetry set-up section of the transmitter.
+
+1[00] 255(FF)
+2[01] 255(FF)
+3[02] 255(FF)
+4[03] 255(FF)
+5[04] to 6[05] 01,01(0101) Volts Sensor Enabled
+02,02(0202) Temp Sensor Enabled
+03,03(0303) Amps Sensor Enabled
+10,10(0A0A) PBox Enabled
+17,17(1111) Speed Sensor Enabled
+18,18(1212) Altimeter Sensor Enabled
+20,20(1414) GForce Sensor Enabled
+21,21(1515) Jetpac Enabled (option only on the DX18 and DX10t)
+22,22(1616) GPS Sensor Enabled
+124,124(7E7E) RPM Sensor Enable
+7[06] to 23[16] Contain Telemetry set-up information i.e. if options are enabled or inhibited, alarms set vibrate and/or Tone plus Max and Min Values.
+24[17] to 36[23] Not used (But contains Data left in buffer)
+
+
+Last TX Entry
+
+1[00] 255(FF)
+2[01] 255(FF)
+3[02] 255(FF) 
+4[03] 255(FF)
+5[04] 23(17)
+6[05] 23(17)
+7[06] to 23[16] Unknown
+24[17] to 36[23] Not used (But contains Data left in buffer)
+
+If the Transmitter detects the Telemetry unit the Sensor Blocks are shown if not we go back to the beginning and the sequence is repeated. 
+
+
+The Second part is information gathered from the Telemetry Unit
+
+Sensor Block Format
+
+There are 6 to 8 Sensor formats 
+Type 17(11),18(12),20(14),22(16)+23(17),124(7E) and 125(7F) 
+There should be a Type 10 (0A) No Information is known at this time
+
+Type 124(7E) and 125(7F) are always present but the others depend on the sensors being enabled and the Data Blocks present.
+
+The Values for the Volts and Temperature are always present and do not have to be enabled on the Transmitter. 
+I also suspect that this is true of the RPM and the current sensors.
+
+
+Data type = 17(11) Speed Sensor
+
+1[00] Time Stamp LSB
+2[01] Time Stamp
+3[02] Time Stamp 
+4[03] Time Stamp MSB
+5[04] 17(11)
+6[05] 00
+7[06] Speed MSB (Hex)
+8[07] Speed LSB (Hex)
+9[08] Unknown 
+10[09] Unknown 
+11[0A] Unknown
+12[0B] Unknown
+13[0C] Unknown
+14[0D] Unknown
+15[0E] Unknown
+16[0F] Unknown
+17[10] Unknown
+18[11] Unknown
+19[12] Unknown
+20[13] Unknown
+
+Data type = 18(12) Altimeter Sensor
+
+1[00] Time Stamp LSB
+2[01] Time Stamp
+3[02] Time Stamp 
+4[03] Time Stamp MSB
+5[04] 18(12)
+6[05] 00
+7[06] Altitude MSB (Hex)
+8[07] Altitude LSB (Hex) the format is an integer and is in 0.1m
+9[08] Unknown
+10[09] Unknown
+11[0A] Unknown
+12[0B] Unknown
+13[0C] Unknown
+14[0D] Unknown
+15[0E] Unknown
+16[0F] Unknown
+17[10] Unknown
+18[11] Unknown
+19[12] Unknown
+20[13] Unknown
+
+
+Data type = 20(14) Gforce Sensor
+
+1[00] Time Stamp LSB
+2[01] Time Stamp
+3[02] Time Stamp 
+4[03] Time Stamp MSB
+5[04] 20(14)
+6[05] 00
+7[06] x MSB (Hex)
+8[07] x LSB (Hex)
+9[08] y MSB (Hex)
+10[09] y LSB (Hex)
+11[0A] z MSB (Hex)
+12[0B] z LSB (Hex)
+13[0C] x max MSB (Hex)
+14[0D] x max LSB (Hex)
+15[0E] y max MSB (Hex)
+16[0F] y max LSB (Hex)
+17[10] z max MSB (Hex)
+18[11] z max LSB (Hex)
+19[12] z min MSB (Hex)
+20[13] z min LSB (Hex)
+
+
+Data Type = 22(16) GPS Sensor
+
+1[00] Time Stamp LSB
+2[01] Time Stamp
+3[02] Time Stamp 
+4[03] Time Stamp MSB
+5[04] 22(16)
+6[05] 00
+7[06] Altitude LSB
+8[07] Altitude MSB
+9[08] 1/100th of a degree second latitude (Decimal)
+10[09] degree seconds latitude (Decimal)
+11[0A] degree minutes latitude (Decimal)
+12[0B] degrees latitude (Decimal)
+13[0C] 1/100th of a degree second longitude (Decimal)
+14[0D] degree seconds longitude (Decimal)
+15[0E] degree minutes longitude (Decimal)
+16[0F] degrees longitude (Decimal)
+17[10] Heading LSB (Decimal)
+18[11] Heading MSB (Decimal) Divide by 10 for Degrees 
+19[12] Unknown
+20[13] Unknown
+
+Data type 23(17) GPS Sensor
+
+1[00] Time Stamp LSB
+2[01] Time Stamp
+3[02] Time Stamp 
+4[03] Time Stamp MSB
+5[04] 23(17)
+6[05] 0
+7[06] Speed LSB (Decimal)
+8[07] Speed MSB (Decimal) Divide by 10 for Knots. Multiply by 0.185 for Kph and 0.115 for Mph
+9[08] UTC Time LSB 1/10th sec.
+10[09] UTC Time
+11[0A] UTC Time
+12[0B] UTC Time MSB
+13[0C] Number of Sats (Decimal)
+14[0D] 00
+15[0E]-20[13] Unused (But contains Data left in buffer)
+
+
+Data type = 126(7E){TM1000} or 254(FE){TM1100}
+
+1[00] Time Stamp LSB
+2[01] Time Stamp
+3[02] Time Stamp 
+4[03] Time Stamp MSB
+5[04] 126(7E) or 254(FE)
+6[05] 00
+7[06] RPM MSB (Hex)
+8[07] RPM LSB (Hex) RPM = Value (Decimal) * count of Poles
+9[08] Volt MSB (Hex)
+10[09] Volt LSB (Hex) V = Value (Decimal) / 100
+11[0A] Temp MSB (Hex)
+12[0B] Temp LSB (Hex) Value (Decimal) is in Fahrenheit, for Celsius ((Value (Decimal) - 32)*5) / 9
+13[0c] Unknown
+14[0D] Unknown
+15[0E] Unknown
+16[0F] Unknown
+17[10] Unknown
+18[11] Unknown
+19[12] Unknown
+20[13] Unknown
+
+Data type = 127(7F){TM1000} or 255(FF){TM1100}
+1[00] Time Stamp LSB
+2[01] Time Stamp
+3[02] Time Stamp 
+4[03] Time Stamp MSB
+5[04] 127(7F) or 255(FF)
+6[05] 00 Unknown
+7[06] A MSB (Hex)
+8[07] A LSB (Hex)
+9[08] B MSB (Hex)
+10[09] B LSB (Hex)
+11[0A] L MSB (Hex)
+12[0B] L LSB (Hex)
+13[0C] R MSB (Hex)
+14[0D] R LSB (Hex)
+15[0E] Frame loss MSB (Hex)
+16[0F] Frame loss LSB (Hex)
+17[10] Holds MSB (Hex)
+18[11] Holds LSB (Hex)
+19[12] Receiver Volts MSB (Hex)
+20[13] Receiver Volts LSB (Hex) V = Value (Decimal) / 100
+
+Still a few bits to sort out if anyone wants to carry on.
+
+Andy might be able to post a TLM file of a DX10T with a 9000 Rx (DSM2 and X)
+
+By the way Andy this habit of not Padding out the buffers, I recall Microsoft getting into trouble for showing user information in the buffers. We would not want to see anything created behind your Firewall!!!
+
+Thanks to everyone who contributed towards my final offering
+
+Cheers
+
+Kevin
+
 # Spektrum Telemetry Reverse Engineered
 
 The following data comes from [Spektrum Telemetry reverse engineered, make DIY sensors !](http://www.rcgroups.com/forums/showthread.php?t=1726960) RCGroups thread. User **[Mukenukem](http://www.rcgroups.com/forums/member.php?u=331468)** reverse engineered what the TM1000 was doing in order for people to make custom sensors. This data seems to correspond with the earlier information.
