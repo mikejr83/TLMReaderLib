@@ -80,7 +80,9 @@ Bind Info:
 | 0x4         | DMSX 6000 RX |
 
 ### Supplemental Header Block
-The header name block is then followed by up to 7 (Shure?) entries depending on what options are selected in the telmetry set-up section of the transmitter.
+The header name block can then be followed by additional/supplemental header entries depending on what options are selected in the telmetry set-up section of the transmitter. 
+
+*Note: currently it is thought that the number of supplemental header blocks match the number of sensors enabled within the transmitter. As this may change with future releases of AirWave it is best to parse these blocks and look for the value 0x17 in offsets 0x4 and 0x5. This denotes the last header block for the sequence.*
 
 | Byte Offset | Description |
 | ----------- | ----------- | 
@@ -110,7 +112,7 @@ Sensor Type Enabled Info:
 
 ## Data Blocks
 
-Then it repreat a 20 byte block:
+After the header blocks data repreats in a 20 byte block:
 
 | Byte Offset | Description |
 | ----------- | ----------- | 
