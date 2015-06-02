@@ -24,13 +24,25 @@ All blocks start with:
 
 The first four bytes will **always** be timestamp data.
 
+## Data Structure
+
+The data has the following structure:
+
+| Count       | Description |
+| ----------- | ----------- | 
+|One          | Main Header Block |
+|One or more  | Supplemental Header Block (Last Supplemental Header Block has "Sensor type enabled" = 0x17) |
+|Zero or more | Data block |
+
+This structure is repeated each time telemetry recording is started. If the recording is just triggered a short time, it is possible that there are no data blocks.
+
 ## Header Blocks
 
 If timestamp, the first four bytes are `FF FF FF FF` then it is a header block.
 
 The length of any header block is 36 bytes.
 
-### Header Block 1
+### Main Header Block
 This is the name and basic information header block.
 
 | Byte Offset | Description |
@@ -56,6 +68,7 @@ Model Type:
 | ----------- | ----------- | 
 | 0x0         | Fixed Wing |
 | 0x1         | Helicopter |
+| 0x2         | Glider |
 
 Bind Info:
 
@@ -66,8 +79,8 @@ Bind Info:
 | 0x3         | DSMX 8000 RX |
 | 0x4         | DMSX 6000 RX |
 
-### Supplemental Header Data
-The header name block is then followed by up to 7 entries depending on what options are selected in the telmetry set-up section of the transmitter.
+### Supplemental Header Block
+The header name block is then followed by up to 7 (Shure?) entries depending on what options are selected in the telmetry set-up section of the transmitter.
 
 | Byte Offset | Description |
 | ----------- | ----------- | 
@@ -92,6 +105,7 @@ Sensor Type Enabled Info:
 | 0x14, 0x14  | GForce |
 | 0x15, 0x15  | JetCat (DX18 and DX10t only) |
 | 0x16, 0x16  | GPS |
+| 0x17, 0x17  | Identification for last Supplemental Header Block |
 | 0x7E, 0x7E  | RPM |
 
 ## Data Blocks
