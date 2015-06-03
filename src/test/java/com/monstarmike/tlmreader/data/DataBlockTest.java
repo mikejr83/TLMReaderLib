@@ -55,8 +55,8 @@ public class DataBlockTest extends TestCase {
 		for (int i = 0; i < this.theBytes.length; i += 20) {
 			byte[] dataBytes = Arrays.copyOfRange(this.theBytes, i, i + 20);
 			DataBlock block = DataBlock.createDataBlock(dataBytes);
-			if (block != null)
-				System.out.println(block.get_timestamp());
+//			if (block != null)
+//				System.out.println(block.get_timestamp());
 		}
 	}
 }

@@ -79,6 +79,7 @@ public class HeaderTest extends TestCase {
 		byte[] headerBytes = Arrays.copyOfRange(this.theBytes, 0, 36);
 
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(headerBytes);
+		System.out.println("Header name " + headerNameBlock.get_modelName());
 		assertEquals(headerNameBlock.get_modelName(), "Gracia Maxi3.5");
 	}
 

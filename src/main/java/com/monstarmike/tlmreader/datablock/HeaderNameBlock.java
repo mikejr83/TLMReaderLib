@@ -14,8 +14,12 @@ public class HeaderNameBlock extends HeaderBlock {
 
 	public String get_modelName() {
 		if (this.modelName == null) {
+			short offset = 0x0C;
+			while (offset < 0x24 && this.rawData[offset] != 0x0) {
+				offset++;
+			}
 			this.modelName = new String(Arrays.copyOfRange(this.rawData, 0x0C,
-					0x16)).trim();
+					offset)).trim();
 		}
 
 		return this.modelName;

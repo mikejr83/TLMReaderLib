@@ -67,6 +67,10 @@ public class Flight implements Iterable<Block> {
 	public Iterator<HeaderBlock> get_headerBlocks() {
 		return this.headerData.iterator();
 	}
+	
+	public Iterator<DataBlock> get_dataBlocks(){
+		return this.dataBlockData.iterator();
+	}
 
 	@Override
 	public String toString() {
