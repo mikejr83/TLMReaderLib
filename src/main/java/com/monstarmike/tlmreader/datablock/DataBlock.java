@@ -25,6 +25,8 @@ public abstract class DataBlock extends Block {
 				block = new RXBlock(bytes);
 				break;
 			}
+		} else if (bytes[4] == 0x09 && bytes[5] == 0x06) {
+			block = new ServoDataBlock(bytes);
 		} else {
 			switch (bytes[4]) {
 			case 0:
