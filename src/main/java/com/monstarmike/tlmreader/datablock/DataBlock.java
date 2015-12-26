@@ -1,13 +1,11 @@
 package com.monstarmike.tlmreader.datablock;
 
 import com.google.common.primitives.Ints;
-import com.google.common.primitives.Shorts;
 
 public abstract class DataBlock extends Block {
 
 	public int get_timestamp() {
-		return Ints.fromBytes(this.rawData[3], this.rawData[2],
-				this.rawData[1], this.rawData[0]);
+		return Ints.fromBytes(this.rawData[3], this.rawData[2], this.rawData[1], this.rawData[0]);
 	}
 
 	public DataBlock(byte[] rawData) {
@@ -16,16 +14,14 @@ public abstract class DataBlock extends Block {
 
 	public static DataBlock createDataBlock(byte[] bytes) {
 		DataBlock block = null;
-		short tm1100 = Shorts.fromBytes(bytes[4], bytes[5]);
+		short tm1100 = (short) (bytes[4] & 0xFF);
 		if (tm1100 == 0xFE || tm1100 == 0xFF) {
 			switch (tm1100) {
 			case 0xFE:
-				System.out.println("standard TM1100");
 				block = new StandardBlock(bytes);
 				break;
 
 			case 0xFF:
-				System.out.println("RX TM1100");
 				block = new RXBlock(bytes);
 				break;
 			}
@@ -84,7 +80,6 @@ public abstract class DataBlock extends Block {
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
 		return 20;
 	}
 }
