@@ -12,6 +12,7 @@ import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderDataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
+import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
 
 public class Flight implements Iterable<Block> {
 	ArrayList<Block> data;
@@ -20,6 +21,7 @@ public class Flight implements Iterable<Block> {
 	Duration duration = null;
 
 	String modelName;
+	private HeaderRpmBlock rpmHeader;
 
 	public Duration get_duration() {
 		if (this.duration == null) {
@@ -48,6 +50,14 @@ public class Flight implements Iterable<Block> {
 		this.modelName = block.get_modelName();
 		this.data.add(block);
 		this.headerData.add(block);
+	}
+
+	public void addRpmHeaderBlock(HeaderRpmBlock block) {
+		if (block == null)
+			return;
+		this.data.add(block);
+		this.headerData.add(block);
+		this.rpmHeader = block;
 	}
 
 	public void addBlock(HeaderDataBlock block) {
@@ -84,5 +94,9 @@ public class Flight implements Iterable<Block> {
 
 	public Iterator<Block> iterator() {
 		return this.data.iterator();
+	}
+
+	public HeaderRpmBlock getRpmHeader() {
+		return rpmHeader;
 	}
 }
