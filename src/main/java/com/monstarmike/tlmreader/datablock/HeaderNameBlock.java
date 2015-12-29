@@ -82,4 +82,10 @@ public class HeaderNameBlock extends HeaderBlock {
 		super(rawData);
 	}
 
+	@Override
+	public String toString() {
+		return "NameHeader; modelName: " + get_modelName() + ", modelNumber: " + get_modelNumber() + ", modelType: "
+				+ get_modelType() + ", bindInfo: " + get_bindInfo();
+	}
+
 }

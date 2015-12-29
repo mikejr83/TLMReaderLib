@@ -70,4 +70,9 @@ public class HeaderDataBlock extends HeaderBlock {
 		super(rawData);
 	}
 
+	@Override
+	public String toString() {
+		return "DataHeader; type: " + get_sensorTypeEnabled();
+	}
+
 }
