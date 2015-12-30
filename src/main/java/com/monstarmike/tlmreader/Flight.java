@@ -10,7 +10,6 @@ import org.joda.time.format.PeriodFormatterBuilder;
 import com.monstarmike.tlmreader.datablock.Block;
 import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
-import com.monstarmike.tlmreader.datablock.HeaderDataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
 
@@ -60,7 +59,7 @@ public class Flight implements Iterable<Block> {
 		this.rpmHeader = block;
 	}
 
-	public void addBlock(HeaderDataBlock block) {
+	public void addBlock(HeaderBlock block) {
 		if (block == null)
 			return;
 		this.data.add(block);

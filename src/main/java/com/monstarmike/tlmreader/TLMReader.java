@@ -12,6 +12,7 @@ import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderDataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
+import com.monstarmike.tlmreader.datablock.HeaderVoltBlock;
 
 public class TLMReader implements Iterable<Flight> {
 	ArrayList<Flight> flights;
@@ -40,6 +41,8 @@ public class TLMReader implements Iterable<Flight> {
 					this.flights.add(currentFlight);
 				} else if (HeaderRpmBlock.isRpmHeader(headerBytes)) {
 					currentFlight.addRpmHeaderBlock(new HeaderRpmBlock(headerBytes));
+				} else if (HeaderVoltBlock.isVoltHeader(headerBytes)) {
+					currentFlight.addBlock(new HeaderVoltBlock(headerBytes));
 				} else {
 					currentFlight.addBlock(new HeaderDataBlock(headerBytes));
 				}
