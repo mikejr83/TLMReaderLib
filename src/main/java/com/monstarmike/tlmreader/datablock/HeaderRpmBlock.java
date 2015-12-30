@@ -22,7 +22,7 @@ public class HeaderRpmBlock extends HeaderBlock {
 
 	@Override
 	public String toString() {
-		return "RpmHeader; poles: " + getPoles() + ", isActive: " + isActive() + ", ratio: " + getRatio() + ", minRpm: "
+		return "RpmHeader; poles: " + getPoles() + ", active: " + isActive() + ", ratio: " + getRatio() + ", minRpm: "
 				+ getMinRpm() + ", maxRpm: " + getMaxRpm() + ", statusReport: " + getStatusReport()
 				+ ", warningReport: " + getWarningReport();
 	}
