@@ -1,11 +1,14 @@
 package com.monstarmike.tlmreader.datablock;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import com.google.common.primitives.Shorts;
 
 public class RXBlock extends DataBlock {
 
-	Short a = null, b = null, l = null, r = null, frameLoss = null,
-			holds = null, volts = null;
+	Short a, b, l, r, frameLoss, holds;
+	BigDecimal volts;
 
 	public Short get_a() {
 		if (this.a == null) {
@@ -48,16 +51,23 @@ public class RXBlock extends DataBlock {
 		}
 		return this.holds;
 	}
-	
-	public Short get_volts() {
+
+	public BigDecimal get_volts() {
 		if (this.volts == null) {
-			this.volts = Shorts.fromBytes(this.rawData[0x12], this.rawData[0x13]);
+			this.volts = new BigDecimal((double) Shorts.fromBytes(this.rawData[0x12], this.rawData[0x13]) / 100)
+					.setScale(2, RoundingMode.CEILING);
 		}
 		return this.volts;
 	}
 
 	public RXBlock(byte[] rawData) {
 		super(rawData);
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "RxData; FrameLoss: " + get_frameLoss() + ", Holds: " + get_holds() + ", Volts: "
+				+ get_volts();
 	}
 
 }

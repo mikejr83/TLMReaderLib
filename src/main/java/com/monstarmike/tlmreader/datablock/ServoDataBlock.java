@@ -1,7 +1,10 @@
 package com.monstarmike.tlmreader.datablock;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * <b>Address 0x0906</b> Servo Data Block (if "Include Servo Data?" is on)<br>
@@ -99,5 +102,31 @@ public class ServoDataBlock extends DataBlock {
 	public ServoDataBlock(byte[] rawData) {
 		super(rawData);
 		decodeAllChannels();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Entry<Integer, Short> entry : channelValues.entrySet()) {
+			if (sb.length() != 0) {
+				sb.append(", ");
+			}
+			sb.append("CH: ").append(entry.getKey() + 1).append(" = ").append(entry.getValue()).append(" (")
+					.append(getPercent(entry.getKey(), entry.getValue())).append("%)");
+		}
+		return super.toString() + "ServoData; " + sb;
+	}
+
+	private BigDecimal getPercent(Integer channelNumber, Short channelValue) {
+		double maxValue;
+		if (channelNumber < 12) {
+			// 11 Bit Channel
+			maxValue = Math.pow(2, 11);
+		} else {
+			// 9 Bit Channel
+			maxValue = Math.pow(2, 9);
+		}
+		double middleValue = maxValue / 2.0;
+		return new BigDecimal((channelValue - middleValue) / (maxValue / 300)).setScale(1, RoundingMode.CEILING);
 	}
 }

@@ -57,7 +57,8 @@ public class StandardBlock extends DataBlock {
 
 	@Override
 	public String toString() {
-		return super.toString() + " - RPM: " + this.getRpm() + ", Volt: " + this.getVolt() + ", Temperature (in °F): "
-				+ this.getTemperatureInGradFahrenheit() + ", Temperature (in °C): " + getTemperatureInGradCelsius();
+		return super.toString() + "StandardData; RPM: " + this.getRpm() + ", Volt: " + this.getVolt()
+				+ ", Temperature (in °F): " + this.getTemperatureInGradFahrenheit() + ", Temperature (in °C): "
+				+ getTemperatureInGradCelsius();
 	}
 }
