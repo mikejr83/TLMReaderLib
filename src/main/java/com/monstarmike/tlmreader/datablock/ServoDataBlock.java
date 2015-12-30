@@ -127,6 +127,6 @@ public class ServoDataBlock extends DataBlock {
 			maxValue = Math.pow(2, 9);
 		}
 		double middleValue = maxValue / 2.0;
-		return new BigDecimal((channelValue - middleValue) / (maxValue / 300)).setScale(1, RoundingMode.CEILING);
+		return new BigDecimal((channelValue - middleValue) / (maxValue / 300)).setScale(1, RoundingMode.HALF_UP);
 	}
 }

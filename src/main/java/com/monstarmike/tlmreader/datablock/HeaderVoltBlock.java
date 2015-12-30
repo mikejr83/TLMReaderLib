@@ -36,16 +36,16 @@ public class HeaderVoltBlock extends HeaderBlock {
 
 	public BigDecimal getMinVolt() {
 		if (minVolt == null) {
-			minVolt = new BigDecimal((double) Shorts.fromBytes(rawData[13], rawData[12]) / 100).setScale(2,
-					RoundingMode.CEILING);
+			minVolt = new BigDecimal((double) Shorts.fromBytes(rawData[13], rawData[12]) / 100).setScale(1,
+					RoundingMode.HALF_UP);
 		}
 		return minVolt;
 	}
 
 	public BigDecimal getMaxVolt() {
 		if (maxVolt == null) {
-			maxVolt = new BigDecimal((double) Shorts.fromBytes(rawData[15], rawData[14]) / 100).setScale(2,
-					RoundingMode.CEILING);
+			maxVolt = new BigDecimal((double) Shorts.fromBytes(rawData[15], rawData[14]) / 100).setScale(1,
+					RoundingMode.HALF_UP);
 		}
 		return maxVolt;
 	}

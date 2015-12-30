@@ -55,7 +55,7 @@ public class RXBlock extends DataBlock {
 	public BigDecimal get_volts() {
 		if (this.volts == null) {
 			this.volts = new BigDecimal((double) Shorts.fromBytes(this.rawData[0x12], this.rawData[0x13]) / 100)
-					.setScale(2, RoundingMode.CEILING);
+					.setScale(2, RoundingMode.HALF_UP);
 		}
 		return this.volts;
 	}
