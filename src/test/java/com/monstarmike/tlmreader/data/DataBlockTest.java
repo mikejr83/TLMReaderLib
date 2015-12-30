@@ -24,11 +24,9 @@ public class DataBlockTest extends TestCase {
 		super(testName);
 
 		try {
-			this.theBytes = Files.toByteArray(new File(
-					"src/test/data/SensorData.bin"));
+			this.theBytes = Files.toByteArray(new File("src/test/data/SensorData.bin"));
 		} catch (IOException e) {
-			System.out
-					.println("Yo, the data block data needs to be in the src/test/data/SensorData.bin file!");
+			System.out.println("Yo, the data block data needs to be in the src/test/data/SensorData.bin file!");
 			e.printStackTrace();
 		}
 	}
@@ -54,9 +52,9 @@ public class DataBlockTest extends TestCase {
 	public void testDataBlockTimestamp() {
 		for (int i = 0; i < this.theBytes.length; i += 20) {
 			byte[] dataBytes = Arrays.copyOfRange(this.theBytes, i, i + 20);
-			DataBlock block = DataBlock.createDataBlock(dataBytes);
-//			if (block != null)
-//				System.out.println(block.get_timestamp());
+			DataBlock block = DataBlock.createDataBlock(dataBytes, null);
+			// if (block != null)
+			// System.out.println(block.get_timestamp());
 		}
 	}
 }

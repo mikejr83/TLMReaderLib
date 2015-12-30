@@ -13,11 +13,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class AltitudeBlockTest extends TestCase {
-	public static byte[] TEST_BLOCK = { (byte) 0xC3, (byte) 0x88, (byte) 0x00,
-			(byte) 0x00, (byte) 0x12, (byte) 0x00, (byte) 0x07, (byte) 0xDF,
-			(byte) 0x00, (byte) 0xF4, (byte) 0x00, (byte) 0xF4, (byte) 0x00,
-			(byte) 0xF4, (byte) 0x00, (byte) 0xF4, (byte) 0x00, (byte) 0xF4,
-			(byte) 0x00, (byte) 0xF4 };
+	public static byte[] TEST_BLOCK = { (byte) 0xC3, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x12, (byte) 0x00,
+			(byte) 0x07, (byte) 0xDF, (byte) 0x00, (byte) 0xF4, (byte) 0x00, (byte) 0xF4, (byte) 0x00, (byte) 0xF4,
+			(byte) 0x00, (byte) 0xF4, (byte) 0x00, (byte) 0xF4, (byte) 0x00, (byte) 0xF4 };
 
 	byte[] theBytes = null;
 
@@ -31,11 +29,9 @@ public class AltitudeBlockTest extends TestCase {
 		super(testName);
 
 		try {
-			this.theBytes = Files.toByteArray(new File(
-					"src/test/data/SensorData.bin"));
+			this.theBytes = Files.toByteArray(new File("src/test/data/SensorData.bin"));
 		} catch (IOException e) {
-			System.out
-					.println("Yo, the data block data needs to be in the src/test/data/SensorData.bin file!");
+			System.out.println("Yo, the data block data needs to be in the src/test/data/SensorData.bin file!");
 			e.printStackTrace();
 		}
 	}
@@ -60,13 +56,12 @@ public class AltitudeBlockTest extends TestCase {
 	 * the altitude block is created correctly.
 	 */
 	public void testCreation() {
-		DataBlock dataBlock = DataBlock.createDataBlock(TEST_BLOCK);
+		DataBlock dataBlock = DataBlock.createDataBlock(TEST_BLOCK, null);
 		assertTrue(dataBlock instanceof AltitudeBlock);
 	}
 
 	public void testAltitudeValue() {
-		AltitudeBlock block = (AltitudeBlock) DataBlock
-				.createDataBlock(TEST_BLOCK);
+		AltitudeBlock block = (AltitudeBlock) DataBlock.createDataBlock(TEST_BLOCK, null);
 
 		assertEquals(2015, block.get_altitudeInTenthsOfAMeter());
 	}
@@ -75,13 +70,15 @@ public class AltitudeBlockTest extends TestCase {
 		int count = 0;
 		for (int i = 0; i < this.theBytes.length; i += 20) {
 			byte[] dataBytes = Arrays.copyOfRange(this.theBytes, i, i + 20);
-			DataBlock block = DataBlock.createDataBlock(dataBytes);
+			DataBlock block = DataBlock.createDataBlock(dataBytes, null);
 			if (block instanceof AltitudeBlock) {
-//				System.out.println("timestamp: " + block.get_timestamp() + " - Alt: " + ((AltitudeBlock)block).get_altitudeInTenthsOfAMeter());
+				// System.out.println("timestamp: " + block.get_timestamp() + "
+				// - Alt: " +
+				// ((AltitudeBlock)block).get_altitudeInTenthsOfAMeter());
 				count++;
 			}
 		}
-		
+
 		assertEquals(4751, count);
 	}
 }
