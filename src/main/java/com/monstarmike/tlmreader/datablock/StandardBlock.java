@@ -51,8 +51,10 @@ public class StandardBlock extends DataBlock {
 
 	public StandardBlock(byte[] rawData, HeaderRpmBlock rpmHeader) {
 		super(rawData);
-		ratio = rpmHeader.getRatio();
-		poles = rpmHeader.getPoles();
+		if (rpmHeader != null) {
+			ratio = rpmHeader.getRatio();
+			poles = rpmHeader.getPoles();
+		}
 	}
 
 	@Override
