@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import com.google.common.io.Files;
+import com.monstarmike.tlmreader.Flight;
 import com.monstarmike.tlmreader.datablock.DataBlock;
 
 import junit.framework.Test;
@@ -52,7 +53,7 @@ public class DataBlockTest extends TestCase {
 	public void testDataBlockTimestamp() {
 		for (int i = 0; i < this.theBytes.length; i += 20) {
 			byte[] dataBytes = Arrays.copyOfRange(this.theBytes, i, i + 20);
-			DataBlock block = DataBlock.createDataBlock(dataBytes, null);
+			DataBlock block = DataBlock.createDataBlock(dataBytes, new Flight());
 			// if (block != null)
 			// System.out.println(block.get_timestamp());
 		}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import com.google.common.io.Files;
+import com.monstarmike.tlmreader.Flight;
 import com.monstarmike.tlmreader.datablock.AltitudeBlock;
 import com.monstarmike.tlmreader.datablock.DataBlock;
 
@@ -61,7 +62,7 @@ public class AltitudeBlockTest extends TestCase {
 	}
 
 	public void testAltitudeValue() {
-		AltitudeBlock block = (AltitudeBlock) DataBlock.createDataBlock(TEST_BLOCK, null);
+		AltitudeBlock block = (AltitudeBlock) DataBlock.createDataBlock(TEST_BLOCK, new Flight());
 
 		assertEquals(2015, block.get_altitudeInTenthsOfAMeter());
 	}
@@ -70,7 +71,7 @@ public class AltitudeBlockTest extends TestCase {
 		int count = 0;
 		for (int i = 0; i < this.theBytes.length; i += 20) {
 			byte[] dataBytes = Arrays.copyOfRange(this.theBytes, i, i + 20);
-			DataBlock block = DataBlock.createDataBlock(dataBytes, null);
+			DataBlock block = DataBlock.createDataBlock(dataBytes, new Flight());
 			if (block instanceof AltitudeBlock) {
 				// System.out.println("timestamp: " + block.get_timestamp() + "
 				// - Alt: " +
