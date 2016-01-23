@@ -2,22 +2,21 @@ package com.monstarmike.tlmreader;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-import com.monstarmike.tlmreader.datablock.Block;
 import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
 
-public class Flight implements Iterable<Block> {
-	ArrayList<Block> data;
-	ArrayList<HeaderBlock> headerData;
-	ArrayList<DataBlock> dataBlockData;
-	Duration duration = null;
+public class Flight {
+	private ArrayList<HeaderBlock> headerData;
+	private ArrayList<DataBlock> dataBlockData;
+	private Duration duration = null;
 
 	String modelName;
 	private HeaderRpmBlock rpmHeader;
@@ -38,7 +37,6 @@ public class Flight implements Iterable<Block> {
 	}
 
 	public Flight() {
-		this.data = new ArrayList<Block>();
 		this.headerData = new ArrayList<HeaderBlock>();
 		this.dataBlockData = new ArrayList<DataBlock>();
 	}
@@ -47,14 +45,12 @@ public class Flight implements Iterable<Block> {
 		if (block == null)
 			return;
 		this.modelName = block.get_modelName();
-		this.data.add(block);
 		this.headerData.add(block);
 	}
 
 	public void addRpmHeaderBlock(HeaderRpmBlock block) {
 		if (block == null)
 			return;
-		this.data.add(block);
 		this.headerData.add(block);
 		this.rpmHeader = block;
 	}
@@ -62,19 +58,17 @@ public class Flight implements Iterable<Block> {
 	public void addBlock(HeaderBlock block) {
 		if (block == null)
 			return;
-		this.data.add(block);
 		this.headerData.add(block);
 	}
 
 	public void addBlock(DataBlock block) {
 		if (block == null)
 			return;
-		this.data.add(block);
 		this.dataBlockData.add(block);
 	}
 	
-	public Iterator<HeaderBlock> get_headerBlocks() {
-		return this.headerData.iterator();
+	public List<HeaderBlock> get_headerBlocks() {
+		return this.headerData;
 	}
 	
 	public Iterator<DataBlock> get_dataBlocks(){
@@ -89,10 +83,6 @@ public class Flight implements Iterable<Block> {
 
 		return this.modelName + " duration: "
 				+ formatter.print(this.get_duration().toPeriod());
-	}
-
-	public Iterator<Block> iterator() {
-		return this.data.iterator();
 	}
 
 	public HeaderRpmBlock getRpmHeader() {
