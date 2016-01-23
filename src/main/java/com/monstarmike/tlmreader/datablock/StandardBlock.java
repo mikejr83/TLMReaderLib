@@ -1,56 +1,48 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import com.google.common.primitives.Shorts;
 
 public class StandardBlock extends DataBlock {
 
-	BigDecimal rpm;
-	BigDecimal volt;
-	BigDecimal tempInGradFahrenheit;
-	private Double ratio;
-	private Byte poles;
+	Double rpm;
+	Double volt;
+	Short tempInGradFahrenheit;
+	private Double ratio = 1.0;
+	private Byte poles = 1;
 
-	public BigDecimal get_rpm() {
+	public double get_rpm() {
 		if (this.rpm == null) {
 			short rawRpmData = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
-			if (rawRpmData == -1) { // 0xFFFF
-				this.rpm = new BigDecimal(0).setScale(2, RoundingMode.HALF_UP);
+			if (rawRpmData == 0) { // 0x0000
+				this.rpm = 0.0;
 			} else {
-				this.rpm = new BigDecimal((1.0 / rawRpmData * 120000000.0) / ratio / poles).setScale(2,
-						RoundingMode.HALF_UP);
+				this.rpm = (1.0 / rawRpmData * 120000000.0) / ratio / poles;
 			}
 		}
 		return this.rpm;
 	}
 
-	public BigDecimal get_volt() {
+	public double get_volt() {
 		if (this.volt == null) {
-			this.volt = new BigDecimal(Shorts.fromBytes(this.rawData[8], this.rawData[9]) / 100).setScale(2,
-					RoundingMode.HALF_UP);
+			this.volt = (double) Shorts.fromBytes(this.rawData[8], this.rawData[9]) / 100.0;
 		}
 		return this.volt;
 	}
 
-	public BigDecimal get_temperature() {
+	public double get_temperature() {
 		return get_temperatureInGradCelsius();
 	}
 
-	public BigDecimal get_temperatureInGradFahrenheit() {
+	public short get_temperatureInGradFahrenheit() {
 		if (this.tempInGradFahrenheit == null) {
-			this.tempInGradFahrenheit = new BigDecimal(Shorts.fromBytes(this.rawData[10], this.rawData[11])).setScale(2,
-					RoundingMode.HALF_UP);
+			this.tempInGradFahrenheit = Shorts.fromBytes(this.rawData[10], this.rawData[11]);
 		}
 		return this.tempInGradFahrenheit;
 	}
 
-	public BigDecimal get_temperatureInGradCelsius() {
-		if (this.tempInGradFahrenheit == null) {
-			get_temperatureInGradFahrenheit();
-		}
-		return new BigDecimal((this.tempInGradFahrenheit.doubleValue() - 32) / 1.8).setScale(2, RoundingMode.HALF_UP);
+	public double get_temperatureInGradCelsius() {
+		get_temperatureInGradFahrenheit();
+		return ((double)this.tempInGradFahrenheit - 32) / 1.8;
 	}
 
 	public StandardBlock(byte[] rawData, HeaderRpmBlock rpmHeader) {
