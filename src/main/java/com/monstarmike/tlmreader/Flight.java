@@ -67,8 +67,8 @@ public class Flight {
 		this.dataBlockData.add(block);
 	}
 	
-	public List<HeaderBlock> get_headerBlocks() {
-		return this.headerData;
+	public Iterator<HeaderBlock> get_headerBlocks() {
+		return this.headerData.iterator();
 	}
 	
 	public Iterator<DataBlock> get_dataBlocks(){
