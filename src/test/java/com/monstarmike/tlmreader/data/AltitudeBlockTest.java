@@ -62,7 +62,7 @@ public class AltitudeBlockTest extends TestCase {
 	}
 
 	public void testAltitudeValue() {
-		AltitudeBlock block = (AltitudeBlock) DataBlock.createDataBlock(TEST_BLOCK, new Flight());
+		AltitudeBlock block = (AltitudeBlock) DataBlock.createDataBlock(TEST_BLOCK, null);
 
 		assertEquals(2015, block.get_altitudeInTenthsOfAMeter());
 	}
@@ -71,7 +71,7 @@ public class AltitudeBlockTest extends TestCase {
 		int count = 0;
 		for (int i = 0; i < this.theBytes.length; i += 20) {
 			byte[] dataBytes = Arrays.copyOfRange(this.theBytes, i, i + 20);
-			DataBlock block = DataBlock.createDataBlock(dataBytes, new Flight());
+			DataBlock block = DataBlock.createDataBlock(dataBytes, null);
 			if (block instanceof AltitudeBlock) {
 				// System.out.println("timestamp: " + block.get_timestamp() + "
 				// - Alt: " +

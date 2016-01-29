@@ -3,8 +3,6 @@ package com.monstarmike.tlmreader.datablock;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import com.monstarmike.tlmreader.Flight;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -12,36 +10,31 @@ public class StandardBlockTest extends TestCase {
 
 	public void testReadRpmZeroNoRpmHeader() {
 		short testValue = (short) 0x0000;
-		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue),
-				new Flight());
+		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
 	public void testReadRpm1111tZeroNoRpmHeader() {
 		short testValue = (short) 0x1111;
-		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue),
-				new Flight());
+		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
 	public void testReadRpm00FFZeroNoRpmHeader() {
 		short testValue = (short) 0x00FF;
-		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue),
-				new Flight());
+		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
 	public void testReadRpmFF00ZeroNoRpmHeader() {
 		short testValue = (short) 0xFF00;
-		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue),
-				new Flight());
+		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
 	public void testReadRpmFFFFZeroNoRpmHeader() {
 		short testValue = (short) 0xFFFF;
-		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue),
-				new Flight());
+		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 

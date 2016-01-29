@@ -1,7 +1,6 @@
 package com.monstarmike.tlmreader.datablock;
 
 import com.google.common.primitives.Ints;
-import com.monstarmike.tlmreader.Flight;
 
 public abstract class DataBlock extends Block {
 
@@ -13,13 +12,13 @@ public abstract class DataBlock extends Block {
 		super(rawData);
 	}
 
-	public static DataBlock createDataBlock(byte[] bytes, Flight currentFlight) {
+	public static DataBlock createDataBlock(byte[] bytes, HeaderRpmBlock rpmHeaderBlock) {
 		DataBlock block = null;
 		short tm1100 = (short) (bytes[4] & 0xFF);
 		if (tm1100 == 0xFE || tm1100 == 0xFF) {
 			switch (tm1100) {
 			case 0xFE:
-				block = new StandardBlock(bytes, currentFlight.getRpmHeader());
+				block = new StandardBlock(bytes, rpmHeaderBlock);
 				break;
 
 			case 0xFF:
@@ -69,7 +68,7 @@ public abstract class DataBlock extends Block {
 
 			case 0x7E:
 				// rpm, temperature, rx volts
-				block = new StandardBlock(bytes, currentFlight.getRpmHeader());
+				block = new StandardBlock(bytes, rpmHeaderBlock);
 				break;
 
 			case 0x7F:
