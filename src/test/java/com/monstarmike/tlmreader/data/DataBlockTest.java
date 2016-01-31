@@ -1,28 +1,23 @@
 package com.monstarmike.tlmreader.data;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import com.google.common.io.Files;
-import com.monstarmike.tlmreader.Flight;
 import com.monstarmike.tlmreader.datablock.DataBlock;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-public class DataBlockTest extends TestCase {
+public class DataBlockTest {
 	byte[] theBytes = null;
 
-	/**
-	 * Create the test case
-	 *
-	 * @param testName
-	 *            name of the test case
-	 */
-	public DataBlockTest(String testName) {
-		super(testName);
+	@Before
+	public void setup() {
 
 		try {
 			this.theBytes = Files.toByteArray(new File("src/test/data/SensorData.bin"));
@@ -36,26 +31,22 @@ public class DataBlockTest extends TestCase {
 	 * Checks that the loaded data set for the tests is correct. All data in the
 	 * dataset should be 20 byte sensor data block information.
 	 */
+	@Test
 	public void testDataSetIsGood() {
 		assertTrue(this.theBytes.length % 20 == 0);
 	}
 
-	/**
-	 * @return the suite of tests being tested
-	 */
-	public static Test suite() {
-		return new TestSuite(DataBlockTest.class);
+	@Test
+	public void testTimestampOfTheFirstDataBlock() {
+		byte[] dataBytes = Arrays.copyOfRange(this.theBytes, 0, 20);
+		DataBlock dataBlock = DataBlock.createDataBlock(dataBytes, null);
+		assertEquals(6620, dataBlock.get_timestamp());
 	}
-
-	/**
-	 * Rigourous Test :-)
-	 */
-	public void testDataBlockTimestamp() {
-		for (int i = 0; i < this.theBytes.length; i += 20) {
-			byte[] dataBytes = Arrays.copyOfRange(this.theBytes, i, i + 20);
-			DataBlock block = DataBlock.createDataBlock(dataBytes, null);
-			// if (block != null)
-			// System.out.println(block.get_timestamp());
-		}
+	
+	@Test
+	public void testTimestampOfTheLastDataBlock() {
+		byte[] dataBytes = Arrays.copyOfRange(this.theBytes, this.theBytes.length-20, this.theBytes.length);
+		DataBlock dataBlock = DataBlock.createDataBlock(dataBytes, null);
+		assertEquals(90516, dataBlock.get_timestamp());
 	}
 }

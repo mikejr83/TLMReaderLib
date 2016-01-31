@@ -3,41 +3,47 @@ package com.monstarmike.tlmreader.datablock;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class StandardBlockTest extends TestCase {
+public class StandardBlockTest {
 
+	@Test
 	public void testReadRpmZeroNoRpmHeader() {
 		short testValue = (short) 0x0000;
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
+	@Test
 	public void testReadRpm1111tZeroNoRpmHeader() {
 		short testValue = (short) 0x1111;
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
+	@Test
 	public void testReadRpm00FFZeroNoRpmHeader() {
 		short testValue = (short) 0x00FF;
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
+	@Test
 	public void testReadRpmFF00ZeroNoRpmHeader() {
 		short testValue = (short) 0xFF00;
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
+	@Test
 	public void testReadRpmFFFFZeroNoRpmHeader() {
 		short testValue = (short) 0xFFFF;
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(createRpmTestBlock(testValue), null);
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
+	@Test
 	private byte[] createRpmTestBlock(final short value) {
 		byte[] testBlock = new byte[20];
 		testBlock[4] = (byte) 0xFE; // marker for StandardBlock
