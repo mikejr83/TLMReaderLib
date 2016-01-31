@@ -43,7 +43,6 @@ public class StandardBlockTest {
 		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), wrapDouble(standardBlock.get_rpm()));
 	}
 
-	@Test
 	private byte[] createRpmTestBlock(final short value) {
 		byte[] testBlock = new byte[20];
 		testBlock[4] = (byte) 0xFE; // marker for StandardBlock
