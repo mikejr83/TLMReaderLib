@@ -92,7 +92,7 @@ public class ServoDataBlock extends DataBlock {
 		channelValues.put(channelNumber + channelSubNumber, channelValue);
 	}
 
-	public Short getChannelValue(int channelNumber) {
+	public short getChannelValue(int channelNumber) {
 		if (channelValues == null) {
 			decodeAllChannels();
 		}
