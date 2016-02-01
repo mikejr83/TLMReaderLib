@@ -18,46 +18,39 @@ public class PowerboxBlock extends DataBlock {
 	 * but not set the value.
 	 */
 
-	Short voltageOne = null, voltageTwo = null, capacityOne = null,
-			capacityTwo = null;
+	short voltageOne, voltageTwo, capacityOne, capacityTwo;
 
 	public double get_voltageOne() {
-		if (this.voltageOne == null) {
-			this.voltageOne = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
-		}
-		return (double)this.voltageOne * 0.01;
+		return (double) voltageOne * 0.01;
 	}
 
 	public double get_voltageTwo() {
-		if (this.voltageTwo == null) {
-			this.voltageTwo = Shorts.fromBytes(this.rawData[8], this.rawData[9]);
-		}
-		return (double)this.voltageTwo * 0.01;
+		return (double) voltageTwo * 0.01;
 	}
 
 	public double get_capacityOne() {
-		if (this.capacityOne == null) {
-			this.capacityOne = Shorts.fromBytes(this.rawData[10], this.rawData[11]);
-		}
-		return this.capacityOne;
+		return capacityOne;
 	}
 
 	public double get_capacityTwo() {
-		if (this.capacityTwo == null) {
-			this.capacityTwo = Shorts.fromBytes(this.rawData[12], this.rawData[13]);
-		}
-		return this.capacityTwo;
+		return capacityTwo;
 	}
 
 	public PowerboxBlock(byte[] rawData) {
 		super(rawData);
+		decode(rawData);
+	}
+
+	private void decode(byte[] rawData) {
+		voltageOne = Shorts.fromBytes(rawData[6], rawData[7]);
+		voltageTwo = Shorts.fromBytes(rawData[8], rawData[9]);
+		capacityOne = Shorts.fromBytes(rawData[10], rawData[11]);
+		capacityTwo = Shorts.fromBytes(rawData[12], rawData[13]);
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString() + " - V1: " + this.get_voltageOne() + " Capacity 1: "
-				+ this.get_capacityOne() + " - V2: " + this.get_voltageTwo()
-				+ " Capacity 2: " + this.get_capacityTwo();
+		return super.toString() + " - V1: " + this.get_voltageOne() + " Capacity 1: " + this.get_capacityOne()
+				+ " - V2: " + this.get_voltageTwo() + " Capacity 2: " + this.get_capacityTwo();
 	}
 }
