@@ -25,14 +25,14 @@ public class PowerboxBlock extends DataBlock {
 		if (this.voltageOne == null) {
 			this.voltageOne = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
 		}
-		return this.voltageOne * 0.01;
+		return (double)this.voltageOne * 0.01;
 	}
 
 	public double get_voltageTwo() {
 		if (this.voltageTwo == null) {
 			this.voltageTwo = Shorts.fromBytes(this.rawData[8], this.rawData[9]);
 		}
-		return this.voltageTwo * 0.01;
+		return (double)this.voltageTwo * 0.01;
 	}
 
 	public double get_capacityOne() {
