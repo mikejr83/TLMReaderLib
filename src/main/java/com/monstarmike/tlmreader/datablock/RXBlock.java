@@ -7,47 +7,47 @@ public class RXBlock extends DataBlock {
 	short a, b, l, r, frameLoss, holds;
 	float volts;
 
-	public RXBlock(byte[] rawData) {
+	public RXBlock(final byte[] rawData) {
 		super(rawData);
-		decode();
+		decode(rawData);
 	}
 
-	private void decode() {
-		this.a = Shorts.fromBytes(this.rawData[0x06], this.rawData[0x07]);
-		this.b = Shorts.fromBytes(this.rawData[0x08], this.rawData[0x09]);
-		this.l = Shorts.fromBytes(this.rawData[0x0A], this.rawData[0x0B]);
-		this.r = Shorts.fromBytes(this.rawData[0x0C], this.rawData[0x0D]);
-		this.frameLoss = Shorts.fromBytes(this.rawData[0x0E], this.rawData[0x0F]);
-		this.holds = Shorts.fromBytes(this.rawData[0x10], this.rawData[0x11]);
-		this.volts = (float) ((double) Shorts.fromBytes(this.rawData[0x12], this.rawData[0x13]) / 100);
+	private void decode(final byte[] rawData) {
+		a = Shorts.fromBytes(rawData[0x06], rawData[0x07]);
+		b = Shorts.fromBytes(rawData[0x08], rawData[0x09]);
+		l = Shorts.fromBytes(rawData[0x0A], rawData[0x0B]);
+		r = Shorts.fromBytes(rawData[0x0C], rawData[0x0D]);
+		frameLoss = Shorts.fromBytes(rawData[0x0E], rawData[0x0F]);
+		holds = Shorts.fromBytes(rawData[0x10], rawData[0x11]);
+		volts = (float) ((double) Shorts.fromBytes(rawData[0x12], rawData[0x13]) / 100);
 	}
 
 	public Short get_a() {
-		return this.a;
+		return a;
 	}
 
 	public Short get_b() {
-		return this.b;
+		return b;
 	}
 
 	public Short get_l() {
-		return this.l;
+		return l;
 	}
 
 	public Short get_r() {
-		return this.r;
+		return r;
 	}
 
 	public Short get_frameLoss() {
-		return this.frameLoss;
+		return frameLoss;
 	}
 
 	public Short get_holds() {
-		return this.holds;
+		return holds;
 	}
 
 	public float get_volts() {
-		return this.volts;
+		return volts;
 	}
 
 	@Override

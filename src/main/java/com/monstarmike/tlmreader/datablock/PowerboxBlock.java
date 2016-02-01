@@ -50,7 +50,7 @@ public class PowerboxBlock extends DataBlock {
 
 	@Override
 	public String toString() {
-		return super.toString() + " - V1: " + this.get_voltageOne() + " Capacity 1: " + this.get_capacityOne()
-				+ " - V2: " + this.get_voltageTwo() + " Capacity 2: " + this.get_capacityTwo();
+		return super.toString() + " - V1: " + get_voltageOne() + " Capacity 1: " + get_capacityOne() + " - V2: "
+				+ get_voltageTwo() + " Capacity 2: " + get_capacityTwo();
 	}
 }

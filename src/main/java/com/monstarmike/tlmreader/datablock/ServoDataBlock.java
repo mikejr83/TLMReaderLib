@@ -58,21 +58,18 @@ public class ServoDataBlock extends DataBlock {
 	private int availableChannelWithDataBitArray = 0;
 
 	public boolean hasChannel(int channelNumber) {
-		if (channelValues == null) {
-			decodeAllChannels();
-		}
 		return isBitSet(channelNumber);
 	}
 
-	private void decodeAllChannels() {
+	private void decodeAllChannels(byte[] rawData) {
 		channelValues = new short[MAX_NUMBER_OF_CHANNELS];
-		decode11BitChannel(this.rawData[0x06], this.rawData[0x07]);
-		decode11BitChannel(this.rawData[0x08], this.rawData[0x09]);
-		decode11BitChannel(this.rawData[0x0A], this.rawData[0x0B]);
-		decode11BitChannel(this.rawData[0x0C], this.rawData[0x0D]);
-		decode11BitChannel(this.rawData[0x0E], this.rawData[0x0F]);
-		decode11BitChannel(this.rawData[0x10], this.rawData[0x11]);
-		decode9BitChannel(this.rawData[0x06], this.rawData[0x12], this.rawData[0x13]);
+		decode11BitChannel(rawData[0x06], rawData[0x07]);
+		decode11BitChannel(rawData[0x08], rawData[0x09]);
+		decode11BitChannel(rawData[0x0A], rawData[0x0B]);
+		decode11BitChannel(rawData[0x0C], rawData[0x0D]);
+		decode11BitChannel(rawData[0x0E], rawData[0x0F]);
+		decode11BitChannel(rawData[0x10], rawData[0x11]);
+		decode9BitChannel(rawData[0x06], rawData[0x12], rawData[0x13]);
 	}
 
 	private void decode11BitChannel(byte first, byte second) {
@@ -95,14 +92,12 @@ public class ServoDataBlock extends DataBlock {
 	 * @return The value of that channel
 	 */
 	public short getChannelValue(int channelNumber) {
-		if (channelValues == null) {
-			decodeAllChannels();
-		}
 		return channelValues[channelNumber];
 	}
 
 	public ServoDataBlock(byte[] rawData) {
 		super(rawData);
+		decodeAllChannels(rawData);
 	}
 
 	private void setChannelValue(short channelValue, int completeChannelNumber) {
