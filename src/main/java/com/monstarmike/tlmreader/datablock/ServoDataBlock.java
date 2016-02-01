@@ -1,11 +1,5 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 /**
  * <b>Address 0x0906</b> Servo Data Block (if "Include Servo Data?" is on)<br>
  * <br>
@@ -15,7 +9,7 @@ import java.util.Map.Entry;
  * <br>
  * The channels 0-11 are stored with 11 Bit per channel. These channels are
  * encoded in each other datablock<br>
- * The channels 12-16 (12-18(20)*) are stored with 9 Bit per channel. In every
+ * The channels 12-15 (12-17(19)*) are stored with 9 Bit per channel. In every
  * datablock, there is one of these channels encoded.<br>
  * * With my DX9, I have no possiblity to check how many 9 Bit channels are
  * decoded.
@@ -58,17 +52,20 @@ import java.util.Map.Entry;
  */
 public class ServoDataBlock extends DataBlock {
 
-	Map<Integer, Short> channelValues;
+	private static final int MAX_NUMBER_OF_CHANNELS = 20;
+
+	private short[] channelValues;
+	private int availableChannelWithDataBitArray = 0;
 
 	public boolean hasChannel(int channelNumber) {
 		if (channelValues == null) {
 			decodeAllChannels();
 		}
-		return channelValues.containsKey(channelValues);
+		return isBitSet(channelNumber);
 	}
 
 	private void decodeAllChannels() {
-		channelValues = new HashMap<Integer, Short>();
+		channelValues = new short[MAX_NUMBER_OF_CHANNELS];
 		decode11BitChannel(this.rawData[0x06], this.rawData[0x07]);
 		decode11BitChannel(this.rawData[0x08], this.rawData[0x09]);
 		decode11BitChannel(this.rawData[0x0A], this.rawData[0x0B]);
@@ -81,7 +78,7 @@ public class ServoDataBlock extends DataBlock {
 	private void decode11BitChannel(byte first, byte second) {
 		int channelNumber = (first & 0x78) >> 3;
 		short channelValue = (short) (((first & 0x07) << 8) + (second & 0xFF));
-		channelValues.put(channelNumber, channelValue);
+		setChannelValue(channelValue, channelNumber);
 	}
 
 	private void decode9BitChannel(byte blockByte, byte first, byte second) {
@@ -89,35 +86,55 @@ public class ServoDataBlock extends DataBlock {
 		// always 12 on a 9Bit Channel
 		int channelSubNumber = ((blockByte & 0x80) >> 5) + ((first & 0x06) >> 1);
 		short channelValue = (short) (((first & 0x01) << 8) + (second & 0xFF));
-		channelValues.put(channelNumber + channelSubNumber, channelValue);
+		setChannelValue(channelValue, channelNumber + channelSubNumber);
 	}
 
+	/**
+	 * @param channelNumber
+	 *            Zero based channelnumber
+	 * @return The value of that channel
+	 */
 	public short getChannelValue(int channelNumber) {
 		if (channelValues == null) {
 			decodeAllChannels();
 		}
-		return channelValues.get(channelNumber);
+		return channelValues[channelNumber];
 	}
 
 	public ServoDataBlock(byte[] rawData) {
 		super(rawData);
-		decodeAllChannels();
+	}
+
+	private void setChannelValue(short channelValue, int completeChannelNumber) {
+		channelValues[completeChannelNumber] = (short) channelValue;
+		setBit(completeChannelNumber);
+	}
+
+	private boolean isBitSet(int channelNumber) {
+		return (availableChannelWithDataBitArray & (1 << channelNumber)) != 0;
+	}
+
+	private void setBit(int channelNumber) {
+		availableChannelWithDataBitArray |= (1 << channelNumber);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (Entry<Integer, Short> entry : channelValues.entrySet()) {
-			if (sb.length() != 0) {
-				sb.append(", ");
+		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
+			if (isBitSet(i)) {
+				if (sb.length() != 0) {
+					sb.append(", ");
+				}
+				sb.append("CH: ").append(i).append(" = ").append(channelValues[i]).append(" (")
+						.append(getPercent(i, channelValues[i])).append("%)");
 			}
-			sb.append("CH: ").append(entry.getKey() + 1).append(" = ").append(entry.getValue()).append(" (")
-					.append(getPercent(entry.getKey(), entry.getValue())).append("%)");
 		}
 		return super.toString() + "ServoData; " + sb;
 	}
 
-	private BigDecimal getPercent(Integer channelNumber, Short channelValue) {
+	private float getPercent(Integer channelNumber, short channelValue) {
+		final int MAX_SERVO_TRAVEL_IN_PERCENT = 300; // +-150%
 		double maxValue;
 		if (channelNumber < 12) {
 			// 11 Bit Channel
@@ -127,6 +144,6 @@ public class ServoDataBlock extends DataBlock {
 			maxValue = Math.pow(2, 9);
 		}
 		double middleValue = maxValue / 2.0;
-		return new BigDecimal((channelValue - middleValue) / (maxValue / 300)).setScale(1, RoundingMode.HALF_UP);
+		return (float) ((channelValue - middleValue) / (maxValue / MAX_SERVO_TRAVEL_IN_PERCENT));
 	}
 }
