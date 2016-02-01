@@ -62,7 +62,7 @@ public class RXBlockTest {
 		byte[] testBlock = createRXTestBlock();
 		setVoltsAtPosition(testBlock, 6.03, 6);
 		RXBlock rxBlock = (RXBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(new BigDecimal(6.03).setScale(2,  RoundingMode.HALF_UP), rxBlock.get_volts());
+		assertEquals(6.03, rxBlock.get_volts(), 0.005);
 	}
 
 	private byte[] createRXTestBlock() {
