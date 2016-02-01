@@ -67,7 +67,7 @@ public class RXBlockTest {
 
 	private byte[] createRXTestBlock() {
 		byte[] testBlock = new byte[20];
-		testBlock[4] = (byte) 0x7F; // marker for StandardBlock
+		testBlock[4] = (byte) 0x7F; // marker for RXBlock
 		return testBlock;
 	}
 
