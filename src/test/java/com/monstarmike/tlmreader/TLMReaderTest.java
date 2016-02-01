@@ -1,5 +1,7 @@
 package com.monstarmike.tlmreader;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,10 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class TLMReaderTest extends TestCase {
+public class TLMReaderTest {
 
 	String tlmFileSailplane = "src/test/data/2015 - FSS 2 - day 2.TLM";
 	String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
@@ -22,9 +23,10 @@ public class TLMReaderTest extends TestCase {
 			Arrays.asList(52236, 0, 52506, 38117, 50823, 54373, 49197, 42081));
 	List<Long> expectedFlightDurationsHeli = new ArrayList<Long>(
 			Arrays.<Long> asList(454610l, 9590l, 366530l, 348790l, 352780l));
-	List<Integer> expectedFlightDataBlocksHeli= new ArrayList<Integer>(
+	List<Integer> expectedFlightDataBlocksHeli = new ArrayList<Integer>(
 			Arrays.asList(79684, 1746, 64788, 60682, 61738));
 
+	@Test
 	public void testParseFlightDefinitionsTestDurationsWithInputStream() throws IOException {
 		TLMReader reader = new TLMReader();
 		InputStream inputStream = new FileInputStream(new File(tlmFileSailplane));
@@ -33,9 +35,10 @@ public class TLMReaderTest extends TestCase {
 		for (IFlight flight : flights) {
 			actualFlightDurations.add(flight.get_duration().getMillis());
 		}
-		Assert.assertEquals(expectedFlightDurationsSailplane, actualFlightDurations);
+		assertEquals(expectedFlightDurationsSailplane, actualFlightDurations);
 	}
 
+	@Test
 	public void testParseFlightDefinitionsTestDurationsSailPlain() throws IOException {
 		TLMReader reader = new TLMReader();
 		List<IFlight> flights = reader.parseFlightDefinitions(tlmFileSailplane);
@@ -43,8 +46,10 @@ public class TLMReaderTest extends TestCase {
 		for (IFlight flight : flights) {
 			actualFlightDurations.add(flight.get_duration().getMillis());
 		}
-		Assert.assertEquals(expectedFlightDurationsSailplane, actualFlightDurations);
+		assertEquals(expectedFlightDurationsSailplane, actualFlightDurations);
 	}
+
+	@Test
 	public void testParseFlightDefinitionsTestDataBlocksSailplane() throws IOException {
 		TLMReader reader = new TLMReader();
 		List<IFlight> flights = reader.parseFlightDefinitions(tlmFileSailplane);
@@ -52,9 +57,10 @@ public class TLMReaderTest extends TestCase {
 		for (IFlight flight : flights) {
 			actutalDataBlocks.add(flight.getNumberOfDataBlocks());
 		}
-		Assert.assertEquals(expectedFlightDataBlocksSailplane, actutalDataBlocks);
+		assertEquals(expectedFlightDataBlocksSailplane, actutalDataBlocks);
 	}
 
+	@Test
 	public void testParseFlightDefinitionsTestDurationsHeli() throws IOException {
 		TLMReader reader = new TLMReader();
 		List<IFlight> flights = reader.parseFlightDefinitions(tlmFileHeli);
@@ -62,9 +68,9 @@ public class TLMReaderTest extends TestCase {
 		for (IFlight flight : flights) {
 			actualFlightDurations.add(flight.get_duration().getMillis());
 		}
-		Assert.assertEquals(expectedFlightDurationsHeli, actualFlightDurations);
+		assertEquals(expectedFlightDurationsHeli, actualFlightDurations);
 	}
-	
+
 	public void testParseFlightDefinitionsTestDataBlocksHeli() throws IOException {
 		TLMReader reader = new TLMReader();
 		List<IFlight> flights = reader.parseFlightDefinitions(tlmFileHeli);
@@ -72,7 +78,7 @@ public class TLMReaderTest extends TestCase {
 		for (IFlight flight : flights) {
 			actutalDataBlocks.add(flight.getNumberOfDataBlocks());
 		}
-		Assert.assertEquals(expectedFlightDataBlocksHeli, actutalDataBlocks);
+		assertEquals(expectedFlightDataBlocksHeli, actutalDataBlocks);
 	}
 
 	public void testParseFlightTestDurationWithInputStream() throws IOException {
@@ -80,17 +86,13 @@ public class TLMReaderTest extends TestCase {
 		TLMReader reader = new TLMReader();
 		InputStream inputStream = new FileInputStream(new File(tlmFileSailplane));
 		Flight flight = reader.parseFlight(inputStream, flightId);
-		Assert.assertEquals(expectedFlightDurationsSailplane.get(flightId), Long.valueOf(flight.get_duration().getMillis()));
+		assertEquals(expectedFlightDurationsSailplane.get(flightId), Long.valueOf(flight.get_duration().getMillis()));
 	}
 
+	@Test(expected = RuntimeException.class)
 	public void testParseFlightFlightIdNotAvailable() throws IOException {
 		int flightId = 20;
 		TLMReader reader = new TLMReader();
-		try {
-			reader.parseFlight(tlmFileSailplane, flightId);
-			Assert.fail("parseFlight should throw a RuntimeException if the flightId is not available");
-		} catch (RuntimeException e) {
-			// The expected result
-		}
+		reader.parseFlight(tlmFileSailplane, flightId);
 	}
 }
