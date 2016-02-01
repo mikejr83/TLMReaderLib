@@ -12,17 +12,18 @@ public class AirspeedBlock extends DataBlock {
 	 * 563 km/h
 	 */
 
-	Short airspeed = null;
+	private short airspeed;;
 
 	public short get_airspeed() {
-		if (this.airspeed == null) {
-			this.airspeed = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
-		}
-		
 		return this.airspeed;
 	}
 
-	public AirspeedBlock(byte[] rawData) {
+	public AirspeedBlock(final byte[] rawData) {
 		super(rawData);
+		decode();
+	}
+
+	private void decode() {
+		this.airspeed = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
 	}
 }
