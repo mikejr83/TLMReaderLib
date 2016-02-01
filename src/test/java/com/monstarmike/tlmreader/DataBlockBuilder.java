@@ -1,8 +1,5 @@
 package com.monstarmike.tlmreader;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import com.google.common.primitives.Ints;
 
 public final class DataBlockBuilder {
@@ -20,7 +17,7 @@ public final class DataBlockBuilder {
 
 	public DataBlockBuilder setValueWithScale2(float value, int position) {
 		short shortValue = (short) Math.round(value * 100);
-		return setValue(shortValue, position);
+		return setValue(shortValue, position);		
 	}
 
 	public byte[] get() {
