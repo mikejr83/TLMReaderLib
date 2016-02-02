@@ -16,59 +16,48 @@ public class GForceBlock extends DataBlock {
 	 * set for Z-axis from -40g to 40g
 	 */
 
-	Short x = null, y = null, z = null, maxX = null, maxY = null, maxZ = null,
-			minZ = null;
+	private short x, y, z, maxX, maxY, maxZ, minZ;
 
 	public short get_x() {
-		if (this.x == null) {
-			this.x = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
-		}
-		return this.x;
+		return x;
 	}
 
 	public short get_y() {
-		if (this.y == null) {
-			this.y = Shorts.fromBytes(this.rawData[8], this.rawData[9]);
-		}
-		return this.y;
+		return y;
 	}
 
 	public short get_z() {
-		if (this.z == null) {
-			this.z = Shorts.fromBytes(this.rawData[10], this.rawData[11]);
-		}
-		return this.z;
+		return z;
 	}
 
 	public short get_maxX() {
-		if (this.maxX == null) {
-			this.maxX = Shorts.fromBytes(this.rawData[12], this.rawData[13]);
-		}
-		return this.maxX;
+		return maxX;
 	}
 
 	public short get_maxY() {
-		if (this.maxY == null) {
-			this.maxY = Shorts.fromBytes(this.rawData[14], this.rawData[15]);
-		}
-		return this.maxY;
+		return maxY;
 	}
 
 	public short get_maxZ() {
-		if (this.maxZ == null) {
-			this.maxZ = Shorts.fromBytes(this.rawData[16], this.rawData[17]);
-		}
-		return this.maxZ;
+		return maxZ;
 	}
 
 	public short get_minZ() {
-		if (this.minZ == null) {
-			this.minZ = Shorts.fromBytes(this.rawData[18], this.rawData[19]);
-		}
-		return this.minZ;
+		return minZ;
 	}
 
 	public GForceBlock(byte[] rawData) {
 		super(rawData);
+		decode(rawData);
+	}
+
+	private void decode(byte[] rawData) {
+		x = Shorts.fromBytes(rawData[6], rawData[7]);
+		y = Shorts.fromBytes(rawData[8], rawData[9]);
+		z = Shorts.fromBytes(rawData[10], rawData[11]);
+		maxX = Shorts.fromBytes(rawData[12], rawData[13]);
+		maxY = Shorts.fromBytes(rawData[14], rawData[15]);
+		maxZ = Shorts.fromBytes(rawData[16], rawData[17]);
+		minZ = Shorts.fromBytes(rawData[18], rawData[19]);
 	}
 }
