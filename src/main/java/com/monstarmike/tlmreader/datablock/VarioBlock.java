@@ -4,29 +4,29 @@ import com.google.common.primitives.Shorts;
 
 public class VarioBlock extends DataBlock {
 
-	private short altitude, interval250, interval500, interval1000, interval2000, interval3000;
+	private float altitude, interval250, interval500, interval1000, interval2000, interval3000;
 
-	public short get_altitude() {
+	public float get_altitude() {
 		return altitude;
 	}
 
-	public short get_250ms() {
+	public float get_250ms() {
 		return interval250;
 	}
 
-	public short get_500ms() {
+	public float get_500ms() {
 		return interval500;
 	}
 
-	public short get_1000ms() {
+	public float get_1000ms() {
 		return interval1000;
 	}
 
-	public short get_2000ms() {
+	public float get_2000ms() {
 		return interval2000;
 	}
 
-	public short get_3000ms() {
+	public float get_3000ms() {
 		return interval3000;
 	}
 
@@ -36,12 +36,12 @@ public class VarioBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		altitude = Shorts.fromBytes(rawData[0x06], rawData[0x07]);
-		interval250 = Shorts.fromBytes(rawData[0x08], rawData[0x09]);
-		interval500 = Shorts.fromBytes(rawData[0x0A], rawData[0x0B]);
-		interval1000 = Shorts.fromBytes(rawData[0x0C], rawData[0x0D]);
-		interval2000 = Shorts.fromBytes(rawData[0x0E], rawData[0x0F]);
-		interval3000 = Shorts.fromBytes(rawData[0x10], rawData[0x11]);
+		altitude = 0.1f * Shorts.fromBytes(rawData[0x06], rawData[0x07]);
+		interval250 = 0.1f * Shorts.fromBytes(rawData[0x08], rawData[0x09]);
+		interval500 = 0.1f * Shorts.fromBytes(rawData[0x0A], rawData[0x0B]);
+		interval1000 = 0.1f * Shorts.fromBytes(rawData[0x0C], rawData[0x0D]);
+		interval2000 = 0.1f * Shorts.fromBytes(rawData[0x0E], rawData[0x0F]);
+		interval3000 = 0.1f * Shorts.fromBytes(rawData[0x10], rawData[0x11]);
 	}
 
 	@Override

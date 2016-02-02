@@ -4,8 +4,8 @@ import com.google.common.primitives.Shorts;
 
 public class RXBlock extends DataBlock {
 
-	short a, b, l, r, frameLoss, holds;
-	float volts;
+	private short a, b, l, r, frameLoss, holds;
+	private float volts;
 
 	public RXBlock(final byte[] rawData) {
 		super(rawData);
@@ -22,27 +22,27 @@ public class RXBlock extends DataBlock {
 		volts = (float) ((double) Shorts.fromBytes(rawData[0x12], rawData[0x13]) / 100);
 	}
 
-	public Short get_a() {
+	public short get_a() {
 		return a;
 	}
 
-	public Short get_b() {
+	public short get_b() {
 		return b;
 	}
 
-	public Short get_l() {
+	public short get_l() {
 		return l;
 	}
 
-	public Short get_r() {
+	public short get_r() {
 		return r;
 	}
 
-	public Short get_frameLoss() {
+	public short get_frameLoss() {
 		return frameLoss;
 	}
 
-	public Short get_holds() {
+	public short get_holds() {
 		return holds;
 	}
 

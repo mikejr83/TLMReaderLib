@@ -18,14 +18,15 @@ public class PowerboxBlock extends DataBlock {
 	 * but not set the value.
 	 */
 
-	short voltageOne, voltageTwo, capacityOne, capacityTwo;
+	private float voltageOne, voltageTwo;
+	private short capacityOne, capacityTwo;
 
-	public double get_voltageOne() {
-		return (double) voltageOne * 0.01;
+	public float get_voltageOne() {
+		return voltageOne;
 	}
 
-	public double get_voltageTwo() {
-		return (double) voltageTwo * 0.01;
+	public float get_voltageTwo() {
+		return voltageTwo;
 	}
 
 	public double get_capacityOne() {
@@ -42,8 +43,8 @@ public class PowerboxBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		voltageOne = Shorts.fromBytes(rawData[6], rawData[7]);
-		voltageTwo = Shorts.fromBytes(rawData[8], rawData[9]);
+		voltageOne = 0.01f * Shorts.fromBytes(rawData[6], rawData[7]);
+		voltageTwo = 0.01f * Shorts.fromBytes(rawData[8], rawData[9]);
 		capacityOne = Shorts.fromBytes(rawData[10], rawData[11]);
 		capacityTwo = Shorts.fromBytes(rawData[12], rawData[13]);
 	}

@@ -61,7 +61,7 @@ public class ServoDataBlock extends DataBlock {
 		return isBitSet(channelNumber);
 	}
 
-	private void decodeAllChannels(byte[] rawData) {
+	private void decode(byte[] rawData) {
 		channelValues = new short[MAX_NUMBER_OF_CHANNELS];
 		decode11BitChannel(rawData[0x06], rawData[0x07]);
 		decode11BitChannel(rawData[0x08], rawData[0x09]);
@@ -97,7 +97,7 @@ public class ServoDataBlock extends DataBlock {
 
 	public ServoDataBlock(byte[] rawData) {
 		super(rawData);
-		decodeAllChannels(rawData);
+		decode(rawData);
 	}
 
 	private void setChannelValue(short channelValue, int completeChannelNumber) {

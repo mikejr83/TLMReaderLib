@@ -16,33 +16,33 @@ public class GForceBlock extends DataBlock {
 	 * set for Z-axis from -40g to 40g
 	 */
 
-	private short x, y, z, maxX, maxY, maxZ, minZ;
+	private float x, y, z, maxX, maxY, maxZ, minZ;
 
-	public short get_x() {
+	public float get_x() {
 		return x;
 	}
 
-	public short get_y() {
+	public float get_y() {
 		return y;
 	}
 
-	public short get_z() {
+	public float get_z() {
 		return z;
 	}
 
-	public short get_maxX() {
+	public float get_maxX() {
 		return maxX;
 	}
 
-	public short get_maxY() {
+	public float get_maxY() {
 		return maxY;
 	}
 
-	public short get_maxZ() {
+	public float get_maxZ() {
 		return maxZ;
 	}
 
-	public short get_minZ() {
+	public float get_minZ() {
 		return minZ;
 	}
 
@@ -52,12 +52,12 @@ public class GForceBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		x = Shorts.fromBytes(rawData[6], rawData[7]);
-		y = Shorts.fromBytes(rawData[8], rawData[9]);
-		z = Shorts.fromBytes(rawData[10], rawData[11]);
-		maxX = Shorts.fromBytes(rawData[12], rawData[13]);
-		maxY = Shorts.fromBytes(rawData[14], rawData[15]);
-		maxZ = Shorts.fromBytes(rawData[16], rawData[17]);
-		minZ = Shorts.fromBytes(rawData[18], rawData[19]);
+		x = 0.01f * Shorts.fromBytes(rawData[6], rawData[7]);
+		y = 0.01f * Shorts.fromBytes(rawData[8], rawData[9]);
+		z = 0.01f * Shorts.fromBytes(rawData[10], rawData[11]);
+		maxX = 0.01f * Shorts.fromBytes(rawData[12], rawData[13]);
+		maxY = 0.01f * Shorts.fromBytes(rawData[14], rawData[15]);
+		maxZ = 0.01f * Shorts.fromBytes(rawData[16], rawData[17]);
+		minZ = 0.01f * Shorts.fromBytes(rawData[18], rawData[19]);
 	}
 }

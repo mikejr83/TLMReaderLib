@@ -16,6 +16,4 @@ public class CurrentBlockTest {
 		CurrentBlock currentBlock = (CurrentBlock) DataBlock.createDataBlock(testBlock, null);
 		assertEquals(2973.0 * 0.1967 , currentBlock.get_Current(), 0.0001);
 	}
-
-
 }

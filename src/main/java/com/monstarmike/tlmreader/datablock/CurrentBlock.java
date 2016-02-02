@@ -12,10 +12,10 @@ public class CurrentBlock extends DataBlock {
 	 * display 4 digits, I tried up to 0x2000 (displaying 1612A). Please beware
 	 * that the maximum alarm value you can set in the radio is 200A.
 	 */
-	short current;
+	private float current;
 
-	public double get_Current() {
-		return this.current * 0.1967;
+	public float get_Current() {
+		return current;
 	}
 
 	public CurrentBlock(byte[] rawData) {
@@ -24,11 +24,11 @@ public class CurrentBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		current = Shorts.fromBytes(rawData[6], rawData[7]);
+		current = 0.1967f * Shorts.fromBytes(rawData[6], rawData[7]);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " - " + new Double(this.get_Current()).toString();
+		return super.toString() + " - " + get_Current();
 	}
 }
