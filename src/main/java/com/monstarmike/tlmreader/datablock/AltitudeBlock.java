@@ -12,18 +12,20 @@ public final class AltitudeBlock extends DataBlock {
 	 * is -3276.8m
 	 */
 
-	Short altitudeInTenthsOfAMeter = null;
+	short altitudeInTenthsOfAMeter;
 
 	public short get_altitudeInTenthsOfAMeter() {
-		if (this.altitudeInTenthsOfAMeter == null)
-			this.altitudeInTenthsOfAMeter = Shorts.fromBytes(this.rawData[6],
-					this.rawData[7]);
 
 		return this.altitudeInTenthsOfAMeter;
 	}
 
 	public AltitudeBlock(byte[] rawData) {
 		super(rawData);
+		decode(rawData);
+	}
+
+	private void decode(byte[] rawData) {
+		altitudeInTenthsOfAMeter = Shorts.fromBytes(rawData[6], rawData[7]);
 	}
 
 }
