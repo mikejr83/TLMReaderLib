@@ -62,7 +62,7 @@ public abstract class DataBlock extends Block {
 				break;
 
 			case 0x14:
-				// gps
+				// gforce
 				block = new GForceBlock(bytes);
 				break;
 
@@ -70,7 +70,7 @@ public abstract class DataBlock extends Block {
 				// vario
 				block = new VarioBlock(bytes);
 				break;
-				
+
 			case 0x7E:
 				// rpm, temperature, rx volts
 				block = new StandardBlock(bytes, rpmHeaderBlock);
