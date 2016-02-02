@@ -31,7 +31,7 @@ public class StandardBlockTest {
 		short testValue = (short) 0x00FF;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x6).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.get_rpm(), 0.001);
+		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.get_rpm(), 0.02);
 	}
 
 	@Test
