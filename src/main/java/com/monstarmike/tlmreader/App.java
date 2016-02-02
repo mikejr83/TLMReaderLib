@@ -18,14 +18,15 @@ public class App {
 		TLMReader reader = new TLMReader();
 		try {
 			String tlmFileSailplane = "src/test/data/2015 - FSS 2 - day 2.TLM";
-			String tlmFileHeli = "src/test/data/2015-12-29.TLM";
+//			String tlmFileHeli = "src/test/data/2015-12-29.TLM";
+			String tlmFileHeli = "src/test/data/20160129.TLM";
 			List<IFlight> flights = reader.parseFlightDefinitions(tlmFileHeli);
 			for (IFlight flight : flights) {
 				printFlightDefinitions(flight);
 			}
 			Flight flight = reader.parseFlight(tlmFileSailplane, 0);
 			printFlightDefinitions(flight);
-//			printDataBlocks(flight);
+			// printDataBlocks(flight);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +45,7 @@ public class App {
 			if (dataBlock instanceof StandardBlock) {
 				StandardBlock standardBlock = (StandardBlock) dataBlock;
 				System.out.println("Std: rpm: " + standardBlock.get_rpm() + " volt: " + standardBlock.get_volt()
-						+ " temp: " + standardBlock.get_temperature());
+						+ " temp: " + standardBlock.get_temperatureInGradCelsius());
 			}
 		}
 	}

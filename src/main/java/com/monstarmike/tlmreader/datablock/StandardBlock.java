@@ -29,10 +29,6 @@ public class StandardBlock extends DataBlock {
 		return this.volt;
 	}
 
-	public double get_temperature() {
-		return get_temperatureInGradCelsius();
-	}
-
 	public short get_temperatureInGradFahrenheit() {
 		if (this.tempInGradFahrenheit == null) {
 			this.tempInGradFahrenheit = Shorts.fromBytes(this.rawData[10], this.rawData[11]);
