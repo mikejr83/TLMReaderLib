@@ -20,7 +20,7 @@ public class TLMReaderTest {
 	List<Long> expectedFlightDurationsSailplane = new ArrayList<Long>(
 			Arrays.<Long> asList(762050l, 0l, 838960l, 510170l, 655640l, 861870l, 889210l, 838040l));
 	List<Integer> expectedFlightDataBlocksSailplane = new ArrayList<Integer>(
-			Arrays.asList(52236, 0, 52506, 38117, 50823, 54373, 49197, 42081));
+			Arrays.asList(56960, 0, 57250, 41557, 55404, 59186, 53659, 45903));
 	List<Long> expectedFlightDurationsHeli = new ArrayList<Long>(
 			Arrays.<Long> asList(454610l, 9590l, 366530l, 348790l, 352780l));
 	List<Integer> expectedFlightDataBlocksHeli = new ArrayList<Integer>(
