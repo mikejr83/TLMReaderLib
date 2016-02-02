@@ -15,15 +15,15 @@ public class AirspeedBlock extends DataBlock {
 	private short airspeed;;
 
 	public short get_airspeed() {
-		return this.airspeed;
+		return airspeed;
 	}
 
 	public AirspeedBlock(final byte[] rawData) {
 		super(rawData);
-		decode();
+		decode(rawData);
 	}
 
-	private void decode() {
-		this.airspeed = Shorts.fromBytes(this.rawData[6], this.rawData[7]);
+	private void decode(byte[] rawData) {
+		airspeed = Shorts.fromBytes(rawData[6], rawData[7]);
 	}
 }

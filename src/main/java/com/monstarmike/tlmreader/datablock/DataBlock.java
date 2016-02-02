@@ -4,12 +4,20 @@ import com.google.common.primitives.Ints;
 
 public abstract class DataBlock extends Block {
 
+	private int timestamp;
+	
 	public int get_timestamp() {
-		return Ints.fromBytes(this.rawData[3], this.rawData[2], this.rawData[1], this.rawData[0]);
+		return timestamp;
 	}
 
 	public DataBlock(byte[] rawData) {
 		super(rawData);
+		decode(rawData);
+		this.rawData = null;
+	}
+
+	private void decode(byte[] rawData) {
+		timestamp = Ints.fromBytes(rawData[3], rawData[2], rawData[1], rawData[0]);
 	}
 
 	public static DataBlock createDataBlock(byte[] bytes, HeaderRpmBlock rpmHeaderBlock) {
