@@ -4,20 +4,31 @@ import com.google.common.primitives.Shorts;
 
 public class HeaderRpmBlock extends HeaderBlock {
 
-	Byte poles;
-	Boolean active;
-	Double ratio;
-	Short minRpm;
-	Short maxRpm;
-	Byte statusReport;
-	Byte warningReport;
+	byte poles;
+	boolean active;
+	float ratio;
+	short minRpm;
+	short maxRpm;
+	byte statusReport;
+	byte warningReport;
 
 	public HeaderRpmBlock(byte[] rawData) {
 		super(rawData);
+		decode(rawData);
+	}
+
+	private void decode(byte[] rawData) {
+		poles = new Byte(rawData[6]);
+		active = new Boolean((byte) 0x01 == rawData[7]);
+		ratio = (float) Shorts.fromBytes(rawData[11], rawData[10]) * 0.01f;
+		minRpm = Shorts.fromBytes(rawData[13], rawData[12]);
+		maxRpm = Shorts.fromBytes(rawData[15], rawData[14]);
+		statusReport = new Byte(rawData[16]);
+		warningReport = new Byte(rawData[17]);
 	}
 
 	public static boolean isRpmHeader(byte[] bytes) {
-		return bytes.length > 6 && bytes[4] == (byte) 0x7E && bytes[5] == (byte) 0x7E;
+		return bytes.length > 6 && bytes[4] == (byte) 0x7E && bytes[5] == (byte) 0x7E;		
 	}
 
 	@Override
@@ -27,52 +38,31 @@ public class HeaderRpmBlock extends HeaderBlock {
 				+ ", warningReport: " + getWarningReport();
 	}
 
-	public Byte getPoles() {
-		if (poles == null) {
-			poles = new Byte(rawData[6]);
-		}
+	public byte getPoles() {
 		return poles;
 	}
 
-	public Boolean isActive() {
-		if (active == null) {
-			active = new Boolean((byte) 0x01 == rawData[7]);
-		}
+	public boolean isActive() {
 		return active;
 	}
 
-	public Double getRatio() {
-		if (ratio == null) {
-			ratio = (double) Shorts.fromBytes(rawData[11], rawData[10]) / 100;
-		}
+	public float getRatio() {
 		return ratio;
 	}
 
-	public Short getMinRpm() {
-		if (minRpm == null) {
-			minRpm = Shorts.fromBytes(rawData[13], rawData[12]);
-		}
+	public short getMinRpm() {
 		return minRpm;
 	}
 
-	public Short getMaxRpm() {
-		if (maxRpm == null) {
-			maxRpm = Shorts.fromBytes(rawData[15], rawData[14]);
-		}
+	public short getMaxRpm() {
 		return maxRpm;
 	}
 
 	public String getStatusReport() {
-		if (statusReport == null) {
-			statusReport = new Byte(rawData[16]);
-		}
 		return convertReportTime(statusReport);
 	}
 
 	public String getWarningReport() {
-		if (warningReport == null) {
-			warningReport = new Byte(rawData[17]);
-		}
 		return convertReportTime(warningReport);
 	}
 }

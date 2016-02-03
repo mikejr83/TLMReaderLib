@@ -15,9 +15,18 @@ public final class DataBlockBuilder {
 		return this;
 	}
 
+	public DataBlockBuilder setSwitchedEndianValue(short value, int position) {
+		setValueAtPosition(dataBlock, switchEndianOfShort(value), position);
+		return this;
+	}
+
+	private short switchEndianOfShort(short value) {
+		return (short) (((value & 0xFF00) >> 8) | ((value & 0xFF) << 8));
+	}
+
 	public DataBlockBuilder setValueWithScale2(float value, int position) {
 		short shortValue = (short) Math.round(value * 100);
-		return setValue(shortValue, position);		
+		return setValue(shortValue, position);
 	}
 
 	public byte[] get() {

@@ -28,7 +28,7 @@ public class StandardBlock extends DataBlock {
 	public StandardBlock(final byte[] rawData, final HeaderRpmBlock rpmHeader) {
 		super(rawData);
 		if (rpmHeader != null) {
-			ratio = rpmHeader.getRatio().floatValue();
+			ratio = rpmHeader.getRatio();
 			poles = rpmHeader.getPoles();
 		}
 		decode(rawData);

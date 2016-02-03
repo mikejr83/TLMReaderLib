@@ -53,7 +53,7 @@ public class StandardBlockTest {
 	@Test
 	public void testGetRpm() {
 		byte poles = (byte)6;
-		double ratio = 8.0;
+		float ratio = 8.0f;
 		HeaderRpmBlock rpmHeaderMock = Mockito.mock(HeaderRpmBlock.class);
 		Mockito.when(rpmHeaderMock.getPoles()).thenReturn(poles);
 		Mockito.when(rpmHeaderMock.getRatio()).thenReturn(ratio);
