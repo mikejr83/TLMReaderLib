@@ -46,7 +46,7 @@ public class HeaderVoltBlockTest {
 		byte[] testBlock = new HeaderBlockBuilder(0, VOLT_HEADERBLOCK_MAKER).setSwitchedEndianValue((short) 2300, 0x0C)
 				.get();
 		HeaderVoltBlock voltHeaderBlock = new HeaderVoltBlock(testBlock);
-		assertEquals(23.0, voltHeaderBlock.getMinVolt().floatValue(), 0.001);
+		assertEquals(23.0, voltHeaderBlock.getMinVolt(), 0.001);
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class HeaderVoltBlockTest {
 		byte[] testBlock = new HeaderBlockBuilder(0, VOLT_HEADERBLOCK_MAKER).setSwitchedEndianValue((short) 6000, 0x0E)
 				.get();
 		HeaderVoltBlock voltHeaderBlock = new HeaderVoltBlock(testBlock);
-		assertEquals(60.0, voltHeaderBlock.getMaxVolt().floatValue(), 0.001);
+		assertEquals(60.0, voltHeaderBlock.getMaxVolt(), 0.001);
 	}
 
 	@Test

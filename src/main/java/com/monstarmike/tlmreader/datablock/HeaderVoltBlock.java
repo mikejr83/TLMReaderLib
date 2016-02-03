@@ -1,20 +1,22 @@
 package com.monstarmike.tlmreader.datablock;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import com.google.common.primitives.Shorts;
 
 public class HeaderVoltBlock extends HeaderBlock {
 
-	Boolean active;
-	BigDecimal minVolt;
-	BigDecimal maxVolt;
-	Byte statusReport;
-	Byte warningReport;
+	private boolean active;
+	private float minVolt;
+	private float maxVolt;
+	private byte statusReport;
+	private byte warningReport;
 
 	public HeaderVoltBlock(byte[] rawData) {
 		super(rawData);
+		active = new Boolean((byte) 0x01 == rawData[7]);
+		minVolt = ((float) Shorts.fromBytes(rawData[13], rawData[12]) * 0.01f);
+		maxVolt = ((float) Shorts.fromBytes(rawData[15], rawData[14]) * 0.01f);
+		statusReport = new Byte(rawData[16]);
+		warningReport = new Byte(rawData[17]);
 	}
 
 	public static boolean isVoltHeader(byte[] bytes) {
@@ -27,40 +29,23 @@ public class HeaderVoltBlock extends HeaderBlock {
 				+ ", statusReport: " + getStatusReport() + ", warningReport: " + getWarningReport();
 	}
 
-	public Boolean isActive() {
-		if (active == null) {
-			active = new Boolean((byte) 0x01 == rawData[7]);
-		}
+	public boolean isActive() {
 		return active;
 	}
 
-	public BigDecimal getMinVolt() {
-		if (minVolt == null) {
-			minVolt = new BigDecimal((double) Shorts.fromBytes(rawData[13], rawData[12]) / 100).setScale(1,
-					RoundingMode.HALF_UP);
-		}
+	public float getMinVolt() {
 		return minVolt;
 	}
 
-	public BigDecimal getMaxVolt() {
-		if (maxVolt == null) {
-			maxVolt = new BigDecimal((double) Shorts.fromBytes(rawData[15], rawData[14]) / 100).setScale(1,
-					RoundingMode.HALF_UP);
-		}
+	public float getMaxVolt() {
 		return maxVolt;
 	}
 
 	public String getStatusReport() {
-		if (statusReport == null) {
-			statusReport = new Byte(rawData[16]);
-		}
 		return convertReportTime(statusReport);
 	}
 
 	public String getWarningReport() {
-		if (warningReport == null) {
-			warningReport = new Byte(rawData[17]);
-		}
 		return convertReportTime(warningReport);
 	}
 }
