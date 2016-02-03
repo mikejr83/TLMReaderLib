@@ -2,7 +2,7 @@ package com.monstarmike.tlmreader.datablock;
 
 import com.google.common.primitives.Ints;
 
-public abstract class DataBlock extends Block {
+public abstract class DataBlock implements Block {
 
 	private int timestamp;
 	
@@ -11,9 +11,7 @@ public abstract class DataBlock extends Block {
 	}
 
 	public DataBlock(byte[] rawData) {
-		super(rawData);
 		decode(rawData);
-		this.rawData = null;
 	}
 
 	private void decode(byte[] rawData) {
@@ -93,7 +91,6 @@ public abstract class DataBlock extends Block {
 		return block;
 	}
 
-	@Override
 	public int getSize() {
 		return 20;
 	}

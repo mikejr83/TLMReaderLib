@@ -12,6 +12,10 @@ public class HeaderVoltBlock extends HeaderBlock {
 
 	public HeaderVoltBlock(byte[] rawData) {
 		super(rawData);
+		decode(rawData);
+	}
+
+	private void decode(byte[] rawData) {
 		active = new Boolean((byte) 0x01 == rawData[7]);
 		minVolt = ((float) Shorts.fromBytes(rawData[13], rawData[12]) * 0.01f);
 		maxVolt = ((float) Shorts.fromBytes(rawData[15], rawData[14]) * 0.01f);
