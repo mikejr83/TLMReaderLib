@@ -54,6 +54,10 @@ public class HeaderDataBlock extends HeaderBlock {
 				case 0x7E:
 					this.sensorTypeEnabled = "RPM";
 					break;
+					
+				default:
+					this.sensorTypeEnabled = "Unknown Header Block";
+					break;
 				}
 			}
 		}
