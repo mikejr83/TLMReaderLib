@@ -1,77 +1,54 @@
 package com.monstarmike.tlmreader.datablock;
 
+import com.google.common.primitives.Shorts;
+
 public class HeaderDataBlock extends HeaderBlock {
-	String sensorTypeEnabled = null;
 	boolean terminatingBlock = false;
+	private short sensorType;
 
 	public String get_sensorTypeEnabled() {
-		if (this.sensorTypeEnabled == null) {
-			if (this.rawData[0x4] != this.rawData[0x5]) {
-				this.sensorTypeEnabled = "invalid information! 0x4 does not equal 0x5";
-			} else {
-				switch (this.rawData[0x4]) {
-				case 0x1:
-					this.sensorTypeEnabled = "Volts";
-					break;
-
-				case 0x2:
-					this.sensorTypeEnabled = "Temperature";
-					break;
-
-				case 0x3:
-					this.sensorTypeEnabled = "Amps";
-					break;
-
-				case 0x0A:
-					this.sensorTypeEnabled = "PowerBox";
-					break;
-
-				case 0x11:
-					this.sensorTypeEnabled = "Speed";
-					break;
-
-				case 0x12:
-					this.sensorTypeEnabled = "Altimeter";
-					break;
-
-				case 0x14:
-					this.sensorTypeEnabled = "G-Force";
-					break;
-
-				case 0x15:
-					this.sensorTypeEnabled = "JetCat";
-					break;
-
-				case 0x16:
-					this.sensorTypeEnabled = "GPS";
-					break;
-
-				case 0x17:
-					this.sensorTypeEnabled = "Terminating Block";
-					this.terminatingBlock = true;
-					break;
-
-				case 0x7E:
-					this.sensorTypeEnabled = "RPM";
-					break;
-					
-				default:
-					this.sensorTypeEnabled = "Unknown Header Block";
-					break;
-				}
-			}
+		byte[] sensorTypeBytes = Shorts.toByteArray(sensorType);
+		if (sensorTypeBytes[0x00] != sensorTypeBytes[0x01]) {
+			return "invalid information! 0x4 does not equal 0x5";
 		}
-
-		return this.sensorTypeEnabled;
+		switch (sensorTypeBytes[0x00]) {
+		case 0x1:
+			return "Volts";
+		case 0x2:
+			return "Temperature";
+		case 0x3:
+			return "Amps";
+		case 0x0A:
+			return "PowerBox";
+		case 0x11:
+			return "Speed";
+		case 0x12:
+			return "Altimeter";
+		case 0x14:
+			return "G-Force";
+		case 0x15:
+			return "JetCat";
+		case 0x16:
+			return "GPS";
+		case 0x17:
+			this.terminatingBlock = true;
+			return "Terminating Block";
+		default:
+			return "Unknown Header Block";
+		}
 	}
-	
+
 	public boolean isTerminatingBlock() {
-		this.get_sensorTypeEnabled();
-		return this.terminatingBlock;
+		return terminatingBlock;
 	}
 
 	public HeaderDataBlock(byte[] rawData) {
 		super(rawData);
+		decode(rawData);
+	}
+
+	private void decode(byte[] rawData) {
+		sensorType = Shorts.fromBytes(rawData[4], rawData[5]);
 	}
 
 	@Override
