@@ -29,11 +29,11 @@ public class PowerboxBlock extends DataBlock {
 		return voltageTwo;
 	}
 
-	public double get_capacityOne() {
+	public short get_capacityOne() {
 		return capacityOne;
 	}
 
-	public double get_capacityTwo() {
+	public short get_capacityTwo() {
 		return capacityTwo;
 	}
 

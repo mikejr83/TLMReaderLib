@@ -19,7 +19,7 @@ public class RXBlock extends DataBlock {
 		r = Shorts.fromBytes(rawData[0x0C], rawData[0x0D]);
 		frameLoss = Shorts.fromBytes(rawData[0x0E], rawData[0x0F]);
 		holds = Shorts.fromBytes(rawData[0x10], rawData[0x11]);
-		volts = (float) ((double) Shorts.fromBytes(rawData[0x12], rawData[0x13]) / 100);
+		volts = ((float) Shorts.fromBytes(rawData[0x12], rawData[0x13]) * 0.01f);
 	}
 
 	public short get_a() {
