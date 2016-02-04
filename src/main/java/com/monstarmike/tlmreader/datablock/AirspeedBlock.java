@@ -12,10 +12,10 @@ public class AirspeedBlock extends DataBlock {
 	 * 563 km/h
 	 */
 
-	private short airspeed;;
+	private short airspeedKmPerHour;;
 
-	public short get_airspeed() {
-		return airspeed;
+	public short getAirspeedInKmPerHour() {
+		return airspeedKmPerHour;
 	}
 
 	public AirspeedBlock(final byte[] rawData) {
@@ -24,6 +24,6 @@ public class AirspeedBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		airspeed = Shorts.fromBytes(rawData[6], rawData[7]);
+		airspeedKmPerHour = Shorts.fromBytes(rawData[6], rawData[7]);
 	}
 }

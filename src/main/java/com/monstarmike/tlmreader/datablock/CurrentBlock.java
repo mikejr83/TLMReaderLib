@@ -14,7 +14,7 @@ public class CurrentBlock extends DataBlock {
 	 */
 	private float current;
 
-	public float get_Current() {
+	public float getCurrent() {
 		return current;
 	}
 
@@ -29,6 +29,6 @@ public class CurrentBlock extends DataBlock {
 
 	@Override
 	public String toString() {
-		return super.toString() + " - " + get_Current();
+		return super.toString() + " - " + getCurrent();
 	}
 }

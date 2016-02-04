@@ -16,34 +16,35 @@ public class GForceBlock extends DataBlock {
 	 * set for Z-axis from -40g to 40g
 	 */
 
-	private float x, y, z, maxX, maxY, maxZ, minZ;
+	private short xInHunderthOfG, yInHunderthOfG, zInHunderthOfG, maxXInHunderthOfG, maxYInHunderthOfG,
+			maxZInHunderthOfG, minZInHunderthOfG;
 
-	public float get_x() {
-		return x;
+	public short getXInHunderthOfG() {
+		return xInHunderthOfG;
 	}
 
-	public float get_y() {
-		return y;
+	public short getYInHunderthOfG() {
+		return yInHunderthOfG;
 	}
 
-	public float get_z() {
-		return z;
+	public short getZInHunderthOfG() {
+		return zInHunderthOfG;
 	}
 
-	public float get_maxX() {
-		return maxX;
+	public short getMaxXInHunderthOfG() {
+		return maxXInHunderthOfG;
 	}
 
-	public float get_maxY() {
-		return maxY;
+	public short getMaxYInHunderthOfG() {
+		return maxYInHunderthOfG;
 	}
 
-	public float get_maxZ() {
-		return maxZ;
+	public short getMaxZInHunderthOfG() {
+		return maxZInHunderthOfG;
 	}
 
-	public float get_minZ() {
-		return minZ;
+	public short getMinZInHunderthOfG() {
+		return minZInHunderthOfG;
 	}
 
 	public GForceBlock(byte[] rawData) {
@@ -52,12 +53,12 @@ public class GForceBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		x = 0.01f * Shorts.fromBytes(rawData[6], rawData[7]);
-		y = 0.01f * Shorts.fromBytes(rawData[8], rawData[9]);
-		z = 0.01f * Shorts.fromBytes(rawData[10], rawData[11]);
-		maxX = 0.01f * Shorts.fromBytes(rawData[12], rawData[13]);
-		maxY = 0.01f * Shorts.fromBytes(rawData[14], rawData[15]);
-		maxZ = 0.01f * Shorts.fromBytes(rawData[16], rawData[17]);
-		minZ = 0.01f * Shorts.fromBytes(rawData[18], rawData[19]);
+		xInHunderthOfG = Shorts.fromBytes(rawData[6], rawData[7]);
+		yInHunderthOfG = Shorts.fromBytes(rawData[8], rawData[9]);
+		zInHunderthOfG = Shorts.fromBytes(rawData[10], rawData[11]);
+		maxXInHunderthOfG = Shorts.fromBytes(rawData[12], rawData[13]);
+		maxYInHunderthOfG = Shorts.fromBytes(rawData[14], rawData[15]);
+		maxZInHunderthOfG = Shorts.fromBytes(rawData[16], rawData[17]);
+		minZInHunderthOfG = Shorts.fromBytes(rawData[18], rawData[19]);
 	}
 }

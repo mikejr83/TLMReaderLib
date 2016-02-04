@@ -14,6 +14,6 @@ public class CurrentBlockTest {
 	public void testGetCurrent() {
 		byte[] testBlock = new DataBlockBuilder(0, CURRENT_DATABLOCK_MAKER).setValue(2973, 0x6).get();
 		CurrentBlock currentBlock = (CurrentBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(2973.0 * 0.1967 , currentBlock.get_Current(), 0.0001);
+		assertEquals(2973.0 * 0.1967 , currentBlock.getCurrent(), 0.0001);
 	}
 }

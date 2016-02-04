@@ -35,7 +35,7 @@ public class Flight implements IFlight {
 	}
 
 	public void addHeaderNameBlock(HeaderNameBlock block) {
-		this.modelName = block.get_modelName();
+		this.modelName = block.getModelName();
 		this.headerData.add(block);
 	}
 

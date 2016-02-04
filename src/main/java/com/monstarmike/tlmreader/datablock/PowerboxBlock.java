@@ -18,23 +18,23 @@ public class PowerboxBlock extends DataBlock {
 	 * but not set the value.
 	 */
 
-	private float voltageOne, voltageTwo;
-	private short capacityOne, capacityTwo;
+	private short voltageOneInHunderthOfVolts, voltageTwoInHunderthOfVolts;
+	private short capacityOneInmAh, capacityTwoInmAh;
 
-	public float get_voltageOne() {
-		return voltageOne;
+	public short getVoltageOneInHunderthOfVolts() {
+		return voltageOneInHunderthOfVolts;
 	}
 
-	public float get_voltageTwo() {
-		return voltageTwo;
+	public short getVoltageTwoInHunderthOfVolts() {
+		return voltageTwoInHunderthOfVolts;
 	}
 
-	public short get_capacityOne() {
-		return capacityOne;
+	public short getCapacityOneInmAh() {
+		return capacityOneInmAh;
 	}
 
-	public short get_capacityTwo() {
-		return capacityTwo;
+	public short getCapacityTwoInmAh() {
+		return capacityTwoInmAh;
 	}
 
 	public PowerboxBlock(byte[] rawData) {
@@ -43,15 +43,15 @@ public class PowerboxBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		voltageOne = 0.01f * Shorts.fromBytes(rawData[6], rawData[7]);
-		voltageTwo = 0.01f * Shorts.fromBytes(rawData[8], rawData[9]);
-		capacityOne = Shorts.fromBytes(rawData[10], rawData[11]);
-		capacityTwo = Shorts.fromBytes(rawData[12], rawData[13]);
+		voltageOneInHunderthOfVolts = Shorts.fromBytes(rawData[6], rawData[7]);
+		voltageTwoInHunderthOfVolts = Shorts.fromBytes(rawData[8], rawData[9]);
+		capacityOneInmAh = Shorts.fromBytes(rawData[10], rawData[11]);
+		capacityTwoInmAh = Shorts.fromBytes(rawData[12], rawData[13]);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " - V1: " + get_voltageOne() + " Capacity 1: " + get_capacityOne() + " - V2: "
-				+ get_voltageTwo() + " Capacity 2: " + get_capacityTwo();
+		return super.toString() + " - V1: " + getVoltageOneInHunderthOfVolts() + " Capacity 1: " + getCapacityOneInmAh() + " - V2: "
+				+ getVoltageTwoInHunderthOfVolts() + " Capacity 2: " + getCapacityTwoInmAh();
 	}
 }

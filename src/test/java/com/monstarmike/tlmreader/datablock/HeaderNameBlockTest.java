@@ -32,70 +32,70 @@ public class HeaderNameBlockTest {
 	public void testGetBindInfo_DSM2_6000() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x0100, 0x06).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("DSM2 6000", headerNameBlock.get_bindInfo());
+		assertEquals("DSM2 6000", headerNameBlock.getBindInfo());
 	}
 
 	@Test
 	public void testGetBindInfo_DSM2_8000() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x0200, 0x06).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("DSM2 8000", headerNameBlock.get_bindInfo());
+		assertEquals("DSM2 8000", headerNameBlock.getBindInfo());
 	}
 
 	@Test
 	public void testGetBindInfo_DSMX_8000() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x0300, 0x06).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("DSMX 8000", headerNameBlock.get_bindInfo());
+		assertEquals("DSMX 8000", headerNameBlock.getBindInfo());
 	}
 
 	@Test
 	public void testGetBindInfo_DSMX_6000() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x0400, 0x06).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("DSMX 6000", headerNameBlock.get_bindInfo());
+		assertEquals("DSMX 6000", headerNameBlock.getBindInfo());
 	}
 
 	@Test
 	public void testGetModelType_FixedWing() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x00, 0x04).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("Fixed Wing", headerNameBlock.get_modelType());
+		assertEquals("Fixed Wing", headerNameBlock.getModelType());
 	}
 
 	@Test
 	public void testGetModelType_Helicopter() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x01, 0x04).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("Helicopter", headerNameBlock.get_modelType());
+		assertEquals("Helicopter", headerNameBlock.getModelType());
 	}
 
 	@Test
 	public void testGetModelType_Sailplane() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x02, 0x04).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("Sailplane", headerNameBlock.get_modelType());
+		assertEquals("Sailplane", headerNameBlock.getModelType());
 	}
 
 	@Test
 	public void testGetModelNumberPos1() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x0000, 0x04).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals(1, headerNameBlock.get_modelNumber());
+		assertEquals(1, headerNameBlock.getModelNumber());
 	}
 
 	@Test
 	public void testGetModelNumberPos16() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue(0x0F00, 0x04).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals(16, headerNameBlock.get_modelNumber());
+		assertEquals(16, headerNameBlock.getModelNumber());
 	}
 
 	@Test
 	public void testGetModelName() {
 		byte[] testBlock = new HeaderBlockBuilder(0, NAME_HEADERBLOCK_MAKER).setValue("ModelName", 0x0C).get();
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(testBlock);
-		assertEquals("ModelName", headerNameBlock.get_modelName());
+		assertEquals("ModelName", headerNameBlock.getModelName());
 	}
 
 }

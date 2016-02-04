@@ -6,7 +6,7 @@ public class HeaderDataBlock extends HeaderBlock {
 	boolean terminatingBlock = false;
 	private short sensorType;
 
-	public String get_sensorTypeEnabled() {
+	public String getSensorTypeEnabled() {
 		byte[] sensorTypeBytes = Shorts.toByteArray(sensorType);
 		if (sensorTypeBytes[0x00] != sensorTypeBytes[0x01]) {
 			return "invalid information! 0x4 does not equal 0x5";
@@ -53,7 +53,7 @@ public class HeaderDataBlock extends HeaderBlock {
 
 	@Override
 	public String toString() {
-		return "DataHeader; type: " + get_sensorTypeEnabled();
+		return "DataHeader; type: " + getSensorTypeEnabled();
 	}
 
 }

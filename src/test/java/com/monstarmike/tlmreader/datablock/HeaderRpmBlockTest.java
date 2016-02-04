@@ -49,10 +49,10 @@ public class HeaderRpmBlockTest {
 	}
 	@Test
 	public void testGetRatio() {
-		short ratio = 8 * 100;
-		byte[] testBlock = new HeaderBlockBuilder(0, RPM_HEADERBLOCK_MAKER).setSwitchedEndianValue(ratio, 0x0A).get();
+		short ratioInHunderth = 8 * 100; 
+		byte[] testBlock = new HeaderBlockBuilder(0, RPM_HEADERBLOCK_MAKER).setSwitchedEndianValue(ratioInHunderth, 0x0A).get();
 		HeaderRpmBlock rpmHeaderBlock = new HeaderRpmBlock(testBlock);
-		assertEquals(8.00, (double)rpmHeaderBlock.getRatio(), 0.001);
+		assertEquals(800, rpmHeaderBlock.getRatioInHunderth());
 	}
 	@Test
 	public void testGetMinRpm() {

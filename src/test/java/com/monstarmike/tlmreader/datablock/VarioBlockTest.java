@@ -15,46 +15,46 @@ public class VarioBlockTest {
 		short altitudeInTenthOfMeters = 50 * 10;
 		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(altitudeInTenthOfMeters, 0x6).get();
 		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(0.1f * altitudeInTenthOfMeters, (short)varioBlock.get_altitude(), 0.001);
-	}
-	
-	@Test
-	public void testGetChangeInLast250ms() {
-		short changeInTenthOfMeters = 20 * 10;
-		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(changeInTenthOfMeters, 0x08).get();
-		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(0.1f * changeInTenthOfMeters, (short)varioBlock.get_250ms(), 0.001);
-	}
-	
-	@Test
-	public void testGetChangeInLast500ms() {
-		short changeInTenthOfMeters = 4 * 10;
-		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(changeInTenthOfMeters, 0x0A).get();
-		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(0.1f * changeInTenthOfMeters, (short)varioBlock.get_500ms(), 0.001);
+		assertEquals(altitudeInTenthOfMeters, varioBlock.getAltitudeInTenthOfMeter());
 	}
 
 	@Test
-	public void testGetChangeInLast1000ms() {
-		short changeInTenthOfMeters = 15 * 10;
-		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(changeInTenthOfMeters, 0x0C).get();
+	public void testGetDeltaInIntervalOf250ms() {
+		short deltaInTenthOfMeters = 20 * 10;
+		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(deltaInTenthOfMeters, 0x08).get();
 		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(0.1f * changeInTenthOfMeters, (short)varioBlock.get_1000ms(), 0.001);
+		assertEquals(deltaInTenthOfMeters, varioBlock.getDeltaInIntervalOf250MsInTenthOfMeter());
 	}
-	
+
 	@Test
-	public void testGetChangeInLast2000ms() {
-		short changeInTenthOfMeters = 23 * 10;
-		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(changeInTenthOfMeters, 0x0E).get();
+	public void testGetDeltaInIntervalOf500ms() {
+		short deltaInTenthOfMeters = 4 * 10;
+		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(deltaInTenthOfMeters, 0x0A).get();
 		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(0.1f * changeInTenthOfMeters, (short)varioBlock.get_2000ms(), 0.001);
+		assertEquals(deltaInTenthOfMeters, varioBlock.getDeltaInIntervalOf500MsInTenthOfMeter());
 	}
-	
+
 	@Test
-	public void testGetChangeInLast3000ms() {
-		short changeInTenthOfMeters = 17 * 10;
-		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(changeInTenthOfMeters, 0x10).get();
+	public void testGetDeltaInIntervalOf1000ms() {
+		short deltaInTenthOfMeters = 15 * 10;
+		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(deltaInTenthOfMeters, 0x0C).get();
 		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
-		assertEquals(0.1f * changeInTenthOfMeters, (short)varioBlock.get_3000ms(), 0.001);
+		assertEquals(deltaInTenthOfMeters, varioBlock.getDeltaInIntervalOf1000MsInTenthOfMeter());
+	}
+
+	@Test
+	public void testGetDeltaInIntervalOf2000ms() {
+		short deltaInTenthOfMeters = 23 * 10;
+		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(deltaInTenthOfMeters, 0x0E).get();
+		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
+		assertEquals(deltaInTenthOfMeters, varioBlock.getDeltaInIntervalOf2000MsInTenthOfMeter());
+	}
+
+	@Test
+	public void testGetDeltaInIntervalOf3000ms() {
+		short deltaInTenthOfMeters = 17 * 10;
+		byte[] testBlock = new DataBlockBuilder(0, VARIO_DATABLOCK_MAKER).setValue(deltaInTenthOfMeters, 0x10).get();
+		VarioBlock varioBlock = (VarioBlock) DataBlock.createDataBlock(testBlock, null);
+		assertEquals(deltaInTenthOfMeters, varioBlock.getDeltaInIntervalOf3000MsInTenthOfMeter());
 	}
 }

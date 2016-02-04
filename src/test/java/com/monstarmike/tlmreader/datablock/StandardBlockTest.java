@@ -15,15 +15,15 @@ public class StandardBlockTest {
 		short testValue = (short) 0x0000;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x6).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.get_rpm(), 0.001);
+		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.getRpm(), 0.001);
 	}
 
 	@Test
-	public void testReadRpm1111tZeroNoRpmHeader() {
+	public void testReadRpm1111ZeroNoRpmHeader() {
 		short testValue = (short) 0x1111;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x6).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.get_rpm(), 0.001);
+		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.getRpm(), 0.01);
 	}
 
 	@Test
@@ -31,7 +31,7 @@ public class StandardBlockTest {
 		short testValue = (short) 0x00FF;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x6).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.get_rpm(), 0.02);
+		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.getRpm(), 0.02);
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class StandardBlockTest {
 		short testValue = (short) 0xFF00;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x6).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.get_rpm(), 0.001);
+		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.getRpm(), 0.001);
 	}
 
 	@Test
@@ -47,28 +47,28 @@ public class StandardBlockTest {
 		short testValue = (short) 0xFFFF;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x06).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.get_rpm(), 0.001);
+		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue), standardBlock.getRpm(), 0.001);
 	}
 	
 	@Test
 	public void testGetRpm() {
 		byte poles = (byte)6;
-		float ratio = 8.0f;
+		short ratioInHunderth = 800;
 		HeaderRpmBlock rpmHeaderMock = Mockito.mock(HeaderRpmBlock.class);
 		Mockito.when(rpmHeaderMock.getPoles()).thenReturn(poles);
-		Mockito.when(rpmHeaderMock.getRatio()).thenReturn(ratio);
+		Mockito.when(rpmHeaderMock.getRatioInHunderth()).thenReturn(ratioInHunderth);
 		short testValue = (short) 0xFFFF;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x06).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, rpmHeaderMock );
-		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue) / poles / ratio, standardBlock.get_rpm(), 0.001);
+		Assert.assertEquals(reverseEngineeredRpmValueFunction(testValue) / poles / ratioInHunderth * 100, standardBlock.getRpm(), 0.001);
 	}
 	
 	@Test
 	public void testGetVolt() {
-		short testValue = (short) 1163;
-		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x08).get();
+		short valueInHunderthOfVolts = (short) 1163;
+		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(valueInHunderthOfVolts, 0x08).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(11.63, standardBlock.get_volt(), 0.001);
+		Assert.assertEquals(valueInHunderthOfVolts, standardBlock.getVoltageInHunderthOfVolts());
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class StandardBlockTest {
 		short testValue = (short) 87;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x0A).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals(87, standardBlock.get_temperatureInGradFahrenheit());
+		Assert.assertEquals(87, standardBlock.getTemperatureInGradFahrenheit());
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class StandardBlockTest {
 		short testValue = (short) 87;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x0A).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
-		Assert.assertEquals((87 - 32) / 1.8,  standardBlock.get_temperatureInGradCelsius(), 0.001);
+		Assert.assertEquals((87 - 32) / 1.8,  standardBlock.getTemperatureInGradCelsius(), 0.001);
 	}
 	
 	private double reverseEngineeredRpmValueFunction(final short rawShortValue) {

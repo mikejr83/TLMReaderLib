@@ -6,7 +6,7 @@ public class HeaderRpmBlock extends HeaderBlock {
 
 	byte poles;
 	boolean active;
-	float ratio;
+	short ratioInHunderth;
 	short minRpm;
 	short maxRpm;
 	byte statusReport;
@@ -20,7 +20,7 @@ public class HeaderRpmBlock extends HeaderBlock {
 	private void decode(byte[] rawData) {
 		poles = new Byte(rawData[6]);
 		active = new Boolean((byte) 0x01 == rawData[7]);
-		ratio = (float) Shorts.fromBytes(rawData[11], rawData[10]) * 0.01f;
+		ratioInHunderth = Shorts.fromBytes(rawData[11], rawData[10]);
 		minRpm = Shorts.fromBytes(rawData[13], rawData[12]);
 		maxRpm = Shorts.fromBytes(rawData[15], rawData[14]);
 		statusReport = new Byte(rawData[16]);
@@ -33,7 +33,7 @@ public class HeaderRpmBlock extends HeaderBlock {
 
 	@Override
 	public String toString() {
-		return "RpmHeader; poles: " + getPoles() + ", active: " + isActive() + ", ratio: " + getRatio() + ", minRpm: "
+		return "RpmHeader; poles: " + getPoles() + ", active: " + isActive() + ", ratio: " + getRatioInHunderth() + ", minRpm: "
 				+ getMinRpm() + ", maxRpm: " + getMaxRpm() + ", statusReport: " + getStatusReport()
 				+ ", warningReport: " + getWarningReport();
 	}
@@ -46,8 +46,8 @@ public class HeaderRpmBlock extends HeaderBlock {
 		return active;
 	}
 
-	public float getRatio() {
-		return ratio;
+	public short getRatioInHunderth() {
+		return ratioInHunderth;
 	}
 
 	public short getMinRpm() {

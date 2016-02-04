@@ -12,15 +12,15 @@ public class HeaderNameBlock extends HeaderBlock {
 		return bytes.length > 6 && bytes[4] != bytes[5];
 	}
 
-	public String get_modelName() {
+	public String getModelName() {
 		return modelName;
 	}
 
-	public int get_modelNumber() {
+	public int getModelNumber() {
 		return modelNumber;
 	}
 
-	public String get_modelType() {
+	public String getModelType() {
 		switch (modelType) {
 		case 0x0:
 			return "Fixed Wing";
@@ -32,7 +32,7 @@ public class HeaderNameBlock extends HeaderBlock {
 		}
 	}
 
-	public String get_bindInfo() {
+	public String getBindInfo() {
 		switch (bindInfo) {
 		case 0x1:
 			return "DSM2 6000";
@@ -65,8 +65,8 @@ public class HeaderNameBlock extends HeaderBlock {
 
 	@Override
 	public String toString() {
-		return "NameHeader; modelName: " + get_modelName() + ", modelNumber: " + get_modelNumber() + ", modelType: "
-				+ get_modelType() + ", bindInfo: " + get_bindInfo();
+		return "NameHeader; modelName: " + getModelName() + ", modelNumber: " + getModelNumber() + ", modelType: "
+				+ getModelType() + ", bindInfo: " + getBindInfo();
 	}
 
 }

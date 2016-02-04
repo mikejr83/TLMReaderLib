@@ -4,30 +4,32 @@ import com.google.common.primitives.Shorts;
 
 public class VarioBlock extends DataBlock {
 
-	private float altitude, interval250, interval500, interval1000, interval2000, interval3000;
+	private short altitudeInTenthOfMeter, deltaInIntervalOf250MsInTenthOfMeter, deltaInIntervalOf500MsInTenthOfMeter,
+			deltaInIntervalOf1000MsInTenthOfMeter, deltaInIntervalOf2000MsInTenthOfMeter,
+			deltaInIntervalOf3000MsInTenthOfMeter;
 
-	public float get_altitude() {
-		return altitude;
+	public short getAltitudeInTenthOfMeter() {
+		return altitudeInTenthOfMeter;
 	}
 
-	public float get_250ms() {
-		return interval250;
+	public short getDeltaInIntervalOf250MsInTenthOfMeter() {
+		return deltaInIntervalOf250MsInTenthOfMeter;
 	}
 
-	public float get_500ms() {
-		return interval500;
+	public short getDeltaInIntervalOf500MsInTenthOfMeter() {
+		return deltaInIntervalOf500MsInTenthOfMeter;
 	}
 
-	public float get_1000ms() {
-		return interval1000;
+	public short getDeltaInIntervalOf1000MsInTenthOfMeter() {
+		return deltaInIntervalOf1000MsInTenthOfMeter;
 	}
 
-	public float get_2000ms() {
-		return interval2000;
+	public short getDeltaInIntervalOf2000MsInTenthOfMeter() {
+		return deltaInIntervalOf2000MsInTenthOfMeter;
 	}
 
-	public float get_3000ms() {
-		return interval3000;
+	public short getDeltaInIntervalOf3000MsInTenthOfMeter() {
+		return deltaInIntervalOf3000MsInTenthOfMeter;
 	}
 
 	public VarioBlock(byte[] rawData) {
@@ -36,18 +38,18 @@ public class VarioBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		altitude = 0.1f * Shorts.fromBytes(rawData[0x06], rawData[0x07]);
-		interval250 = 0.1f * Shorts.fromBytes(rawData[0x08], rawData[0x09]);
-		interval500 = 0.1f * Shorts.fromBytes(rawData[0x0A], rawData[0x0B]);
-		interval1000 = 0.1f * Shorts.fromBytes(rawData[0x0C], rawData[0x0D]);
-		interval2000 = 0.1f * Shorts.fromBytes(rawData[0x0E], rawData[0x0F]);
-		interval3000 = 0.1f * Shorts.fromBytes(rawData[0x10], rawData[0x11]);
+		altitudeInTenthOfMeter = Shorts.fromBytes(rawData[0x06], rawData[0x07]);
+		deltaInIntervalOf250MsInTenthOfMeter = Shorts.fromBytes(rawData[0x08], rawData[0x09]);
+		deltaInIntervalOf500MsInTenthOfMeter = Shorts.fromBytes(rawData[0x0A], rawData[0x0B]);
+		deltaInIntervalOf1000MsInTenthOfMeter = Shorts.fromBytes(rawData[0x0C], rawData[0x0D]);
+		deltaInIntervalOf2000MsInTenthOfMeter = Shorts.fromBytes(rawData[0x0E], rawData[0x0F]);
+		deltaInIntervalOf3000MsInTenthOfMeter = Shorts.fromBytes(rawData[0x10], rawData[0x11]);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " - altitude: " + get_altitude() + " - 250 delta: " + get_250ms() + " - 500 delta: "
-				+ get_500ms() + " - 1000 delta: " + get_1000ms() + " - 2000 delta: " + get_2000ms() + " - 3000 delta: "
-				+ get_3000ms();
+		return super.toString() + " - altitude: " + getAltitudeInTenthOfMeter() + " - 250 delta: " + getDeltaInIntervalOf250MsInTenthOfMeter() + " - 500 delta: "
+				+ getDeltaInIntervalOf500MsInTenthOfMeter() + " - 1000 delta: " + getDeltaInIntervalOf1000MsInTenthOfMeter() + " - 2000 delta: " + getDeltaInIntervalOf2000MsInTenthOfMeter() + " - 3000 delta: "
+				+ getDeltaInIntervalOf3000MsInTenthOfMeter();
 	}
 }

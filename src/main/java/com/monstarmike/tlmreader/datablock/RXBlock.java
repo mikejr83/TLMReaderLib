@@ -2,10 +2,17 @@ package com.monstarmike.tlmreader.datablock;
 
 import com.google.common.primitives.Shorts;
 
+
+/**
+ * The Values of a, b, l ,r are number packetLoss of the each receiver. 
+ * It looks like, that if the value is 0xFFFF or Short.MIN_VALUE there is no such receiver installed.
+ */
+
 public class RXBlock extends DataBlock {
 
+	
 	private short a, b, l, r, frameLoss, holds;
-	private float volts;
+	private short voltageInHunderthOfVolts;
 
 	public RXBlock(final byte[] rawData) {
 		super(rawData);
@@ -19,41 +26,41 @@ public class RXBlock extends DataBlock {
 		r = Shorts.fromBytes(rawData[0x0C], rawData[0x0D]);
 		frameLoss = Shorts.fromBytes(rawData[0x0E], rawData[0x0F]);
 		holds = Shorts.fromBytes(rawData[0x10], rawData[0x11]);
-		volts = ((float) Shorts.fromBytes(rawData[0x12], rawData[0x13]) * 0.01f);
+		voltageInHunderthOfVolts = Shorts.fromBytes(rawData[0x12], rawData[0x13]);
 	}
 
-	public short get_a() {
+	public short getA() {
 		return a;
 	}
 
-	public short get_b() {
+	public short getB() {
 		return b;
 	}
 
-	public short get_l() {
+	public short getL() {
 		return l;
 	}
 
-	public short get_r() {
+	public short getR() {
 		return r;
 	}
 
-	public short get_frameLoss() {
+	public short getFrameLoss() {
 		return frameLoss;
 	}
 
-	public short get_holds() {
+	public short getHolds() {
 		return holds;
 	}
 
-	public float get_volts() {
-		return volts;
+	public short getVoltageInHunderthOfVolts() {
+		return voltageInHunderthOfVolts;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "RxData; FrameLoss: " + get_frameLoss() + ", Holds: " + get_holds() + ", Volts: "
-				+ get_volts();
+		return super.toString() + "RxData; FrameLoss: " + getFrameLoss() + ", Holds: " + getHolds() + ", Volts: "
+				+ getVoltageInHunderthOfVolts();
 	}
 
 }

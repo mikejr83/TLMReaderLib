@@ -72,7 +72,7 @@ public class HeaderTest {
 		byte[] headerBytes = Arrays.copyOfRange(this.theBytes, 0, 36);
 
 		HeaderNameBlock headerNameBlock = new HeaderNameBlock(headerBytes);
-		assertEquals(headerNameBlock.get_modelName(), "Gracia Maxi3.5");
+		assertEquals(headerNameBlock.getModelName(), "Gracia Maxi3.5");
 	}
 
 }

@@ -5,8 +5,8 @@ import com.google.common.primitives.Shorts;
 public class HeaderVoltBlock extends HeaderBlock {
 
 	private boolean active;
-	private float minVolt;
-	private float maxVolt;
+	private short minVoltageInHunderthOfVolts;
+	private short maxVoltageInHunderthOfVolts;
 	private byte statusReport;
 	private byte warningReport;
 
@@ -17,8 +17,8 @@ public class HeaderVoltBlock extends HeaderBlock {
 
 	private void decode(byte[] rawData) {
 		active = new Boolean((byte) 0x01 == rawData[7]);
-		minVolt = ((float) Shorts.fromBytes(rawData[13], rawData[12]) * 0.01f);
-		maxVolt = ((float) Shorts.fromBytes(rawData[15], rawData[14]) * 0.01f);
+		minVoltageInHunderthOfVolts = Shorts.fromBytes(rawData[13], rawData[12]);
+		maxVoltageInHunderthOfVolts = Shorts.fromBytes(rawData[15], rawData[14]);
 		statusReport = new Byte(rawData[16]);
 		warningReport = new Byte(rawData[17]);
 	}
@@ -29,7 +29,7 @@ public class HeaderVoltBlock extends HeaderBlock {
 
 	@Override
 	public String toString() {
-		return "VoltHeader; active: " + isActive() + ", minVolt: " + getMinVolt() + ", maxVolt: " + getMaxVolt()
+		return "VoltHeader; active: " + isActive() + ", minVolt: " + getMinVoltageInHunderthOfVolts() + ", maxVolt: " + getMaxVoltageInHunderthOfVolts()
 				+ ", statusReport: " + getStatusReport() + ", warningReport: " + getWarningReport();
 	}
 
@@ -37,12 +37,12 @@ public class HeaderVoltBlock extends HeaderBlock {
 		return active;
 	}
 
-	public float getMinVolt() {
-		return minVolt;
+	public short getMinVoltageInHunderthOfVolts() {
+		return minVoltageInHunderthOfVolts;
 	}
 
-	public float getMaxVolt() {
-		return maxVolt;
+	public short getMaxVoltageInHunderthOfVolts() {
+		return maxVoltageInHunderthOfVolts;
 	}
 
 	public String getStatusReport() {
