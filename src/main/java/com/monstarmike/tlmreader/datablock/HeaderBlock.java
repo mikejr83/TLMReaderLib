@@ -13,6 +13,10 @@ public abstract class HeaderBlock implements Block {
 
 	public HeaderBlock(byte[] rawData) {
 	}
+	
+	public DataNormalizer getNormalizer() {
+		return new NoneNormalizer();
+	}
 
 	protected String convertReportTime(Byte report) {
 		switch (report) {

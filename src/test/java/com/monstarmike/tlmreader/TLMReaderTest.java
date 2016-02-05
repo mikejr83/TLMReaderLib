@@ -33,7 +33,7 @@ public class TLMReaderTest {
 		List<IFlight> flights = reader.parseFlightDefinitions(inputStream);
 		List<Long> actualFlightDurations = new ArrayList<Long>();
 		for (IFlight flight : flights) {
-			actualFlightDurations.add(flight.get_duration().getMillis());
+			actualFlightDurations.add(flight.getDuration().getMillis());
 		}
 		assertEquals(expectedFlightDurationsSailplane, actualFlightDurations);
 	}
@@ -44,7 +44,7 @@ public class TLMReaderTest {
 		List<IFlight> flights = reader.parseFlightDefinitions(tlmFileSailplane);
 		List<Long> actualFlightDurations = new ArrayList<Long>();
 		for (IFlight flight : flights) {
-			actualFlightDurations.add(flight.get_duration().getMillis());
+			actualFlightDurations.add(flight.getDuration().getMillis());
 		}
 		assertEquals(expectedFlightDurationsSailplane, actualFlightDurations);
 	}
@@ -66,7 +66,7 @@ public class TLMReaderTest {
 		List<IFlight> flights = reader.parseFlightDefinitions(tlmFileHeli);
 		List<Long> actualFlightDurations = new ArrayList<Long>();
 		for (IFlight flight : flights) {
-			actualFlightDurations.add(flight.get_duration().getMillis());
+			actualFlightDurations.add(flight.getDuration().getMillis());
 		}
 		assertEquals(expectedFlightDurationsHeli, actualFlightDurations);
 	}
@@ -86,7 +86,7 @@ public class TLMReaderTest {
 		TLMReader reader = new TLMReader();
 		InputStream inputStream = new FileInputStream(new File(tlmFileSailplane));
 		Flight flight = reader.parseFlight(inputStream, flightId);
-		assertEquals(expectedFlightDurationsSailplane.get(flightId), Long.valueOf(flight.get_duration().getMillis()));
+		assertEquals(expectedFlightDurationsSailplane.get(flightId), Long.valueOf(flight.getDuration().getMillis()));
 	}
 
 	@Test(expected = RuntimeException.class)

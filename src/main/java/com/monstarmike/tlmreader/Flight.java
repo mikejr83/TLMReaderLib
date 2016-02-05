@@ -1,13 +1,14 @@
 package com.monstarmike.tlmreader;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 import com.monstarmike.tlmreader.datablock.DataBlock;
+import com.monstarmike.tlmreader.datablock.DataNormalizer;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
@@ -20,7 +21,7 @@ public class Flight implements IFlight {
 	String modelName;
 	private HeaderRpmBlock rpmHeader;
 
-	public Duration get_duration() {
+	public Duration getDuration() {
 		if (this.duration == null) {
 			int start = 0, end = 0;
 
@@ -30,8 +31,15 @@ public class Flight implements IFlight {
 			}
 			this.duration = new Duration((end - start) * 10);
 		}
-
 		return this.duration;
+	}
+	
+	public void normalizeDataBlocks() {
+		List<HeaderBlock> headerBlocks = getHeaderBlocks();
+		for (HeaderBlock headerBlock : headerBlocks) {
+			DataNormalizer normalizer = headerBlock.getNormalizer();
+			normalizer.normalize(getDataBlocks());
+		}
 	}
 
 	public void addHeaderNameBlock(HeaderNameBlock block) {
@@ -52,12 +60,12 @@ public class Flight implements IFlight {
 		this.blockData.add(block);
 	}
 
-	public Iterator<HeaderBlock> get_headerBlocks() {
-		return this.headerData.iterator();
+	public List<HeaderBlock> getHeaderBlocks() {
+		return this.headerData;
 	}
 
-	public Iterator<DataBlock> get_dataBlocks() {
-		return this.blockData.iterator();
+	public List<DataBlock> getDataBlocks() {
+		return this.blockData;
 	}
 
 	@Override
@@ -65,7 +73,7 @@ public class Flight implements IFlight {
 		PeriodFormatter formatter = new PeriodFormatterBuilder().appendHours().appendSuffix(":").appendMinutes()
 				.appendSuffix(":").appendSeconds().appendSuffix(".").appendMillis().toFormatter();
 
-		return this.modelName + " duration: " + formatter.print(this.get_duration().toPeriod());
+		return this.modelName + " duration: " + formatter.print(this.getDuration().toPeriod());
 	}
 
 	public HeaderRpmBlock getRpmHeader() {

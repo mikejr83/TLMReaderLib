@@ -1,7 +1,7 @@
 package com.monstarmike.tlmreader;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;
@@ -22,7 +22,7 @@ public class FlightDefinition implements IFlight {
 	String modelName;
 	private HeaderRpmBlock rpmHeaderBlock;
 
-	public Duration get_duration() {
+	public Duration getDuration() {
 		if (this.duration == null) {
 			int start = 0, end = 0;
 
@@ -66,12 +66,12 @@ public class FlightDefinition implements IFlight {
 				.appendSeconds().appendSuffix(".").appendMillis().toFormatter();
 
 		return this.modelName + " duration: "
-				+ formatter.print(this.get_duration().toPeriod());
+				+ formatter.print(this.getDuration().toPeriod());
 	}
 
 	
-	public Iterator<HeaderBlock> get_headerBlocks() {
-		return headerData.iterator();
+	public List<HeaderBlock> getHeaderBlocks() {
+		return headerData;
 	}
 
 	public int getNumberOfDataBlocks() {
