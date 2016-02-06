@@ -1,5 +1,6 @@
 package com.monstarmike.tlmreader.datablock;
 
+import com.google.common.primitives.Ints;
 import com.google.common.primitives.Shorts;
 
 public class StandardBlock extends DataBlock {
@@ -36,7 +37,7 @@ public class StandardBlock extends DataBlock {
 	}
 
 	private void decode(final byte[] rawData) {
-		final short rawRpmData = Shorts.fromBytes(rawData[6], rawData[7]);
+		final int rawRpmData = Ints.fromBytes((byte) 0, (byte) 0, rawData[6], rawData[7]);
 		if (rawRpmData == 0) { // 0x0000
 			rpm = 0.0f;
 		} else {
