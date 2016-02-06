@@ -6,6 +6,9 @@ public abstract class DataBlock implements Block {
 
 	private int timestamp;
 	
+	/**
+	 * Timestamp in hunderth of seconds
+	 */
 	public int get_timestamp() {
 		return timestamp;
 	}

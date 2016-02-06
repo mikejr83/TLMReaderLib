@@ -1,6 +1,6 @@
 package com.monstarmike.tlmreader;
 
-import java.util.Iterator;
+import java.util.List;
 
 import org.joda.time.Duration;
 
@@ -11,7 +11,7 @@ import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
 
 public interface IFlight {
 
-	Duration get_duration();
+	Duration getDuration();
 
 	void addHeaderNameBlock(HeaderNameBlock block);
 	
@@ -21,7 +21,7 @@ public interface IFlight {
 
 	HeaderRpmBlock getRpmHeader();
 	
-	Iterator<HeaderBlock> get_headerBlocks();
+	List<HeaderBlock> getHeaderBlocks();
 	
 	int getNumberOfDataBlocks();
 

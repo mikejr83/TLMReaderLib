@@ -38,6 +38,11 @@ public class HeaderRpmBlock extends HeaderBlock {
 				+ ", warningReport: " + getWarningReport();
 	}
 
+	@Override
+	public DataNormalizer getNormalizer() {
+		return new RpmNormalizer();
+	}
+	
 	public byte getPoles() {
 		return poles;
 	}

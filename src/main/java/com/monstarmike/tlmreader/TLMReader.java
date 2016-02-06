@@ -16,6 +16,7 @@ import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
 import com.monstarmike.tlmreader.datablock.HeaderVoltBlock;
 
 public class TLMReader {
+	
 	private int byteCounter;
 
 	public int getNumberOfBytesRead() {
@@ -104,7 +105,9 @@ public class TLMReader {
 		if (flights.isEmpty()) {
 			throw new RuntimeException("FlightId  '"+joId+"' not found in inputStream.");
 		}
-		return flights.get(flights.size() - 1);
+		Flight flight = flights.get(flights.size() - 1);
+		flight.normalizeDataBlocks();
+		return flight;
 	}
 
 	private abstract class TlmParser {
