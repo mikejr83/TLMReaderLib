@@ -5,8 +5,10 @@ import java.util.List;
 
 public class RpmNormalizer implements DataNormalizer {
 
+	private static final double LIMIT_RPM_VALUE = 10000.0;
+
 	/**
-	 * Remove all datablocks with too high rpm values (limit
+	 * Remove all datablocks with too high rpm values
 	 */
 	public void normalize(final List<DataBlock> dataBlocks) {
 		Iterator<DataBlock> iterator = dataBlocks.iterator();
@@ -14,7 +16,7 @@ public class RpmNormalizer implements DataNormalizer {
 			DataBlock dataBlock = iterator.next();
 			if (dataBlock instanceof StandardBlock) {
 				float rpm = ((StandardBlock) dataBlock).getRpm();
-				if (rpm > 10000.0) {
+				if (rpm > LIMIT_RPM_VALUE) {
 					iterator.remove();
 				}
 			}
