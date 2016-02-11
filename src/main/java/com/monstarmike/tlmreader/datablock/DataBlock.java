@@ -9,7 +9,7 @@ public abstract class DataBlock implements Block {
 	/**
 	 * Timestamp in hunderth of seconds
 	 */
-	public int get_timestamp() {
+	public int getTimestamp() {
 		return timestamp;
 	}
 

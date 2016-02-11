@@ -14,7 +14,7 @@ public final class AltitudeBlock extends DataBlock {
 
 	private short altitudeInTenthOfMeter;
 
-	public short get_altitudeInTenthOfMeter() {
+	public short getAltitudeInTenthOfMeter() {
 		return this.altitudeInTenthOfMeter;
 	}
 

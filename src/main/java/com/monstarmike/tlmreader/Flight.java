@@ -26,8 +26,8 @@ public class Flight implements IFlight {
 			int start = 0, end = 0;
 
 			if (this.blockData.size() > 0) {
-				start = this.blockData.get(0).get_timestamp();
-				end = this.blockData.get(this.blockData.size() - 1).get_timestamp();
+				start = this.blockData.get(0).getTimestamp();
+				end = this.blockData.get(this.blockData.size() - 1).getTimestamp();
 			}
 			this.duration = new Duration((end - start) * 10);
 		}
@@ -76,6 +76,10 @@ public class Flight implements IFlight {
 		return this.modelName + " duration: " + formatter.print(this.getDuration().toPeriod());
 	}
 
+	public boolean hasRpmHeader() {
+		return rpmHeader != null;
+	}
+	
 	public HeaderRpmBlock getRpmHeader() {
 		return rpmHeader;
 	}

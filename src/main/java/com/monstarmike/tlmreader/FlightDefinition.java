@@ -27,8 +27,8 @@ public class FlightDefinition implements IFlight {
 			int start = 0, end = 0;
 
 			if (firstDataBlock != null && lastDataBlock != null) {
-				start = firstDataBlock.get_timestamp();
-				end = lastDataBlock.get_timestamp();
+				start = firstDataBlock.getTimestamp();
+				end = lastDataBlock.getTimestamp();
 			}
 			this.duration = new Duration((end - start) * 10);
 		}

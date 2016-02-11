@@ -40,13 +40,13 @@ public class DataBlockTest {
 	public void testTimestampOfTheFirstDataBlock() {
 		byte[] dataBytes = Arrays.copyOfRange(this.theBytes, 0, 20);
 		DataBlock dataBlock = DataBlock.createDataBlock(dataBytes, null);
-		assertEquals(6620, dataBlock.get_timestamp());
+		assertEquals(6620, dataBlock.getTimestamp());
 	}
 	
 	@Test
 	public void testTimestampOfTheLastDataBlock() {
 		byte[] dataBytes = Arrays.copyOfRange(this.theBytes, this.theBytes.length-20, this.theBytes.length);
 		DataBlock dataBlock = DataBlock.createDataBlock(dataBytes, null);
-		assertEquals(90516, dataBlock.get_timestamp());
+		assertEquals(90516, dataBlock.getTimestamp());
 	}
 }

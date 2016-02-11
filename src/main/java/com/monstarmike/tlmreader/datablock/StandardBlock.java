@@ -10,13 +10,26 @@ public class StandardBlock extends DataBlock {
 	private short tempInGradFahrenheit;
 	private short ratioInHunderth = 100;
 	private byte poles = 1;
+	private int rawRpmData;
+
+	public boolean hasRpmSensor() {
+		return rawRpmData != 0xFFFF;
+	}
 
 	public float getRpm() {
 		return rpm;
 	}
 
+	public boolean hasVoltageSensor() {
+		return voltageInHunderthOfVolts != Short.MAX_VALUE;
+	}
+
 	public short getVoltageInHunderthOfVolts() {
 		return voltageInHunderthOfVolts;
+	}
+
+	public boolean hasTemperatureSensor() {
+		return tempInGradFahrenheit != Short.MAX_VALUE;
 	}
 
 	public short getTemperatureInGradFahrenheit() {
@@ -37,7 +50,7 @@ public class StandardBlock extends DataBlock {
 	}
 
 	private void decode(final byte[] rawData) {
-		final int rawRpmData = Ints.fromBytes((byte) 0, (byte) 0, rawData[6], rawData[7]);
+		rawRpmData = Ints.fromBytes((byte) 0, (byte) 0, rawData[6], rawData[7]);
 		if (rawRpmData == 0) { // 0x0000
 			rpm = 0.0f;
 		} else {
