@@ -12,24 +12,24 @@ public class StandardBlock extends DataBlock {
 	private byte poles = 1;
 	private int rawRpmData;
 
-	public boolean hasRpmSensor() {
-		return rawRpmData != 0xFFFF;
+	public boolean hasValidRpmData() {
+		return rawRpmData != 0xFFFF && rawRpmData != 0x0000;
 	}
 
 	public float getRpm() {
 		return rpm;
 	}
 
-	public boolean hasVoltageSensor() {
-		return voltageInHunderthOfVolts != Short.MAX_VALUE;
+	public boolean hasValidVoltageData() {
+		return voltageInHunderthOfVolts != Short.MIN_VALUE && voltageInHunderthOfVolts != 0x0000;
 	}
 
 	public short getVoltageInHunderthOfVolts() {
 		return voltageInHunderthOfVolts;
 	}
 
-	public boolean hasTemperatureSensor() {
-		return tempInGradFahrenheit != Short.MAX_VALUE;
+	public boolean hasValidTemperatureData() {
+		return tempInGradFahrenheit != Short.MIN_VALUE && tempInGradFahrenheit != 0x0000;
 	}
 
 	public short getTemperatureInGradFahrenheit() {
@@ -62,8 +62,9 @@ public class StandardBlock extends DataBlock {
 
 	@Override
 	public String toString() {
-		return super.toString() + "StandardData; RPM: " + getRpm() + ", Volt: " + getVoltageInHunderthOfVolts()
-				+ ", Temperature (in °F): " + getTemperatureInGradFahrenheit() + ", Temperature (in °C): "
-				+ getTemperatureInGradCelsius();
+		return "StandardData; RPM: " + getRpm() + " (" + hasValidRpmData() + ") , Volt: "
+				+ getVoltageInHunderthOfVolts() / 100.0 + "(" + hasValidVoltageData() + ") , Temperature (in °F): "
+				+ getTemperatureInGradFahrenheit() + "(" + hasValidTemperatureData() + ") , Temperature (in °C): "
+				+ getTemperatureInGradCelsius() + "(" + hasValidTemperatureData() + ")";
 	}
 }
