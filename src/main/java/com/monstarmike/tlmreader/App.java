@@ -19,11 +19,12 @@ public class App {
 		try {
 			String tlmFileSailplane = "src/test/data/2015 - FSS 2 - day 2.TLM";
 			String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
-			List<IFlight> flights = reader.parseFlightDefinitions(tlmFileSailplane);
+			String tlm = tlmFileHeli;
+			List<IFlight> flights = reader.parseFlightDefinitions(tlm);
 			for (IFlight flight : flights) {
 				printFlightDefinitions(flight);
 			}
-			Flight flight = reader.parseFlight(tlmFileSailplane, 0);
+			Flight flight = reader.parseFlight(tlm, 0);
 			printFlightDefinitions(flight);
 			printDataBlocks(flight);
 		} catch (IOException e) {
@@ -41,25 +42,36 @@ public class App {
 	private static void printDataBlocks(Flight flight) {
 		int lastTimestamp = 0;
 		for (DataBlock dataBlock : flight.getDataBlocks()) {
-			if (dataBlock instanceof StandardBlock) {
-				System.out.println("Timestamp: " + dataBlock.getTimestamp());
-				if (lastTimestamp >= dataBlock.getTimestamp()) {
-					System.out.println(
-							" ---------------- last: " + lastTimestamp + " current: " + dataBlock.getTimestamp());
-				}
-			}
-			if (dataBlock instanceof StandardBlock) {
-				StandardBlock standardBlock = (StandardBlock) dataBlock;
-				System.out.println(
-						"Std: rpm: " + standardBlock.getRpm() + " volt: " + standardBlock.getVoltageInHunderthOfVolts()
-								+ " temp: " + standardBlock.getTemperatureInGradCelsius());
-			}
-			if (dataBlock instanceof RXBlock) {
-				RXBlock rxBlock = (RXBlock) dataBlock;
-				System.out.println("A: " + rxBlock.getA() + ", B: " + rxBlock.getB() + ", L: " + rxBlock.getL()
-						+ ", R: " + rxBlock.getR() + ", FrameLoss: " + rxBlock.getFrameLoss() + ", Holds: "
-						+ rxBlock.getHolds());
-			}
+			// if (dataBlock instanceof StandardBlock) {
+			// System.out.println("Timestamp: " + dataBlock.getTimestamp());
+			// if (lastTimestamp >= dataBlock.getTimestamp()) {
+			// System.out.println(
+			// " ---------------- last: " + lastTimestamp + " current: " +
+			// dataBlock.getTimestamp());
+			// }
+			// }
+//			printStandardBlock(dataBlock);
+			printRxBlock(dataBlock);
+		}
+	}
+
+	private static void printRxBlock(DataBlock dataBlock) {
+		if (dataBlock instanceof RXBlock) {
+			RXBlock rxBlock = (RXBlock) dataBlock;
+			System.out.println(rxBlock);
+//			System.out.println("A: " + rxBlock.getLostPacketsReceiverA() + ", B: " + rxBlock.getLostPacketsReceiverB() + ", L: " + rxBlock.getLostPacketsReceiverL()
+//					+ ", R: " + rxBlock.getLostPacketsReceiverR() + ", FrameLoss: " + rxBlock.getFrameLoss() + ", Holds: "
+//					+ rxBlock.getHolds());
+		}
+	}
+
+	private static void printStandardBlock(DataBlock dataBlock) {
+		if (dataBlock instanceof StandardBlock) {
+			StandardBlock standardBlock = (StandardBlock) dataBlock;
+			System.out.println("Std: rpm: " + standardBlock.getRpm() + "(" + standardBlock.hasValidRpmData() + ") volt: "
+					+ standardBlock.getVoltageInHunderthOfVolts() + "(" + standardBlock.hasValidVoltageData() + ") temp: "
+					+ standardBlock.getTemperatureInGradFahrenheit() + "(" + standardBlock.hasValidTemperatureData()
+					+ ")");
 		}
 	}
 
