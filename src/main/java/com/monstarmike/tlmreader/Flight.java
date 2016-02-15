@@ -8,10 +8,10 @@ import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 import com.monstarmike.tlmreader.datablock.DataBlock;
-import com.monstarmike.tlmreader.datablock.DataNormalizer;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
+import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
 
 public class Flight implements IFlight {
 	private ArrayList<HeaderBlock> headerData = new ArrayList<HeaderBlock>();

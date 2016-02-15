@@ -1,6 +1,8 @@
-package com.monstarmike.tlmreader.datablock;
+package com.monstarmike.tlmreader.datablock.normalizer;
 
 import java.util.List;
+
+import com.monstarmike.tlmreader.datablock.DataBlock;
 
 /**
  * This interface can be used, to normalize the values of DataBlocks. A

@@ -1,7 +1,10 @@
-package com.monstarmike.tlmreader.datablock;
+package com.monstarmike.tlmreader.datablock.normalizer;
 
 import java.util.Iterator;
 import java.util.List;
+
+import com.monstarmike.tlmreader.datablock.DataBlock;
+import com.monstarmike.tlmreader.datablock.StandardBlock;
 
 public class RpmNormalizer implements DataNormalizer {
 

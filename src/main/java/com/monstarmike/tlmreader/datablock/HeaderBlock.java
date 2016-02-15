@@ -1,5 +1,8 @@
 package com.monstarmike.tlmreader.datablock;
 
+import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
+import com.monstarmike.tlmreader.datablock.normalizer.NoneNormalizer;
+
 public abstract class HeaderBlock implements Block {
 
 	public static boolean isHeaderBlock(byte[] bytes) {

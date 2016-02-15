@@ -1,6 +1,8 @@
 package com.monstarmike.tlmreader.datablock;
 
 import com.google.common.primitives.Shorts;
+import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
+import com.monstarmike.tlmreader.datablock.normalizer.RpmNormalizer;
 
 public class HeaderRpmBlock extends HeaderBlock {
 
