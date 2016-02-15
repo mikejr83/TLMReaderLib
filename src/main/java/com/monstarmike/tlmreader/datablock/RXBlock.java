@@ -23,7 +23,8 @@ import com.google.common.primitives.Shorts;
  * The values b,l,r,frameloss,holds are not used.<br>
  * The not used values are 32768 (0x8000) == Short.MIN_VALUE.<br>
  * It gives me the appearance, that Lemon is using signed short, with
- * Short.MIN_VALUE for invalid values.
+ * Short.MIN_VALUE for invalid values. Some DataBlocks contains negativ values,
+ * I consider them as invalid too.
  */
 
 public class RXBlock extends DataBlock {
@@ -108,8 +109,8 @@ public class RXBlock extends DataBlock {
 	}
 
 	/**
-	 * @return If Spectrum Telemetry System is used, the value shows
-	 *         lost frames.<br>
+	 * @return If Spectrum Telemetry System is used, the value shows lost
+	 *         frames.<br>
 	 *         If Lemon Telemetry System is used, the value is not used.
 	 */
 	public short getFrameLoss() {
@@ -121,8 +122,7 @@ public class RXBlock extends DataBlock {
 	}
 
 	/**
-	 * @return If Spectrum Telemetry System is used, the value shows
-	 *         holds.<br>
+	 * @return If Spectrum Telemetry System is used, the value shows holds.<br>
 	 *         If Lemon Telemetry System is used, the value is not used.
 	 */
 	public short getHolds() {
