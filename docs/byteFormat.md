@@ -126,6 +126,8 @@ After the header blocks data repreats in a 20 byte block:
 *The values for the Volts and Temperature are always present and do not have to be enabled on the Transmitter. 
 It is also suspected that this is true of the RPM and the current sensors.*
 
+The following addresses for offset 0x4 are reserved: 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A
+
 ### Voltage (Legacy)
 
 Data type value: 0x00
@@ -135,9 +137,82 @@ Data type value: 0x00
 
 Data type value: 0x01
 
+### Power Box
+
+Data type value: 0x0A.
+
+Voltages are measured in 0.01v increments. Capacity is in units of 1mAh.
+
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0x0         | Timestamp low byte |
+| 0x1         | Timestamp |
+| 0x2         | Timestamp |
+| 0x3         | Timestamp high byte |
+| 0x4         | Data type |
+| 0x5         | ?? |
+| 0x6         | Volt 1 (High Byte) |
+| 0x7         | Volt 1 (Low Byte) |
+| 0x8         | Volt 2 (High Byte) | 
+| 0x9         | Volt 2 (Low Byte) |
+| 0x0A        | Capacity 1 (High Byte) |
+| 0x0B        | Capacity 1 (Low Byte) |
+| 0x0C        | Capacity 2 (High Byte) |
+| 0x0D        | Capacity 2 (Low Byte) |
+| 0x0E        | Spare 16 - 1 (High Byte) |
+| 0x0F        | Spare 16 - 1 (Low Byte) |
+| 0x10        | Spare 16 - 2 (High Byte) |
+| 0x11        | Spare 16 - 2 (Low Byte) |
+| 0x12        | Spare |
+| 0x13        | Alarms |
+
+#### Power Box Alarms
+
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0x1         | Voltage 1 |
+| 0x2         | Voltage 2 |
+| 0x4         | Capacity 1 |
+| 0x8         | Capacity 2 |
+| 0x10        | RPM - Not used? |
+| 0x20        | Temperature - Not Used? |
+| 0x40        | Reserved |
+| 0x80        | Reserved |
+
+### Airspeed
+
+Data type value: 0x11.
+
+Airseepd measured in 1km/h increments.
+
+| Byte Offset | Description |
+| ----------- | ----------- | 
+| 0x0         | Timestamp low byte |
+| 0x1         | Timestamp |
+| 0x2         | Timestamp |
+| 0x3         | Timestamp high byte |
+| 0x4         | Data type |
+| 0x5         | ?? |
+| 0x6         | Airspeed (High Byte) |
+| 0x7         | Airspeed (Low Byte) |
+| 0x8         | Max Airspeed (High Byte) | 
+| 0x9         | Max Airspeed (Low Byte) |
+| 0x0A        | ?? |
+| 0x0B        | ?? |
+| 0x0C        | ?? |
+| 0x0D        | ?? |
+| 0x0E        | ?? |
+| 0x0F        | ?? |
+| 0x10        | ?? |
+| 0x11        | ?? |
+| 0x12        | ?? |
+| 0x13        | ?? |
+
 ### Altitude
 
-Data type value: 0x12
+Data type value: 0x12.
+
+Altitude in 0.1 meter increments.
 
 | Byte Offset | Description |
 | ----------- | ----------- | 
@@ -149,8 +224,8 @@ Data type value: 0x12
 | 0x5         | ?? |
 | 0x6         | Altitude (High Byte) |
 | 0x7         | Altitude (Low Byte) |
-| 0x8         | ?? | 
-| 0x9         | ?? |
+| 0x8         | Altitude Max (High Byte) | 
+| 0x9         | Altitude Max (Low Byte) |
 | 0x0A        | ?? |
 | 0x0B        | ?? |
 | 0x0C        | ?? |
@@ -166,7 +241,9 @@ The format is in integer and is in 0.1m increments. 1004 = 100.4 meters.
 
 ### G-Force
 
-Data type value: 0x14
+Data type value: 0x14.
+
+Force is reported in 0.01G increments. The data type for these measurements are a 16-bit **signed** integer. Range is +/- 4000 (+/- 40G) in pro models. Range is +/- 800 (+/- 8G) in standard models. The max gforce for for the x-axis is the absolute value for fore/aft. The max gforce for the y-axis is the absolute value for left/right. The value for the z-axis is the wing spar load.
 
 | Byte Offset | Description |
 | ----------- | ----------- | 
@@ -191,7 +268,183 @@ Data type value: 0x14
 | 0x12        | Z-min (High Byte) |
 | 0x13        | Z-min (Low Byte) |
 
-### GPS - Second Block
+### JetCat
+
+Data type value: 0x15.
+
+**NOTE:** The 16-bit BCD values are assumed to be in the correct order in regards to the whole number and decimal portions (see the bolded portion). The byte-offset for the values is known to be correct. Since the writer does not have a JetCat unit for testing those positions for whole and decimal values will be assumed until confirmation is provided. 
+
+| Byte Offset | Description |
+| ----------- | ----------- |
+| 0x0         | Timestamp low byte |
+| 0x1         | Timestamp |
+| 0x2         | Timestamp |
+| 0x3         | Timestamp high byte |
+| 0x4         | Data type |
+| 0x5         | ?? |
+| 0x6         | ECU Status - See table below. |
+| 0x7         | Throttle (BCD) xx Percent |
+| 0x8         | Pack Voltage (BCD) **xx**.yy | 
+| 0x9         | Pack Voltage (BCD) xx.**yy** |
+| 0x0A        | Pump Voltage (BCD) **xx**.yy |
+| 0x0B        | Pump Voltage (BCD) xx.**yy** |
+| 0x0C        | RPM (BCD) (High Byte) |
+| 0x0D        | RPM (BCD) |
+| 0x0E        | RPM (BCD) |
+| 0x0F        | RPM (BCD) (Low Byte) |
+| 0x10        | EGT in Celsius (BCD) (High Byte) |
+| 0x11        | EGT in Celsius (BCD) (Low Byte) |
+| 0x12        | Off Condition (BCD) - See table below. |
+| 0x13        | Spare |
+
+#### ECU Status
+
+##### JetCat
+
+| Value | Description |
+| ----------- | ----------- |
+| 0x00 | Off |
+| 0x01 | Wait for RPM |
+| 0x02 | Ignite |
+| 0x03 | Accelerate |
+| 0x04 | Stabilize |
+| 0x05 | Learn - Hi |
+| 0x06 | Learn - Low |
+| 0x07 | Undefined |
+| 0x08 | Slow down |
+| 0x09 | Manual |
+| 0x10 | Auto Off |
+| 0x11 | Run |
+| 0x12 | Acceleration Delay |
+| 0x13 | Speed Reg. (Speed Control) |
+| 0x14 | Two Shaft Regualte (only for secondary shaft) |
+| 0x15 | Pre-heat 1 |
+| 0x16 | Pre-heat 2 |
+| 0x17 | Main F Start |
+| 0x18 | Not Used |
+| 0x19 | Kero Fule On |
+
+*Undefined states from 0x1A to 0x1F*
+
+##### EvoJet
+
+| Value | Description |
+| ----------- | ----------- |
+| 0x20 | Off |
+| 0x21 | Ignite |
+| 0x22 | Accelerate |
+| 0x23 | Run |
+| 0x24 | Cal |
+| 0x25 | Cool |
+| 0x26 | Fire |
+| 0x27 | Glow |
+| 0x28 | Heat |
+| 0x29 | Idle |
+| 0x2A | Lock |
+| 0x2B | Rel |
+| 0x2C | Spin |
+| 0x2D | Stop |
+
+*Undefined states from 0x2E to 0x2F
+
+##### Hornet
+
+| Value | Description |
+| ----------- | ----------- |
+| 0x30 | Off |
+| 0x31 | Slow down |
+| 0x32 | Cool down |
+| 0x33 | Auto |
+| 0x34 | Auto HC |
+| 0x35 | Burner On |
+| 0x36 | Cal Idle |
+| 0x37 | Calibrate |
+| 0x38 | Dev Delay |
+| 0x39 | Emergency |
+| 0x3A | Fuel Heat |
+| 0x3B | Fuel Ignite  |
+| 0x3C | Go Idle |
+| 0x3D | Prop Ignite |
+| 0x3E | Ramp Delay |
+| 0x3F | Ramp Up |
+| 0x40 | Standby |
+| 0x41 | Steady |
+| 0x42 | Wait Acc |
+| 0x43 | Error |
+
+*Undefined states from 0x44 to 0x4F
+
+##### XICOY
+
+| Value | Description |
+| ----------- | ----------- |
+| 0x50 | Temperature High |
+| 0x51 | Trim Low |
+| 0x52 | Set Idle |
+| 0x53 | Ready |
+| 0x54 | Ignition |
+| 0x55 | Fuel Ramp |
+| 0x56 | Glow Test |
+| 0x57 | Running |
+| 0x58 | Stop |
+| 0x59 | Flameout |
+| 0x5A | Speed Low |
+| 0x5B | Cooling  |
+| 0x5C | Igniter Bad |
+| 0x5D | Starter F |
+| 0x5E | Weak Fuel |
+| 0x5F | Start On |
+| 0x60 | Pre-heat |
+| 0x61 | Battery |
+| 0x62 | Timeout |
+| 0x63 | Overload |
+| 0x64 | Igniter Fail |
+| 0x65 | Burner On |
+| 0x66 | Starting |
+| 0x67 | Switch Over |
+| 0x68 | Cal Pump |
+| 0x69 | Pump Limit |
+| 0x6A | No Engine |
+| 0x6B | Power Boost |
+| 0x6C | Run Idle |
+| 0x6D | Run Max |
+
+*ECU Max State: 0x74*
+
+#### Off Condition
+
+##### JetCat
+
+Only valid when the ECU status is 0x00 (Off). Enumeration is defined as starting 0. All other values are assumed to increment by 1.
+
+| Value | Description |
+| ----------- | ----------- |
+| 0x01 | No Off Condition Defined |
+| 0x02 | Shutdown via RC |
+| 0x03 | Over temperature |
+| 0x04 | Ignition Timeout |
+| 0x05 | Acceleration Timeout |
+| 0x06 | Acceleration Too Slow |
+| 0x07 | Over RPM |
+| 0x08 | Low RPM Off |
+| 0x09 | Low Battery |
+| 0x0A | Auto Off |
+| 0x0B | Low Temperature Off |
+| 0x0C | Hi Temp Off |
+| 0x0D | Glow Plug Defective |
+| 0x0E | Watch Dog Timer |
+| 0x0F | Fail Safe Off |
+| 0x10 | Manual Off (via GSU) |
+| 0x11 | Power Fail (Battery fail) |
+| 0x12 | Temp Sensor Fail (only during startup) |
+| 0x13 | Fuel Fail |
+| 0x14 | Prop Fail |
+| 0x15 | 2nd Engine Fail |
+| 0x16 | 2nd Engine Diff Too High |
+| 0x17 | 2nd Engine No Comm |
+| 0x18 | Max Off Condition |
+
+### GPS - Second Block (Location Data)
 
 Data type value: 0x16.
 
