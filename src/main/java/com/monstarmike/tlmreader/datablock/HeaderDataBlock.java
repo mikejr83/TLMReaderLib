@@ -6,6 +6,11 @@ public class HeaderDataBlock extends HeaderBlock {
 	boolean terminatingBlock = false;
 	private short sensorType;
 
+	public HeaderDataBlock(byte[] rawData) {
+		super(rawData);
+		decode(rawData);
+	}
+
 	public String getSensorTypeEnabled() {
 		byte[] sensorTypeBytes = Shorts.toByteArray(sensorType);
 		if (sensorTypeBytes[0x00] != sensorTypeBytes[0x01]) {
@@ -40,11 +45,6 @@ public class HeaderDataBlock extends HeaderBlock {
 
 	public boolean isTerminatingBlock() {
 		return terminatingBlock;
-	}
-
-	public HeaderDataBlock(byte[] rawData) {
-		super(rawData);
-		decode(rawData);
 	}
 
 	private void decode(byte[] rawData) {
