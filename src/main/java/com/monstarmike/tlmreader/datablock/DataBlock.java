@@ -80,8 +80,28 @@ public abstract class DataBlock implements Block {
 				break;
 
 			case 0x14:
-				// gforce
+				// g-force
 				block = new GForceBlock(bytes);
+				break;
+				
+			case 0x15:
+				// JetCat
+				block = new JetCat(bytes);
+				break;
+				
+			case 0x16:
+				// GPS Location Data
+				block = new GPSLocationBlock(bytes);
+				break;
+				
+			case 0x17:
+				// GPS Status
+				block = new GPSStatusBlock(bytes);
+				break;
+				
+			case 0x40:
+				// Vario
+				block = new VarioBlock(bytes);
 				break;
 
 			case 0x40:
