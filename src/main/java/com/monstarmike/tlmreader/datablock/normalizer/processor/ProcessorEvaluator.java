@@ -6,36 +6,34 @@ import java.util.List;
 
 import com.monstarmike.tlmreader.datablock.DataBlock;
 
-/** 
+/**
  * Generic Processor used by normalizers
  */
 public class ProcessorEvaluator<T extends DataBlock> {
 	private List<AbstractProcessor<T>> processors = new ArrayList<AbstractProcessor<T>>();
-	
+
 	public void process(List<DataBlock> dataBlocks) {
 		evalProcessors(dataBlocks);
 	}
-	
+
 	public void registerProcessor(AbstractProcessor<T> processor) {
 		processors.add(processor);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void evalProcessors(List<DataBlock> dataBlocks) {
 		for (AbstractProcessor<T> processor : processors) {
-			for (DataBlock dataBlock : dataBlocks){
+			for (DataBlock dataBlock : dataBlocks) {
 				if (processor.getClassOfDataBlock().isAssignableFrom(dataBlock.getClass())) {
-					processor.preprocess((T)dataBlock);
+					processor.preprocess((T) dataBlock);
 				}
 			}
 			processor.preprocessFinished();
 			Iterator<DataBlock> iterator = dataBlocks.iterator();
 			while (iterator.hasNext()) {
 				DataBlock dataBlock = iterator.next();
-				if (dataBlock.getClass().equals(processor.getClassOfDataBlock())) {
-					if (processor.isBad((T)dataBlock)) {
-						iterator.remove();
-					}
+				if (dataBlock.getClass().equals(processor.getClassOfDataBlock()) && processor.isBad((T) dataBlock)) {
+					iterator.remove();
 				}
 			}
 		}

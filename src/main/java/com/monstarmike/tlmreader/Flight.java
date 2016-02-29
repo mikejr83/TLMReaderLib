@@ -11,8 +11,6 @@ import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
-import com.monstarmike.tlmreader.datablock.HeaderRxBlock;
-import com.monstarmike.tlmreader.datablock.HeaderVoltBlock;
 import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
 
 public class Flight implements IFlight {
@@ -25,9 +23,10 @@ public class Flight implements IFlight {
 
 	public Duration getDuration() {
 		if (this.duration == null) {
-			int start = 0, end = 0;
+			int start = 0;
+			int end = 0;
 
-			if (this.blockData.size() > 0) {
+			if (!this.blockData.isEmpty()) {
 				start = this.blockData.get(0).getTimestamp();
 				end = this.blockData.get(this.blockData.size() - 1).getTimestamp();
 			}
@@ -35,7 +34,7 @@ public class Flight implements IFlight {
 		}
 		return this.duration;
 	}
-	
+
 	public void normalizeDataBlocks() {
 		List<HeaderBlock> headerBlocks = getHeaderBlocks();
 		for (HeaderBlock headerBlock : headerBlocks) {
@@ -81,7 +80,7 @@ public class Flight implements IFlight {
 	public boolean hasRpmHeader() {
 		return rpmHeader != null;
 	}
-	
+
 	public HeaderRpmBlock getRpmHeader() {
 		return rpmHeader;
 	}
