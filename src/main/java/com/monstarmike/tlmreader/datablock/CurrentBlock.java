@@ -14,13 +14,22 @@ public class CurrentBlock extends DataBlock {
 	 */
 	private float current;
 
-	public float getCurrent() {
-		return current;
-	}
-
 	public CurrentBlock(byte[] rawData) {
 		super(rawData);
 		decode(rawData);
+	}
+
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof CurrentBlock) {
+			CurrentBlock current = (CurrentBlock) block;
+			return current.getCurrent() == this.current;
+		}
+		return false;
+	}
+
+	public float getCurrent() {
+		return current;
 	}
 
 	private void decode(byte[] rawData) {

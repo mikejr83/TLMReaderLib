@@ -6,8 +6,18 @@ public final class DataBlockBuilder {
 	private final byte[] dataBlock = new byte[20];
 
 	public DataBlockBuilder(final int timestamp, final int blockMarker) {
-		System.arraycopy(Ints.toByteArray(timestamp), 0, dataBlock, 0, 4);
+		byte[] byteArray = Ints.toByteArray(timestamp);
+		System.arraycopy(convertToLittleEndian(byteArray), 0, dataBlock, 0, 4);
 		setValueAtPosition(dataBlock, blockMarker, 4);
+	}
+
+	private Object convertToLittleEndian(byte[] byteArray) {
+		byte[] littleEndian = new byte[4];
+		littleEndian[0] = byteArray[3];
+		littleEndian[1] = byteArray[2];
+		littleEndian[2] = byteArray[1];
+		littleEndian[3] = byteArray[0];
+		return littleEndian;
 	}
 
 	public DataBlockBuilder setValue(int value, int position) {

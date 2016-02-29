@@ -11,6 +11,8 @@ import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
+import com.monstarmike.tlmreader.datablock.HeaderRxBlock;
+import com.monstarmike.tlmreader.datablock.HeaderVoltBlock;
 import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
 
 public class Flight implements IFlight {

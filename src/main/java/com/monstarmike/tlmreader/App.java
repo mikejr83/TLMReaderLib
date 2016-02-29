@@ -18,13 +18,14 @@ public class App {
 		TLMReader reader = new TLMReader();
 		try {
 			String tlmFileSailplane = "src/test/data/2015 - FSS 2 - day 2.TLM";
-			String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
-			String tlm = tlmFileHeli;
+//			String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
+			String tlmFileHeli = "src/test/data/2015-12-29.TLM";
+			String tlm = tlmFileSailplane;
 			List<IFlight> flights = reader.parseFlightDefinitions(tlm);
 			for (IFlight flight : flights) {
 				printFlightDefinitions(flight);
 			}
-			Flight flight = reader.parseFlight(tlm, 0);
+			Flight flight = reader.parseFlight(tlm, 2);
 			printFlightDefinitions(flight);
 			printDataBlocks(flight);
 		} catch (IOException e) {
@@ -51,7 +52,7 @@ public class App {
 			// }
 			// }
 //			printStandardBlock(dataBlock);
-			printRxBlock(dataBlock);
+//			printRxBlock(dataBlock);
 		}
 	}
 

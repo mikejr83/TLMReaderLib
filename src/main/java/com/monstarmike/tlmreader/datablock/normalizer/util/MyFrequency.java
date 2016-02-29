@@ -1,4 +1,4 @@
-package com.monstarmike.tlmreader.datablock.normalizer;
+package com.monstarmike.tlmreader.datablock.normalizer.util;
 
 import java.util.Iterator;
 import java.util.Map;

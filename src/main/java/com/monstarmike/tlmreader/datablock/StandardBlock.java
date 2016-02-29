@@ -12,6 +12,33 @@ public class StandardBlock extends DataBlock {
 	private byte poles = 1;
 	private int rawRpmData;
 
+	public StandardBlock(final byte[] rawData, final HeaderRpmBlock rpmHeader) {
+		super(rawData);
+		if (rpmHeader != null) {
+			ratioInHunderth = rpmHeader.getRatioInHunderth();
+			poles = rpmHeader.getPoles();
+		}
+		decode(rawData);
+	}
+	
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof StandardBlock) {
+			StandardBlock std = (StandardBlock) block;
+			if (std.getRpm() != rpm) {
+				return false;
+			}
+			if (std.getVoltageInHunderthOfVolts() != voltageInHunderthOfVolts) {
+				return false;
+			}
+			if (std.getTemperatureInGradFahrenheit() != tempInGradFahrenheit) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
 	public boolean hasValidRpmData() {
 		return rawRpmData != 0xFFFF && rawRpmData != 0x0000;
 	}
@@ -38,15 +65,6 @@ public class StandardBlock extends DataBlock {
 
 	public float getTemperatureInGradCelsius() {
 		return (tempInGradFahrenheit - 32) / 1.8f;
-	}
-
-	public StandardBlock(final byte[] rawData, final HeaderRpmBlock rpmHeader) {
-		super(rawData);
-		if (rpmHeader != null) {
-			ratioInHunderth = rpmHeader.getRatioInHunderth();
-			poles = rpmHeader.getPoles();
-		}
-		decode(rawData);
 	}
 
 	private void decode(final byte[] rawData) {

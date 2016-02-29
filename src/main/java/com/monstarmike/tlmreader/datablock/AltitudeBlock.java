@@ -14,13 +14,22 @@ public final class AltitudeBlock extends DataBlock {
 
 	private short altitudeInTenthOfMeter;
 
-	public short getAltitudeInTenthOfMeter() {
-		return this.altitudeInTenthOfMeter;
-	}
-
 	public AltitudeBlock(byte[] rawData) {
 		super(rawData);
 		decode(rawData);
+	}
+
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof AltitudeBlock) {
+			AltitudeBlock alt = (AltitudeBlock) block;
+			return alt.getAltitudeInTenthOfMeter() == this.altitudeInTenthOfMeter;
+		}
+		return false;
+	}
+
+	public short getAltitudeInTenthOfMeter() {
+		return this.altitudeInTenthOfMeter;
 	}
 
 	private void decode(byte[] rawData) {

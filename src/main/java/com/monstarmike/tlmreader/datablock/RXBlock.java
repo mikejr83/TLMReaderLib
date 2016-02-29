@@ -29,14 +29,49 @@ import com.google.common.primitives.Shorts;
 
 public class RXBlock extends DataBlock {
 
-	private short lostPacketsReceiverA, lostPacketsReceiverB, lostPacketsReceiverL, lostPacketsReceiverR, frameLoss,
-			holds, voltageInHunderthOfVolts;
+	private short lostPacketsReceiverA; 
+	private short lostPacketsReceiverB;
+	private short lostPacketsReceiverL;
+	private short lostPacketsReceiverR; 
+	private short frameLoss;
+	private short holds; 
+	private short voltageInHunderthOfVolts;
 
 	public RXBlock(final byte[] rawData) {
 		super(rawData);
 		decode(rawData);
 	}
 
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof RXBlock) {
+			RXBlock rx = (RXBlock) block;
+			if (rx.getLostPacketsReceiverA() != getLostPacketsReceiverA()) {
+				return false;
+			}
+			if (rx.getLostPacketsReceiverB() != getLostPacketsReceiverB()) {
+				return false;
+			}
+			if (rx.getLostPacketsReceiverL() != getLostPacketsReceiverL()) {
+				return false;
+			}
+			if (rx.getLostPacketsReceiverR() != getLostPacketsReceiverR()) {
+				return false;
+			}
+			if (rx.getFrameLoss() != getFrameLoss()) {
+				return false;
+			}
+			if (rx.getHolds() != getHolds()) {
+				return false;
+			}
+			if (rx.getVoltageInHunderthOfVolts() != getVoltageInHunderthOfVolts() ) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	private void decode(final byte[] rawData) {
 		lostPacketsReceiverA = Shorts.fromBytes(rawData[0x06], rawData[0x07]);
 		lostPacketsReceiverB = Shorts.fromBytes(rawData[0x08], rawData[0x09]);
@@ -138,12 +173,13 @@ public class RXBlock extends DataBlock {
 
 	@Override
 	public String toString() {
-		return "RxData; LostPacketsReceiver A: " + getLostPacketsReceiverA() + " (" + hasValidDataLostPacketsReceiverA()
-				+ "), B: " + getLostPacketsReceiverB() + " (" + hasValidDataLostPacketsReceiverB() + "), L: "
-				+ getLostPacketsReceiverL() + " (" + hasValidDataLostPacketsReceiverL() + "), R: "
-				+ getLostPacketsReceiverR() + " (" + hasValidDataLostPacketsReceiverR() + "), FrameLoss: "
-				+ getFrameLoss() + "(" + hasValidFrameLosssData() + ") , Holds: " + getHolds() + "("
-				+ hasValidHoldsData() + "), Volts: " + getVoltageInHunderthOfVolts();
+		return "RxData: " + getTimestamp() + ", LostPacketsReceiver A: " + getLostPacketsReceiverA() + " ("
+				+ hasValidDataLostPacketsReceiverA() + "), B: " + getLostPacketsReceiverB() + " ("
+				+ hasValidDataLostPacketsReceiverB() + "), L: " + getLostPacketsReceiverL() + " ("
+				+ hasValidDataLostPacketsReceiverL() + "), R: " + getLostPacketsReceiverR() + " ("
+				+ hasValidDataLostPacketsReceiverR() + "), FrameLoss: " + getFrameLoss() + "("
+				+ hasValidFrameLosssData() + ") , Holds: " + getHolds() + "(" + hasValidHoldsData() + "), Volts: "
+				+ getVoltageInHunderthOfVolts();
 	}
 
 }

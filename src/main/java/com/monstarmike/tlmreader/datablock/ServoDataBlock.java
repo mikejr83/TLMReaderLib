@@ -57,6 +57,26 @@ public class ServoDataBlock extends DataBlock {
 	private short[] channelValues;
 	private int availableChannelWithDataBitArray = 0;
 
+	public ServoDataBlock(byte[] rawData) {
+		super(rawData);
+		decode(rawData);
+	}
+
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof ServoDataBlock) {
+			ServoDataBlock servo = (ServoDataBlock) block;
+			for (int i=0; i<availableChannelWithDataBitArray; i++) {
+				if (servo.getChannelValue(i) != channelValues[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+
+	}
+	
 	public boolean hasChannel(int channelNumber) {
 		return isBitSet(channelNumber);
 	}
@@ -95,13 +115,8 @@ public class ServoDataBlock extends DataBlock {
 		return channelValues[channelNumber];
 	}
 
-	public ServoDataBlock(byte[] rawData) {
-		super(rawData);
-		decode(rawData);
-	}
-
 	private void setChannelValue(short channelValue, int completeChannelNumber) {
-		channelValues[completeChannelNumber] = (short) channelValue;
+		channelValues[completeChannelNumber] = channelValue;
 		setBit(completeChannelNumber);
 	}
 

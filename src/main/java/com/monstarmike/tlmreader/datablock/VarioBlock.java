@@ -4,9 +4,44 @@ import com.google.common.primitives.Shorts;
 
 public class VarioBlock extends DataBlock {
 
-	private short altitudeInTenthOfMeter, deltaInIntervalOf250MsInTenthOfMeter, deltaInIntervalOf500MsInTenthOfMeter,
-			deltaInIntervalOf1000MsInTenthOfMeter, deltaInIntervalOf2000MsInTenthOfMeter,
-			deltaInIntervalOf3000MsInTenthOfMeter;
+	private short altitudeInTenthOfMeter;
+	private short deltaInIntervalOf250MsInTenthOfMeter;
+	private short deltaInIntervalOf500MsInTenthOfMeter;
+	private short deltaInIntervalOf1000MsInTenthOfMeter;
+	private short deltaInIntervalOf2000MsInTenthOfMeter;
+	private short deltaInIntervalOf3000MsInTenthOfMeter;
+
+	public VarioBlock(byte[] rawData) {
+		super(rawData);
+		decode(rawData);
+	}
+
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof VarioBlock) {
+			VarioBlock std = (VarioBlock) block;
+			if (std.getAltitudeInTenthOfMeter() != altitudeInTenthOfMeter) {
+				return false;
+			}
+			if (std.getDeltaInIntervalOf250MsInTenthOfMeter() != deltaInIntervalOf250MsInTenthOfMeter) {
+				return false;
+			}
+			if (std.getDeltaInIntervalOf500MsInTenthOfMeter() != deltaInIntervalOf500MsInTenthOfMeter) {
+				return false;
+			}
+			if (std.getDeltaInIntervalOf1000MsInTenthOfMeter() != deltaInIntervalOf1000MsInTenthOfMeter) {
+				return false;
+			}
+			if (std.getDeltaInIntervalOf2000MsInTenthOfMeter() != deltaInIntervalOf2000MsInTenthOfMeter) {
+				return false;
+			}
+			if (std.getDeltaInIntervalOf3000MsInTenthOfMeter() != deltaInIntervalOf3000MsInTenthOfMeter) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
 
 	public short getAltitudeInTenthOfMeter() {
 		return altitudeInTenthOfMeter;
@@ -32,11 +67,6 @@ public class VarioBlock extends DataBlock {
 		return deltaInIntervalOf3000MsInTenthOfMeter;
 	}
 
-	public VarioBlock(byte[] rawData) {
-		super(rawData);
-		decode(rawData);
-	}
-
 	private void decode(byte[] rawData) {
 		altitudeInTenthOfMeter = Shorts.fromBytes(rawData[0x06], rawData[0x07]);
 		deltaInIntervalOf250MsInTenthOfMeter = Shorts.fromBytes(rawData[0x08], rawData[0x09]);
@@ -48,8 +78,11 @@ public class VarioBlock extends DataBlock {
 
 	@Override
 	public String toString() {
-		return super.toString() + " - altitude: " + getAltitudeInTenthOfMeter() + " - 250 delta: " + getDeltaInIntervalOf250MsInTenthOfMeter() + " - 500 delta: "
-				+ getDeltaInIntervalOf500MsInTenthOfMeter() + " - 1000 delta: " + getDeltaInIntervalOf1000MsInTenthOfMeter() + " - 2000 delta: " + getDeltaInIntervalOf2000MsInTenthOfMeter() + " - 3000 delta: "
+		return super.toString() + " - altitude: " + getAltitudeInTenthOfMeter() + " - 250 delta: "
+				+ getDeltaInIntervalOf250MsInTenthOfMeter() + " - 500 delta: "
+				+ getDeltaInIntervalOf500MsInTenthOfMeter() + " - 1000 delta: "
+				+ getDeltaInIntervalOf1000MsInTenthOfMeter() + " - 2000 delta: "
+				+ getDeltaInIntervalOf2000MsInTenthOfMeter() + " - 3000 delta: "
 				+ getDeltaInIntervalOf3000MsInTenthOfMeter();
 	}
 }

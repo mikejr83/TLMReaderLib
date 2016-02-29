@@ -1,28 +1,20 @@
 package com.monstarmike.tlmreader.datablock.normalizer;
 
-import java.util.Iterator;
 import java.util.List;
 
 import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.StandardBlock;
+import com.monstarmike.tlmreader.datablock.normalizer.processor.ProcessorEvaluator;
+import com.monstarmike.tlmreader.datablock.normalizer.processor.TooHighRpmValueProcessor;
 
 public class RpmNormalizer implements DataNormalizer {
-
-	private static final double LIMIT_RPM_VALUE = 10000.0;
 
 	/**
 	 * Remove all datablocks with too high rpm values
 	 */
 	public void normalize(final List<DataBlock> dataBlocks) {
-		Iterator<DataBlock> iterator = dataBlocks.iterator();
-		while (iterator.hasNext()) {
-			DataBlock dataBlock = iterator.next();
-			if (dataBlock instanceof StandardBlock) {
-				float rpm = ((StandardBlock) dataBlock).getRpm();
-				if (rpm > LIMIT_RPM_VALUE) {
-					iterator.remove();
-				}
-			}
-		}
+		ProcessorEvaluator<StandardBlock> evaluator = new ProcessorEvaluator<StandardBlock>();
+		evaluator.registerProcessor(new TooHighRpmValueProcessor());
+		evaluator.process(dataBlocks);
 	}
 }

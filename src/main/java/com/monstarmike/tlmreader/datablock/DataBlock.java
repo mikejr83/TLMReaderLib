@@ -5,16 +5,40 @@ import com.google.common.primitives.Ints;
 public abstract class DataBlock implements Block {
 
 	private int timestamp;
+
+	public DataBlock(byte[] rawData) {
+		decode(rawData);
+	}
 	
+	public abstract boolean areValuesEquals(DataBlock block);
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + timestamp;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DataBlock other = (DataBlock) obj;
+		if (timestamp != other.timestamp)
+			return false;
+		return true;
+	}
+
 	/**
 	 * Timestamp in hunderth of seconds
 	 */
 	public int getTimestamp() {
 		return timestamp;
-	}
-
-	public DataBlock(byte[] rawData) {
-		decode(rawData);
 	}
 
 	private void decode(byte[] rawData) {

@@ -1,4 +1,4 @@
-package com.monstarmike.tlmreader.datablock.normalizer;
+package com.monstarmike.tlmreader.datablock.normalizer.util;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -6,6 +6,8 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.monstarmike.tlmreader.datablock.normalizer.util.MyFrequency;
 
 public class MyFrequencyTest {
 

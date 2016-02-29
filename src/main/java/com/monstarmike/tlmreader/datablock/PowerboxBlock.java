@@ -18,8 +18,36 @@ public class PowerboxBlock extends DataBlock {
 	 * but not set the value.
 	 */
 
-	private short voltageOneInHunderthOfVolts, voltageTwoInHunderthOfVolts;
-	private short capacityOneInmAh, capacityTwoInmAh;
+	private short voltageOneInHunderthOfVolts;
+	private short voltageTwoInHunderthOfVolts;
+	private short capacityOneInmAh; 
+	private short capacityTwoInmAh;
+
+	public PowerboxBlock(byte[] rawData) {
+		super(rawData);
+		decode(rawData);
+	}
+	
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof PowerboxBlock) {
+			PowerboxBlock powerbox = (PowerboxBlock) block;
+			if (powerbox.getVoltageOneInHunderthOfVolts() != voltageOneInHunderthOfVolts) {
+				return false;
+			}
+			if (powerbox.getVoltageOneInHunderthOfVolts() != voltageTwoInHunderthOfVolts) {
+				return false;
+			}
+			if (powerbox.getCapacityOneInmAh() != capacityOneInmAh) {
+				return false;
+			}
+			if (powerbox.getCapacityTwoInmAh() != capacityTwoInmAh) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
 
 	public short getVoltageOneInHunderthOfVolts() {
 		return voltageOneInHunderthOfVolts;
@@ -35,11 +63,6 @@ public class PowerboxBlock extends DataBlock {
 
 	public short getCapacityTwoInmAh() {
 		return capacityTwoInmAh;
-	}
-
-	public PowerboxBlock(byte[] rawData) {
-		super(rawData);
-		decode(rawData);
 	}
 
 	private void decode(byte[] rawData) {

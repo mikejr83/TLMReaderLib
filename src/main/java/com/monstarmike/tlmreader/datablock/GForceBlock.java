@@ -19,6 +19,16 @@ public class GForceBlock extends DataBlock {
 	private short xInHunderthOfG, yInHunderthOfG, zInHunderthOfG, maxXInHunderthOfG, maxYInHunderthOfG,
 			maxZInHunderthOfG, minZInHunderthOfG;
 
+	public GForceBlock(byte[] rawData) {
+		super(rawData);
+		decode(rawData);
+	}
+	
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		return false;
+	}
+
 	public short getXInHunderthOfG() {
 		return xInHunderthOfG;
 	}
@@ -45,11 +55,6 @@ public class GForceBlock extends DataBlock {
 
 	public short getMinZInHunderthOfG() {
 		return minZInHunderthOfG;
-	}
-
-	public GForceBlock(byte[] rawData) {
-		super(rawData);
-		decode(rawData);
 	}
 
 	private void decode(byte[] rawData) {
