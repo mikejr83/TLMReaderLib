@@ -32,7 +32,7 @@ public class ProcessorEvaluator<T extends DataBlock> {
 			Iterator<DataBlock> iterator = dataBlocks.iterator();
 			while (iterator.hasNext()) {
 				DataBlock dataBlock = iterator.next();
-				if (dataBlock.getClass().equals(processor.getClassOfDataBlock()) && processor.isBad((T) dataBlock)) {
+				if (processor.getClassOfDataBlock().isAssignableFrom(dataBlock.getClass()) && processor.isBad((T) dataBlock)) {
 					iterator.remove();
 				}
 			}

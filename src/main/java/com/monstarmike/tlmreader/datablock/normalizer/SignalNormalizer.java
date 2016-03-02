@@ -29,14 +29,6 @@ public class SignalNormalizer implements DataNormalizer {
 		evaluator.registerProcessor(new InvalidCountsProcessor());
 		final SpectrumTelemetryDetector detectSpectrumTelemetry = new SpectrumTelemetryDetector();
 		evaluator.registerProcessor(detectSpectrumTelemetry);
-		evaluator.registerProcessor(new RedundantDataBlocksProcessor<RXBlock>() {
-
-			@Override
-			public Class<? extends RXBlock> getClassOfDataBlock() {
-				return RXBlock.class;
-			}
-			
-		});
 		evaluator.process(dataBlocks);
 		
 		headerRxBlock.setSpectrumTelemetrySystem(detectSpectrumTelemetry.isSpectrumTelemetry());

@@ -12,6 +12,8 @@ import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
 import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
+import com.monstarmike.tlmreader.datablock.normalizer.processor.ProcessorEvaluator;
+import com.monstarmike.tlmreader.datablock.normalizer.processor.RedundantDataBlocksProcessor;
 
 public class Flight implements IFlight {
 	private ArrayList<HeaderBlock> headerData = new ArrayList<HeaderBlock>();
@@ -87,5 +89,11 @@ public class Flight implements IFlight {
 
 	public int getNumberOfDataBlocks() {
 		return blockData.size();
+	}
+	
+	public void removeRedundantDataBlocks() {
+		ProcessorEvaluator<DataBlock> evaluator = new ProcessorEvaluator<DataBlock>();
+		evaluator.registerProcessor(new RedundantDataBlocksProcessor());
+		evaluator.process(this.getDataBlocks());
 	}
 }

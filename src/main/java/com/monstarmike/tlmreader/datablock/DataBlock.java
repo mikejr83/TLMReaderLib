@@ -4,10 +4,17 @@ import com.google.common.primitives.Ints;
 
 public abstract class DataBlock implements Block {
 
+	private static int currentSeq = 0;
+	
+	private int sequence = currentSeq++; 
 	private int timestamp;
 
 	public DataBlock(byte[] rawData) {
 		decode(rawData);
+	}
+
+	public int getSequence() {
+		return sequence;
 	}
 	
 	public abstract boolean areValuesEquals(DataBlock block);
@@ -16,7 +23,7 @@ public abstract class DataBlock implements Block {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + timestamp;
+		result = prime * result + sequence;
 		return result;
 	}
 
@@ -29,7 +36,7 @@ public abstract class DataBlock implements Block {
 		if (getClass() != obj.getClass())
 			return false;
 		DataBlock other = (DataBlock) obj;
-		if (timestamp != other.timestamp)
+		if (sequence != other.sequence)
 			return false;
 		return true;
 	}
