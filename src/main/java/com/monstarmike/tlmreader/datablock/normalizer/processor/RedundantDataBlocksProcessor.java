@@ -1,13 +1,12 @@
 package com.monstarmike.tlmreader.datablock.normalizer.processor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import com.monstarmike.tlmreader.datablock.DataBlock;
-import com.monstarmike.tlmreader.datablock.ServoDataBlock;
 
 public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 
@@ -15,7 +14,7 @@ public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 
 	@Override
 	public void preprocess(DataBlock block) {
-		if (!(block instanceof ServoDataBlock)) {
+		if (!(block instanceof DataBlock)) {
 			return;
 		}
 		String type = getType(block);
@@ -28,8 +27,9 @@ public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 	private class ProcessBlockType {
 		private DataBlock lastBlock;
 		private boolean lastStateEquals;
-		private Set<DataBlock> redundantBlocks = new HashSet<DataBlock>();
+		private List<DataBlock> redundantBlocks = new ArrayList<DataBlock>();
 		private int count = 0;
+		private int currentPos = 0;
 
 		public void preprocess(DataBlock block) {
 			count++;
@@ -47,8 +47,30 @@ public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 			return count;
 		}
 
-		public Set<DataBlock> getRedundantBlocks() {
-			return redundantBlocks;
+		public int getNumberOfRedundantBlocks() {
+			return redundantBlocks.size();
+		}
+
+		/**
+		 * The RedundantBlock List must be ordered by the sequence.<br>
+		 * This Implementation is 2 to 3 times faster than the use of a map;
+		 * 
+		 * @param block
+		 *            The checked blocks must also be ordered by sequence.
+		 * @return Returns true, if the block can be found in the redundant
+		 *         block list.
+		 */
+		public boolean isRedundantBlock(final DataBlock block) {
+			if (currentPos >= redundantBlocks.size()) {
+				return false;
+			}
+			while (redundantBlocks.get(currentPos).getSequence() < block.getSequence()) {
+				currentPos++;
+				if (currentPos >= redundantBlocks.size()) {
+					return false;
+				}
+			}
+			return redundantBlocks.get(currentPos).getSequence() == block.getSequence();
 		}
 	}
 
@@ -64,8 +86,8 @@ public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 			String type = entry.getKey();
 			ProcessBlockType blockType = entry.getValue();
 			countAll += blockType.getCount();
-			redundantAll += blockType.getRedundantBlocks().size();
-			printRedundantBlocks(type, blockType.getCount(), blockType.getRedundantBlocks().size());
+			redundantAll += blockType.getNumberOfRedundantBlocks();
+			printRedundantBlocks(type, blockType.getCount(), blockType.getNumberOfRedundantBlocks());
 		}
 		printRedundantBlocks("TOTAL", countAll, redundantAll);
 	}
@@ -81,7 +103,7 @@ public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 		if (!typeMap.containsKey(type)) {
 			return false;
 		}
-		return typeMap.get(type).getRedundantBlocks().contains(block);
+		return typeMap.get(type).isRedundantBlock(block);
 	}
 
 	@Override

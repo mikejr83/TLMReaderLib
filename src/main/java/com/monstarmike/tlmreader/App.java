@@ -18,7 +18,6 @@ public class App {
 		TLMReader reader = new TLMReader();
 		try {
 			long start = System.currentTimeMillis();
-			System.out.println("Start " + start);
 			String tlmFileSailplane = "src/test/data/2015 - FSS 2 - day 2.TLM";
 			// String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
 			// String tlmFileHeli = "src/test/data/2015-12-29.TLM";
@@ -33,12 +32,11 @@ public class App {
 			printFlightDefinitions(flight);
 			printDataBlocks(flight);
 			long end = System.currentTimeMillis();
-			System.out.println("duration: " + (end - start));
+			System.out.println("duration: " + (end - start) + " ms") ;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("MAX: " + Short.MAX_VALUE);
 	}
 
 	private static void printFlightDefinitions(IFlight flight) {

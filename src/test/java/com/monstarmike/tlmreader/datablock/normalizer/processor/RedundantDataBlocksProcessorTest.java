@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -15,7 +14,6 @@ import com.monstarmike.tlmreader.datablock.StandardBlock;
 
 public class RedundantDataBlocksProcessorTest {
 
-	@Ignore
 	@Test
 	public void testRedundantValues() { 
 		final List<DataBlock> blocks = createBlocks(false, true, true, true, true, false, true, true, true, false, true);
@@ -25,7 +23,6 @@ public class RedundantDataBlocksProcessorTest {
 		Assert.assertEquals(expectedBad, actualBad);
 	}
 
-	@Ignore
 	@Test
 	public void testRedundantValuesAllEquals() { 
 		final List<DataBlock> blocks = createBlocks(false, true, true, true, true, true, true, true, true, true, true);
@@ -65,6 +62,7 @@ public class RedundantDataBlocksProcessorTest {
 		final DataBlock mock = Mockito.mock(RXBlock.class);
 		Mockito.when(mock.areValuesEquals(Mockito.any(DataBlock.class))).thenReturn(equalsToLast);
 		Mockito.when(mock.getTimestamp()).thenReturn(timestamp);
+		Mockito.when(mock.getSequence()).thenReturn(timestamp);
 		return mock;
 	}
 }
