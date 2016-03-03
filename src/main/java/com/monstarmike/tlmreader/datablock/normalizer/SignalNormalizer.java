@@ -7,10 +7,9 @@ import com.monstarmike.tlmreader.datablock.HeaderRxBlock;
 import com.monstarmike.tlmreader.datablock.RXBlock;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.DebugOutputProcessor;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.DiscountinuousBlocksProcessor;
-import com.monstarmike.tlmreader.datablock.normalizer.processor.ProcessorEvaluator;
-import com.monstarmike.tlmreader.datablock.normalizer.processor.RedundantDataBlocksProcessor;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.InvalidCountsProcessor;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.InvalidDataBlocksProcessor;
+import com.monstarmike.tlmreader.datablock.normalizer.processor.ProcessorEvaluator;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.SpectrumTelemetryDetector;
 
 public class SignalNormalizer implements DataNormalizer {
@@ -22,7 +21,7 @@ public class SignalNormalizer implements DataNormalizer {
 	}
 
 	public void normalize(final List<DataBlock> dataBlocks) {
-		ProcessorEvaluator<RXBlock> evaluator = new ProcessorEvaluator<RXBlock>();
+		ProcessorEvaluator<RXBlock> evaluator = new ProcessorEvaluator<>();
 		evaluator.registerProcessor(new DebugOutputProcessor());
 		evaluator.registerProcessor(new InvalidDataBlocksProcessor());
 		evaluator.registerProcessor(new DiscountinuousBlocksProcessor());

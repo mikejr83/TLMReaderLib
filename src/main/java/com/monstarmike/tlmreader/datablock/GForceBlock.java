@@ -16,14 +16,19 @@ public class GForceBlock extends DataBlock {
 	 * set for Z-axis from -40g to 40g
 	 */
 
-	private short xInHunderthOfG, yInHunderthOfG, zInHunderthOfG, maxXInHunderthOfG, maxYInHunderthOfG,
-			maxZInHunderthOfG, minZInHunderthOfG;
+	private short xInHunderthOfG;
+	private short yInHunderthOfG;
+	private short zInHunderthOfG;
+	private short maxXInHunderthOfG;
+	private short maxYInHunderthOfG;
+	private short maxZInHunderthOfG;
+	private short minZInHunderthOfG;
 
 	public GForceBlock(byte[] rawData) {
 		super(rawData);
 		decode(rawData);
 	}
-	
+
 	@Override
 	public boolean areValuesEquals(DataBlock block) {
 		return false;

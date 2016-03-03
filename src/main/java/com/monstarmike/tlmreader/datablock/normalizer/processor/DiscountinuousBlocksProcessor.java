@@ -11,10 +11,10 @@ public class DiscountinuousBlocksProcessor extends AbstractProcessor<RXBlock> {
 
 	private static final int MAX_CHANGE_IN_ONE_HUNDERTH = 10;
 
-	private Set<RXBlock> unclassifiedBlocks = new HashSet<RXBlock>();
+	private Set<RXBlock> unclassifiedBlocks = new HashSet<>();
 	private DataState dataState = DataState.UNKNOWN;
 	private RXBlock lastBlock = null;
-	private List<RXBlock> badBlocks = new ArrayList<RXBlock>();
+	private List<RXBlock> badBlocks = new ArrayList<>();
 
 	public boolean isBad(RXBlock block) {
 		return badBlocks.contains(block);

@@ -10,7 +10,7 @@ import com.monstarmike.tlmreader.datablock.DataBlock;
 
 public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 
-	private Map<String, ProcessBlockType> typeMap = new HashMap<String, ProcessBlockType>();
+	private Map<String, ProcessBlockType> typeMap = new HashMap<>();
 
 	@Override
 	public void preprocess(DataBlock block) {
@@ -27,7 +27,7 @@ public class RedundantDataBlocksProcessor extends AbstractProcessor<DataBlock> {
 	private class ProcessBlockType {
 		private DataBlock lastBlock;
 		private boolean lastStateEquals;
-		private List<DataBlock> redundantBlocks = new ArrayList<DataBlock>();
+		private List<DataBlock> redundantBlocks = new ArrayList<>();
 		private int count = 0;
 		private int currentPos = 0;
 

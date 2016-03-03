@@ -10,7 +10,7 @@ import com.monstarmike.tlmreader.datablock.DataBlock;
  * Generic Processor used by normalizers
  */
 public class ProcessorEvaluator<T extends DataBlock> {
-	private List<AbstractProcessor<T>> processors = new ArrayList<AbstractProcessor<T>>();
+	private List<AbstractProcessor<T>> processors = new ArrayList<>();
 
 	public void process(List<DataBlock> dataBlocks) {
 		evalProcessors(dataBlocks);

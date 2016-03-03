@@ -13,7 +13,7 @@ public class RpmNormalizer implements DataNormalizer {
 	 * Remove all datablocks with too high rpm values
 	 */
 	public void normalize(final List<DataBlock> dataBlocks) {
-		ProcessorEvaluator<StandardBlock> evaluator = new ProcessorEvaluator<StandardBlock>();
+		ProcessorEvaluator<StandardBlock> evaluator = new ProcessorEvaluator<>();
 		evaluator.registerProcessor(new TooHighRpmValueProcessor());
 		evaluator.process(dataBlocks);
 	}

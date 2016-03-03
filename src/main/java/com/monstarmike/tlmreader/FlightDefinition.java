@@ -13,7 +13,7 @@ import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
 
 public class FlightDefinition implements IFlight {
-	private ArrayList<HeaderBlock> headerData = new ArrayList<HeaderBlock>();
+	private ArrayList<HeaderBlock> headerData = new ArrayList<>();
 	private DataBlock firstDataBlock;
 	private DataBlock lastDataBlock;
 	private int numberOfDataBlocks;
@@ -24,7 +24,8 @@ public class FlightDefinition implements IFlight {
 
 	public Duration getDuration() {
 		if (this.duration == null) {
-			int start = 0, end = 0;
+			int start = 0;
+			int end = 0;
 
 			if (firstDataBlock != null && lastDataBlock != null) {
 				start = firstDataBlock.getTimestamp();
@@ -39,12 +40,12 @@ public class FlightDefinition implements IFlight {
 	public void addHeaderNameBlock(HeaderNameBlock block) {
 		headerData.add(block);
 	}
-	
+
 	public void addRpmHeaderBlock(HeaderRpmBlock rpmBlock) {
 		this.rpmHeaderBlock = rpmBlock;
 		headerData.add(rpmBlock);
 	}
-	
+
 	public HeaderRpmBlock getRpmHeader() {
 		return rpmHeaderBlock;
 	}
@@ -61,15 +62,12 @@ public class FlightDefinition implements IFlight {
 
 	@Override
 	public String toString() {
-		PeriodFormatter formatter = new PeriodFormatterBuilder().appendHours()
-				.appendSuffix(":").appendMinutes().appendSuffix(":")
-				.appendSeconds().appendSuffix(".").appendMillis().toFormatter();
+		PeriodFormatter formatter = new PeriodFormatterBuilder().appendHours().appendSuffix(":").appendMinutes()
+				.appendSuffix(":").appendSeconds().appendSuffix(".").appendMillis().toFormatter();
 
-		return this.modelName + " duration: "
-				+ formatter.print(this.getDuration().toPeriod());
+		return this.modelName + " duration: " + formatter.print(this.getDuration().toPeriod());
 	}
 
-	
 	public List<HeaderBlock> getHeaderBlocks() {
 		return headerData;
 	}
