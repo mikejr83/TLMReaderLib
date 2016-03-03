@@ -7,8 +7,8 @@
   <version>0.2.0</version>
   <packaging>jar</packaging>
 
-  <name>tlmreader</name>
-  <url>http://maven.apache.org</url>
+	<name>Spektrum TLM Reader Library</name>
+	<url>https://github.com/mikejr83/TLMReaderLib/</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -58,4 +58,8 @@
       <version>2.6</version>
     </dependency>
   </dependencies>
+	<scm>
+		<url>https://github.com/mikejr83/TLMReaderLib/</url>
+		<developerConnection>Michael Gardner</developerConnection>
+	</scm>
 </project>
