@@ -4,6 +4,12 @@ import com.google.common.primitives.Shorts;
 import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
 import com.monstarmike.tlmreader.datablock.normalizer.RpmNormalizer;
 
+/**
+ * This Class contains the information which are set in the sender, when RPM is
+ * choosen in the Telemetry.<br>
+ * The poles and the ratio are later used to calculate the the effective head rpm.  
+ */
+
 public class HeaderRpmBlock extends HeaderBlock {
 
 	byte poles;
@@ -29,6 +35,9 @@ public class HeaderRpmBlock extends HeaderBlock {
 		warningReport = new Byte(rawData[17]);
 	}
 
+	/**
+	 * Check whether the byteArray is a RpmHeader or not.
+	 */
 	public static boolean isRpmHeader(byte[] bytes) {
 		return bytes.length > 6 && bytes[4] == (byte) 0x7E && bytes[5] == (byte) 0x7E;		
 	}

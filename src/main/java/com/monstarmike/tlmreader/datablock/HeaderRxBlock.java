@@ -3,6 +3,10 @@ package com.monstarmike.tlmreader.datablock;
 import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
 import com.monstarmike.tlmreader.datablock.normalizer.SignalNormalizer;
 
+/**
+ * This Block holds the information, if the used receiver is a lemon or a
+ * spectrum Telemetry system.
+ */
 public class HeaderRxBlock extends HeaderBlock {
 	
 	/**
