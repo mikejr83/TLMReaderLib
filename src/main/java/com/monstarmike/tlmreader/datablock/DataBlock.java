@@ -104,11 +104,6 @@ public abstract class DataBlock implements Block {
 				block = new VarioBlock(bytes);
 				break;
 
-			case 0x40:
-				// vario
-				block = new VarioBlock(bytes);
-				break;
-
 			case 0x7E:
 				// rpm, temperature, rx volts
 				block = new StandardBlock(bytes, rpmHeaderBlock);
