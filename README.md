@@ -1,4 +1,6 @@
-# TLMReaderLib
+# TLMReaderLib 
+
+[![Build Status](https://travis-ci.org/mikejr83/TLMReaderLib.svg)](https://travis-ci.org/mikejr83/TLMReaderLib)
 
 ## Spektrum TLM File Reader/Decoder Library
 
