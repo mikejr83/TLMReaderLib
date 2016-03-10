@@ -7,4 +7,10 @@ public class GPSStatusBlock extends DataBlock {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

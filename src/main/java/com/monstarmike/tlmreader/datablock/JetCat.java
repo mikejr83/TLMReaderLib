@@ -3,7 +3,7 @@ package com.monstarmike.tlmreader.datablock;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Shorts;
 
-public class JetCat extends DataBlock {
+public final class JetCat extends DataBlock {
 	public enum ECUStatus {
 		
 	}
@@ -12,37 +12,60 @@ public class JetCat extends DataBlock {
 		
 	}
 	
-	public byte get_rawECUStatus() {
-		return this.rawData[6];
+	private byte rawECUStatus;
+	private byte throttlePercentage;
+	private double packVoltage;
+	private double pumpVoltage;
+	private int rpm;
+	private short egt;
+	private byte rawOffCondition;
+	
+	public byte getRawECUStatus() {
+		return this.rawECUStatus;
 	}
 	
-	public byte get_throttlePercentage() {
-		return this.rawData[7];
+	public byte getThrottlePercentage() {
+		return this.throttlePercentage;
 	}
 	
-	public double get_packVoltage() {
-		return (this.rawData[8] * 100D) + (this.rawData[9] / 100D);
+	public double getPackVoltage() {
+		return this.packVoltage;
 	}
 	
-	public double get_pumpVoltage() {
-		return (this.rawData[10] * 100D) + (this.rawData[11] / 100D);
+	public double getPumpVoltage() {
+		return this.pumpVoltage;
 	}
 	
-	public int get_RPM(){
-		return Ints.fromBytes(this.rawData[12], this.rawData[13], this.rawData[14], this.rawData[15]);
+	public int getRPM(){
+		return this.rpm;
 	}
 	
-	public short get_EGT() {
-		return Shorts.fromBytes(this.rawData[16], this.rawData[17]);
+	public short getEGT() {
+		return this.egt;
 	}
 	
-	public byte get_rawOffCondition() {
-		return this.rawData[18];
+	public byte getRawOffCondition() {
+		return this.rawOffCondition;
 	}
 	
 	public JetCat(byte[] rawData) {
 		super(rawData);
-		// TODO Auto-generated constructor stub
+		decode(rawData);
 	}
 
+	private void decode(byte[] rawData) {
+		rawECUStatus = rawData[6];
+		throttlePercentage = rawData[7];
+		packVoltage = (rawData[8] * 100D) + (rawData[9] / 100D);
+		pumpVoltage = (rawData[10] * 100D) + (rawData[11] / 100D);
+		rpm = Ints.fromBytes(rawData[12], rawData[13], rawData[14], rawData[15]);
+		egt = Shorts.fromBytes(rawData[16], rawData[17]);
+		rawOffCondition = rawData[18];
+	}
+
+	@Override
+	public boolean areValuesEquals(DataBlock block) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
