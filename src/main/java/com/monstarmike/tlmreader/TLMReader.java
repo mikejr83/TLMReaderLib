@@ -5,16 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-
-import com.monstarmike.tlmreader.datablock.DataBlock;
-import com.monstarmike.tlmreader.datablock.HeaderBlock;
-import com.monstarmike.tlmreader.datablock.HeaderDataBlock;
-import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
-import com.monstarmike.tlmreader.datablock.HeaderRpmBlock;
-import com.monstarmike.tlmreader.datablock.HeaderRxBlock;
-import com.monstarmike.tlmreader.datablock.HeaderVoltBlock;
 
 /**
  * This Class is responsible for parsing TLM files. <br>
@@ -29,15 +20,6 @@ import com.monstarmike.tlmreader.datablock.HeaderVoltBlock;
  * </ul>
  */
 public class TLMReader {
-
-	private int byteCounter;
-
-	/**
-	 * @return The size of the TLM file.
-	 */
-	public int getNumberOfBytesRead() {
-		return byteCounter;
-	}
 
 	/**
 	 * The method parse the given file and returns a lists of {@link IFlight}
@@ -89,41 +71,13 @@ public class TLMReader {
 	 *                {@link IOException} is thrown.
 	 */
 	public List<IFlight> parseFlightDefinitions(InputStream inputStream) throws IOException {
-		final ArrayList<IFlight> flights = new ArrayList<IFlight>();
-		new TlmParser() {
-
-			@Override
-			public void handleHeaderBlock(byte[] headerBytes, int flightNumber) {
-				if (HeaderNameBlock.isHeaderName(headerBytes)) {
-					flights.add(new FlightDefinition());
-					getCurrentFlight().addHeaderNameBlock(new HeaderNameBlock(headerBytes));
-				} else if (HeaderRpmBlock.isRpmHeader(headerBytes)) {
-					getCurrentFlight().addRpmHeaderBlock(new HeaderRpmBlock(headerBytes));
-				}
-			}
-
-			@Override
-			public void handleDataBlock(byte[] dataBytes, int flightNumber) {
-				DataBlock createdDataBlock = DataBlock.createDataBlock(dataBytes,
-						getCurrentFlight().getRpmHeader());
-				if (createdDataBlock != null) {
-					getCurrentFlight().addDataBlock(createdDataBlock);
-				}
-			}
-
-			private IFlight getCurrentFlight() {
-				if (flights.isEmpty()) {
-					throw new RuntimeException("No current Flight available");
-				}
-				return flights.get(flights.size() - 1);
-			}
-		}.parseStream(new BufferedInputStream(inputStream));
-		return flights;
+		return new TlmFlightDefinitionParser().parseFlightDefinitions(new BufferedInputStream(inputStream));
 	}
 
 	/**
 	 * Reads the specified flight with all details from a given
-	 * {@link InputStream}.
+	 * {@link InputStream}. <br>
+	 * Remove all not normal dataBlocks (with invalid bad values).
 	 * 
 	 * @param inputStream
 	 *               The {@link InputStream} to parse.
@@ -136,82 +90,12 @@ public class TLMReader {
 	 *                {@link IOException} is thrown.
 	 */
 	public Flight parseFlight(InputStream inputStream, final int index) throws IOException {
-		final ArrayList<Flight> flights = new ArrayList<Flight>();
-		new TlmParser() {
-
-			@Override
-			public void handleHeaderBlock(byte[] headerBytes, int flightNumber) {
-				if (flightNumber != index) {
-					return;
-				}
-				if (HeaderNameBlock.isHeaderName(headerBytes)) {
-					flights.add(new Flight());
-					getCurrentFlight().addHeaderNameBlock(new HeaderNameBlock(headerBytes));
-				} else if (HeaderRpmBlock.isRpmHeader(headerBytes)) {
-					getCurrentFlight().addRpmHeaderBlock(new HeaderRpmBlock(headerBytes));
-				} else if (HeaderVoltBlock.isVoltHeader(headerBytes)) {
-					getCurrentFlight().addHeaderBlock(new HeaderVoltBlock(headerBytes));
-				} else if (HeaderRxBlock.isRxHeader(headerBytes)) {
-					getCurrentFlight().addHeaderBlock(new HeaderRxBlock(headerBytes));
-				} else {
-					getCurrentFlight().addHeaderBlock(new HeaderDataBlock(headerBytes));
-				}
-			}
-
-			@Override
-			public void handleDataBlock(byte[] dataBytes, int flightNumber) {
-				if (flightNumber != index) {
-					return;
-				}
-				DataBlock createdDataBlock = DataBlock.createDataBlock(dataBytes,
-						getCurrentFlight().getRpmHeader());
-				if (createdDataBlock != null) {
-					getCurrentFlight().addDataBlock(createdDataBlock);
-				}
-			}
-
-			private Flight getCurrentFlight() {
-				if (flights.isEmpty()) {
-					throw new RuntimeException("No current Flight available");
-				}
-				return flights.get(flights.size() - 1);
-			}
-		}.parseStream(new BufferedInputStream(inputStream));
-		if (flights.isEmpty()) {
+		Flight flight = new TlmFlightParser().parseFlight(new BufferedInputStream(inputStream), index);
+		if (flight == null) {
 			throw new RuntimeException("FlightId  '" + index + "' not found in inputStream.");
 		}
-		Flight flight = flights.get(flights.size() - 1);
 		flight.normalizeDataBlocks();
 		return flight;
-	}
-
-	private abstract class TlmParser {
-
-		public void parseStream(BufferedInputStream bufferedStream) throws IOException {
-			int flightNumber = -1;
-			byte[] headerTest = new byte[4];
-			bufferedStream.mark(4);
-			while (bufferedStream.read(headerTest, 0, 4) == 4) {
-				bufferedStream.reset();
-				if (HeaderBlock.isHeaderBlock(headerTest)) {
-					byte[] headerBytes = new byte[36];
-					byteCounter += bufferedStream.read(headerBytes, 0, 36);
-					if (HeaderNameBlock.isHeaderName(headerBytes)) {
-						flightNumber++;
-					}
-					handleHeaderBlock(headerBytes, flightNumber);
-				} else {
-					byte[] dataBytes = new byte[20];
-					byteCounter += bufferedStream.read(dataBytes, 0, 20);
-					handleDataBlock(dataBytes, flightNumber);
-				}
-				bufferedStream.mark(4);
-			}
-		}
-
-		public abstract void handleDataBlock(byte[] dataBytes, int flightNumber);
-
-		public abstract void handleHeaderBlock(byte[] headerBytes, int flightNumber);
 	}
 
 }
