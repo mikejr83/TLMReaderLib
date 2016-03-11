@@ -59,7 +59,42 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<url>https://github.com/mikejr83/TLMReaderLib/</url>
-		<developerConnection>Michael Gardner</developerConnection>
+		<connection>scm:git:https://github.com/mikejr83/TLMReaderLib/</connection>
+		<url>https://github.com/mikejr83/TLMReaderLib/Michael Gardner</url>
 	</scm>
+	<developers>
+		<developer>
+			<id>mikejr83</id>
+			<name>Michael Gardner</name>
+		</developer>
+		<developer>
+			<id>david-0</id>
+			<name>David Leuenberger</name>
+			<email>david.leuenberger@gmx.ch</email>
+			<timezone>Europe/Zurich</timezone>
+		</developer>
+	</developers>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
