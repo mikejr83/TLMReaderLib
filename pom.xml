@@ -60,12 +60,13 @@
 	</dependencies>
 	<scm>
 		<connection>scm:git:https://github.com/mikejr83/TLMReaderLib/</connection>
-		<url>https://github.com/mikejr83/TLMReaderLib/Michael Gardner</url>
+		<url>https://github.com/mikejr83/TLMReaderLib</url>
 	</scm>
 	<developers>
 		<developer>
 			<id>mikejr83</id>
 			<name>Michael Gardner</name>
+			<email>mikejr83@gmail.com</email>
 		</developer>
 		<developer>
 			<id>david-0</id>
