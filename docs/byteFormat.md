@@ -538,7 +538,7 @@ Data type value: 0x7E
 | 0x12        | ?? |
 | 0x13        | ?? |
 
-RPM = Value from sensor * count of poles.
+RPM = (1 / Value from sensor * 120'000'000) / count of poles / ratio
 
 Volts = Value from sensor / 100. 489 = 4.89V
 
