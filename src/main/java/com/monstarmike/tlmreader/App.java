@@ -18,21 +18,21 @@ public class App {
 		TLMReader reader = new TLMReader();
 		try {
 			long start = System.currentTimeMillis();
-			String tlmFileSailplane = "src/test/data/2015 - FSS 2 - day 2.TLM";
-			// String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
-			 String tlmFileHeli = "src/test/data/2015-12-29.TLM";
-//			String tlmFileHeli = "src/test/data/20160129.TLM";
+			String tlmFileSailplane = "src/test/data/2015-FSS2-day2.TLM";
+			String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
+			// String tlmFileHeli = "src/test/data/2015-12-29.TLM";
+			// String tlmFileHeli = "src/test/data/20160129.TLM";
 			String tlm = tlmFileHeli;
 			List<IFlight> flights = reader.parseFlightDefinitions(tlm);
 			for (IFlight flight : flights) {
 				printFlightDefinitions(flight);
 			}
-			Flight flight = reader.parseFlight(tlm, 5);
+			Flight flight = reader.parseFlight(tlm, flights.size() - 1);
 			flight.removeRedundantDataBlocks();
 			printFlightDefinitions(flight);
 			printDataBlocks(flight);
 			long end = System.currentTimeMillis();
-			System.out.println("duration: " + (end - start) + " ms") ;
+			System.out.println("duration: " + (end - start) + " ms");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
