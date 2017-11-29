@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class TLMReaderTest {
 
-	String tlmFileSailplane = "src/test/data/2015 - FSS 2 - day 2.TLM";
+	String tlmFileSailplane = "src/test/data/2015-FSS2-day2.TLM";
 	String tlmFileHeli = "src/test/data/2015-12-22_HELI.TLM";
 
 	List<Long> expectedFlightDurationsSailplane = new ArrayList<Long>(

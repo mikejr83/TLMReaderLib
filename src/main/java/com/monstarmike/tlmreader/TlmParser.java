@@ -6,6 +6,9 @@ import java.io.IOException;
 import com.monstarmike.tlmreader.datablock.HeaderBlock;
 import com.monstarmike.tlmreader.datablock.HeaderNameBlock;
 
+/**
+ * 
+ */
 public abstract class TlmParser {
 	
 	int byteCounter;
