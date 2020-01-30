@@ -9,7 +9,7 @@ public class GForceBlock extends DataBlock {
 	 * 14,00,xMSB,xLSB,yMSB,zMSB,zLSB,xmaxMSB,xmaxLSB,yma
 	 * xMSB,ymaxLSB,zmaxMSB,zmaxLSB,zminMSB,zminLSB MSB/LSB are signed integers,
 	 * unit is 0.01g, on the "normal" display the last digit is rounded. maximum
-	 * display value is +-99.90 (actually 99.99, but when it is rounded, it
+	 * display id is +-99.90 (actually 99.99, but when it is rounded, it
 	 * overflows to 100 and displays ----) The min/max values are retained in
 	 * the sensor, because g-force cah change too quickly for the radio.
 	 * Therefore you cannot clear the min/max values on the radio. Alarm can be
@@ -27,10 +27,44 @@ public class GForceBlock extends DataBlock {
 	public GForceBlock(byte[] rawData) {
 		super(rawData);
 		decode(rawData);
+		
+		measurementNames.add("X GF");
+		measurementNames.add("Y GF");
+		measurementNames.add("Z GF");
+		measurementNames.add("Xmax GF");
+		measurementNames.add("Ymax GF");
+		measurementNames.add("Zmax GF");
+		measurementNames.add("Zmin GF");
+
+		measurementUnits.add("G");
+		measurementUnits.add("G");
+		measurementUnits.add("G");
+		measurementUnits.add("G");
+		measurementUnits.add("G");
+		measurementUnits.add("G");
+		measurementUnits.add("G");
+
+		measurementFactors.add(0.01);
+		measurementFactors.add(0.01);
+		measurementFactors.add(0.01);
+		measurementFactors.add(0.01);
+		measurementFactors.add(0.01);
+		measurementFactors.add(0.01);
+		measurementFactors.add(0.01);
 	}
 
 	@Override
 	public boolean areValuesEquals(DataBlock block) {
+		if (block instanceof GForceBlock) {
+			GForceBlock gf = (GForceBlock) block;
+			return gf.xInHunderthOfG == xInHunderthOfG
+					&& gf.yInHunderthOfG == yInHunderthOfG
+					&& gf.zInHunderthOfG == zInHunderthOfG
+					&& gf.maxXInHunderthOfG == maxXInHunderthOfG
+					&& gf.maxYInHunderthOfG == maxYInHunderthOfG
+					&& gf.maxZInHunderthOfG == maxZInHunderthOfG
+					&& gf.minZInHunderthOfG == minZInHunderthOfG;
+		}
 		return false;
 	}
 
@@ -70,5 +104,14 @@ public class GForceBlock extends DataBlock {
 		maxYInHunderthOfG = Shorts.fromBytes(rawData[14], rawData[15]);
 		maxZInHunderthOfG = Shorts.fromBytes(rawData[16], rawData[17]);
 		minZInHunderthOfG = Shorts.fromBytes(rawData[18], rawData[19]);
+		
+		measurementValues.add((int)getXInHunderthOfG());
+		measurementValues.add((int)getYInHunderthOfG());
+		measurementValues.add((int)getZInHunderthOfG());
+		measurementValues.add((int)getMaxXInHunderthOfG());
+		measurementValues.add((int)getMaxYInHunderthOfG());
+		measurementValues.add((int)getMaxZInHunderthOfG());
+		measurementValues.add((int)getMinZInHunderthOfG());
 	}
+
 }

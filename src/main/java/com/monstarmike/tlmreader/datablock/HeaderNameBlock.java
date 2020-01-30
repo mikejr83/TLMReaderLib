@@ -59,7 +59,7 @@ public class HeaderNameBlock extends HeaderBlock {
 		while (offset < 0x24 && rawData[offset] != 0x0) {
 			offset++;
 		}
-		modelName = new String(Arrays.copyOfRange(rawData, 0x0C, offset)).trim();
+		modelName = new String(Arrays.copyOfRange(rawData, 0x0A, offset)).trim();
 		modelNumber = (byte) (((byte) rawData[0x4]) + 1);
 	}
 

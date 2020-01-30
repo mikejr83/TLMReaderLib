@@ -1,14 +1,14 @@
 package com.monstarmike.tlmreader.datablock.normalizer.processor;
 
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 
-public class InvalidDataBlocksProcessor extends AbstractProcessor<RXBlock> {
+public class InvalidDataBlocksProcessor extends AbstractProcessor<RxBlock> {
 
-	public boolean isBad(RXBlock block) {
+	public boolean isBad(RxBlock block) {
 		return !block.hasValidDataLostPacketsReceiverA();
 	}
 
-	public Class<RXBlock> getClassOfDataBlock() {
-		return RXBlock.class;
+	public Class<RxBlock> getClassOfDataBlock() {
+		return RxBlock.class;
 	}
 }

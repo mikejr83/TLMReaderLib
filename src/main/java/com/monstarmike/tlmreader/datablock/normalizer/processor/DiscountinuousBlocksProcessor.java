@@ -5,18 +5,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 
-public class DiscountinuousBlocksProcessor extends AbstractProcessor<RXBlock> {
+public class DiscountinuousBlocksProcessor extends AbstractProcessor<RxBlock> {
 
 	private static final int MAX_CHANGE_IN_ONE_HUNDERTH = 10;
 
-	private Set<RXBlock> unclassifiedBlocks = new HashSet<>();
+	private Set<RxBlock> unclassifiedBlocks = new HashSet<>();
 	private DataState dataState = DataState.UNKNOWN;
-	private RXBlock lastBlock = null;
-	private List<RXBlock> badBlocks = new ArrayList<>();
+	private RxBlock lastBlock = null;
+	private List<RxBlock> badBlocks = new ArrayList<>();
 
-	public boolean isBad(RXBlock block) {
+	public boolean isBad(RxBlock block) {
 		return badBlocks.contains(block);
 	}
 
@@ -26,7 +26,7 @@ public class DiscountinuousBlocksProcessor extends AbstractProcessor<RXBlock> {
 		}
 	}
 
-	public void preprocess(RXBlock currentBlock) {
+	public void preprocess(RxBlock currentBlock) {
 		if (currentBlock.hasValidDataLostPacketsReceiverA()) {
 			if (lastBlock != null) {
 				ChangeState currentChangeState = isContinuous(lastBlock, currentBlock);
@@ -56,11 +56,11 @@ public class DiscountinuousBlocksProcessor extends AbstractProcessor<RXBlock> {
 		}
 	}
 
-	public Class<RXBlock> getClassOfDataBlock() {
-		return RXBlock.class;
+	public Class<RxBlock> getClassOfDataBlock() {
+		return RxBlock.class;
 	}
 
-	private ChangeState isContinuous(RXBlock last, RXBlock current) {
+	private ChangeState isContinuous(RxBlock last, RxBlock current) {
 		int timeDiff = current.getTimestamp() - last.getTimestamp();
 		int valueDiff = current.getLostPacketsReceiverA() - last.getLostPacketsReceiverA();
 		double change = (double) valueDiff / timeDiff;

@@ -32,7 +32,7 @@ package com.monstarmike.tlmreader.datablock;
  * <li>Bit 0 (most significant bit): meaning not clear. Perhaps used for the
  * rotated 9 Bit Channels?**
  * <li>Bit 0x1-0x4: The channelnumber</li>
- * <li>Bit 0x5-0xF: The value of the channel (11 Bit, 2048 steps, middle
+ * <li>Bit 0x5-0xF: The id of the channel (11 Bit, 2048 steps, middle
  * position 1024 = 0%, range +-150%)</li>
  * </ul>
  * 
@@ -42,7 +42,7 @@ package com.monstarmike.tlmreader.datablock;
  * <li>Bit 0x1-0x4: The channelnumber</li>
  * <li>Bit 0x5-0x6: The subChannelnumber, these bits are rotating in each
  * datablock.**</li>
- * <li>Bit 0x7-0xF: The value of the channel (9 Bit, 512 steps, middle position
+ * <li>Bit 0x7-0xF: The id of the channel (9 Bit, 512 steps, middle position
  * 256 = 0%, range +-150%)</li>
  * </ul>
  * * With this rotation, we can only decode 16 channel. The first Bit of the
@@ -60,6 +60,18 @@ public class ServoDataBlock extends DataBlock {
 	public ServoDataBlock(byte[] rawData) {
 		super(rawData);
 		decode(rawData);
+
+		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
+			measurementNames.add("Ch " + (i+1));
+		}
+
+		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
+			measurementUnits.add("%");
+		}
+
+		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
+			measurementFactors.add(1.0);
+		}
 	}
 
 	@Override
@@ -67,7 +79,7 @@ public class ServoDataBlock extends DataBlock {
 		if (block instanceof ServoDataBlock) {
 			ServoDataBlock servo = (ServoDataBlock) block;
 			for (int i=0; i<availableChannelWithDataBitArray; i++) {
-				if (servo.getChannelValue(i) != channelValues[i]) {
+				if (servo.channelValues[i] != channelValues[i]) {
 					return false;
 				}
 			}
@@ -90,6 +102,13 @@ public class ServoDataBlock extends DataBlock {
 		decode11BitChannel(rawData[0x0E], rawData[0x0F]);
 		decode11BitChannel(rawData[0x10], rawData[0x11]);
 		decode9BitChannel(rawData[0x06], rawData[0x12], rawData[0x13]);
+		
+		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
+			if (isBitSet(i)) 
+				measurementValues.add((int)getPercent(i, channelValues[i]));
+			else
+				measurementValues.add(0);
+		}
 	}
 
 	private void decode11BitChannel(byte first, byte second) {
@@ -107,9 +126,8 @@ public class ServoDataBlock extends DataBlock {
 	}
 
 	/**
-	 * @param channelNumber
-	 *            Zero based channelnumber
-	 * @return The value of that channel
+	 * @param channelNumber  zero based channel number
+	 * @return The id of that channel
 	 */
 	public short getChannelValue(int channelNumber) {
 		return channelValues[channelNumber];
@@ -128,20 +146,21 @@ public class ServoDataBlock extends DataBlock {
 		availableChannelWithDataBitArray |= (1 << channelNumber);
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
-			if (isBitSet(i)) {
-				if (sb.length() != 0) {
-					sb.append(", ");
-				}
-				sb.append("CH: ").append(i).append(" = ").append(channelValues[i]).append(" (")
-						.append(getPercent(i, channelValues[i])).append("%)");
-			}
-		}
-		return super.toString() + "ServoData; " + sb;
-	}
+//	@Override
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("ServoData:        ").append(getTimestamp());
+//		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
+//			if (isBitSet(i)) {
+//				if (sb.length() != 0) {
+//					sb.append(", ");
+//				}
+//				sb.append("CH: ").append(i).append(" = ").append(channelValues[i]).append(" (")
+//						.append(getPercent(i, channelValues[i])).append("%)");
+//			}
+//		}
+//		return sb.toString();
+//	}
 
 	private float getPercent(Integer channelNumber, short channelValue) {
 		final int MAX_SERVO_TRAVEL_IN_PERCENT = 300; // +-150%
@@ -156,4 +175,5 @@ public class ServoDataBlock extends DataBlock {
 		double middleValue = maxValue / 2.0;
 		return (float) ((channelValue - middleValue) / (maxValue / MAX_SERVO_TRAVEL_IN_PERCENT));
 	}
+
 }

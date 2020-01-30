@@ -51,6 +51,7 @@ public class AltitudeBlockTest {
 	@Test
 	public void testAltitudeValue() {
 		AltitudeBlock block = (AltitudeBlock) DataBlock.createDataBlock(TEST_BLOCK, null);
+		System.out.println("testAltitudeValue " + block.getAltitudeInTenthOfMeter());
 		assertEquals(2015, block.getAltitudeInTenthOfMeter());
 	}
 
