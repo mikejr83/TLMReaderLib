@@ -22,7 +22,7 @@ public class StringUtils {
 			decParts[i * 2] = new Integer(bytes[i] & 0xff).toString();
 			decParts[i * 2 + 1] = " ";
 		}
-		return org.apache.commons.lang.StringUtils.join(decParts);
+		return String.join(", ",decParts);
 	}
 	
 
