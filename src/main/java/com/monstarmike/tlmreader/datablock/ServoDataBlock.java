@@ -53,6 +53,7 @@ package com.monstarmike.tlmreader.datablock;
 public class ServoDataBlock extends DataBlock {
 
 	private static final int MAX_NUMBER_OF_CHANNELS = 20;
+	public static final short[] CHANNELVALUES = new short[MAX_NUMBER_OF_CHANNELS];
 
 	private short[] channelValues;
 	private int availableChannelWithDataBitArray = 0;
@@ -104,10 +105,13 @@ public class ServoDataBlock extends DataBlock {
 		decode9BitChannel(rawData[0x06], rawData[0x12], rawData[0x13]);
 		
 		for (int i = 0; i < MAX_NUMBER_OF_CHANNELS; i++) {
-			if (isBitSet(i)) 
+			if (isBitSet(i)) {//channel data available
 				measurementValues.add((int)getPercent(i, channelValues[i]));
-			else
-				measurementValues.add(0);
+				CHANNELVALUES[i] = channelValues[i];
+			}
+			else {
+				measurementValues.add((int)getPercent(i, CHANNELVALUES[i]));
+			}
 		}
 	}
 
