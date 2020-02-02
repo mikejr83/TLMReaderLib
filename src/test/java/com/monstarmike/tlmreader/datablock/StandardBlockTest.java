@@ -114,7 +114,7 @@ public class StandardBlockTest {
 
 	@Test
 	public void testHasValidTemperatureDataShortMIN() {
-		short testValue = (short) Short.MIN_VALUE;
+		short testValue = (short) 0x7FFF;
 		byte[] testBlock = new DataBlockBuilder(0, STD_DATABLOCK_MAKER).setValue(testValue, 0x0A).get();
 		StandardBlock standardBlock = (StandardBlock) DataBlock.createDataBlock(testBlock, null);
 		Assert.assertFalse(standardBlock.hasValidTemperatureData());

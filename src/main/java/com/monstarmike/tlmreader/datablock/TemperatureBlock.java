@@ -46,7 +46,7 @@ public class TemperatureBlock extends DataBlock {
 	}
 
 	private void decode(byte[] rawData) {
-		temperatureInFahrenheit = Shorts.fromBytes(rawData[2], rawData[3]);
+		temperatureInFahrenheit = Shorts.fromBytes(rawData[6], rawData[7]);
 		
 		measurementValues.add((int)getTemperatureInThenthGradCelsius());
 	}

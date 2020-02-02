@@ -231,6 +231,20 @@ public abstract class DataBlock implements IBlock{
 		}
 		return block;
 	}
+	/**
+	 * helper to convert a byte array into a 2 hex character string representation to create test block content
+	 * @param bytes
+	 * @param size
+	 * @return converted string
+	 */
+	public String byte2Hex2CharString(byte[] bytes, int size) {
+		StringBuffer sb = new StringBuffer().append("{");
+		for (int i = 0; i < size; i++) {
+			sb.append(String.format(" (byte)0x%02X,", bytes[i])); //$NON-NLS-1$
+		}
+		sb.setCharAt(sb.length()-1, '}');
+		return sb.toString();
+	}
 
 	public int getSize() {
 		return 20;

@@ -23,7 +23,7 @@ public class VoltageBlock extends DataBlock {
 	}
 	
 	private void decode(byte[] rawData) {
-		voltsInTenthOfVolt = Shorts.fromBytes(rawData[2], rawData[3]);
+		voltsInTenthOfVolt = Shorts.fromBytes(rawData[6], rawData[7]);
 		
 		measurementValues.add((int)getVoltsInTenthOfVolt());
 	}

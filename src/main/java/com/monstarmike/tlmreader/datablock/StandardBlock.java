@@ -85,7 +85,7 @@ public class StandardBlock extends DataBlock {
 	}
 
 	public boolean hasValidTemperatureData() {
-		return tempInDegreeFahrenheit != Short.MIN_VALUE && tempInDegreeFahrenheit != 0x0000;
+		return tempInDegreeFahrenheit != 0x7FFF && tempInDegreeFahrenheit != Short.MIN_VALUE && tempInDegreeFahrenheit != 0 && (tempInDegreeFahrenheit & 0xFC00) == 0;
 	}
 
 	public short getTemperatureInDegreeFahrenheit() {
