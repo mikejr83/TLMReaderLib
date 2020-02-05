@@ -2,6 +2,7 @@ package com.monstarmike.tlmreader.datablock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.google.common.primitives.Ints;
 import com.sun.istack.Nullable;
@@ -274,7 +275,7 @@ public abstract class DataBlock implements IBlock{
 	 * generic toString method for all derived BlockData classes excluding GPS related classes
 	 */
 	public String toString() {
-		StringBuilder sb = new StringBuilder().append(String.format("%-18s", this.getClass().getSimpleName())).append(getTimestamp()).append(" - ");
+		StringBuilder sb = new StringBuilder().append(String.format(Locale.ENGLISH, "%-18s", this.getClass().getSimpleName())).append(getTimestamp()).append(" - ");
 		measurementNames = getMeasurementNames();
 		measurementUnits = getMeasurementUnits();
 		measurementFactors = getMeasurementFactors();
@@ -283,8 +284,8 @@ public abstract class DataBlock implements IBlock{
 			sb.append(measurementNames.get(i))
 			.append(" = ")
 			.append(measurementFactors.get(i) != 1.0 
-					? String.format("%.1f", (measurementValues.get(i) * measurementFactors.get(i)))
-					: String.format("%d", (int)(measurementValues.get(i) * measurementFactors.get(i))))
+					? String.format(Locale.ENGLISH, "%.1f", (measurementValues.get(i) * measurementFactors.get(i)))
+					: String.format(Locale.ENGLISH, "%d", (int)(measurementValues.get(i) * measurementFactors.get(i))))
 			.append(" ")
 			.append(measurementUnits.get(i))
 			.append("; ");
@@ -296,7 +297,7 @@ public abstract class DataBlock implements IBlock{
 	 * generic method for all derived BlockData classes to be used as CSV export header line
 	 */
 	public String getNamesAndUnitsAsCCV() {
-		StringBuilder sb = new StringBuilder().append(String.format("%-18s, Time [ms],", this.getClass().getSimpleName()));
+		StringBuilder sb = new StringBuilder().append(String.format(Locale.ENGLISH, "%-18s, Time [ms],", this.getClass().getSimpleName()));
 		measurementNames = getMeasurementNames();
 		measurementUnits = getMeasurementUnits();
 		for(int i=0; i < measurementNames.size(); ++i) {
@@ -309,11 +310,11 @@ public abstract class DataBlock implements IBlock{
 	 * generic method for all derived BlockData classes to be used as CSV export data line
 	 */
 	public String getCorrectedValuesAsCCV() {
-		StringBuilder sb = new StringBuilder().append(String.format("%-18s, %d,", this.getClass().getSimpleName(), getTimestamp() * 10));
+		StringBuilder sb = new StringBuilder().append(String.format(Locale.ENGLISH, "%-18s, %d,", this.getClass().getSimpleName(), getTimestamp() * 10));
 		measurementValues = getMeasurementValues();
 		measurementFactors = getMeasurementFactors();
 		for(int i=0; i < measurementValues.size(); ++i) {
-			sb.append(String.format(" %7.2f,", measurementValues.get(i) * measurementFactors.get(i)));
+			sb.append(String.format(Locale.ENGLISH, " %7.2f,", measurementValues.get(i) * measurementFactors.get(i)));
 		}
 		return sb.toString();
 	}

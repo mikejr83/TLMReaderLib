@@ -1,5 +1,7 @@
 package com.monstarmike.tlmreader.datablock;
 
+import java.util.Locale;
+
 import com.monstarmike.tlmreader.util.StringUtils;
 
 public class GPSStatusBlock extends DataBlock {
@@ -109,7 +111,7 @@ public class GPSStatusBlock extends DataBlock {
 	@Override
 	public String toString() {
 		return "GPSStatusData:    " + getTimestamp()
-				+ " - speedInKnots = " + String.format("%.1f", getSpeedInTenthOfKnots() * 0.1)
+				+ " - speedInKnots = " + String.format(Locale.ENGLISH, "%.1f", getSpeedInTenthOfKnots() * 0.1)
 				+ ", UTC = " + getUTCString()
 				+ ", numSats = " + getNumSats()
 				+ ", altitudeHightInMeter = " + getAltitudeHightInMeter();
