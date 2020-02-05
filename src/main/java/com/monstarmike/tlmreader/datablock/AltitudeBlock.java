@@ -12,18 +12,29 @@ public final class AltitudeBlock extends DataBlock {
 	 * is -3276.8m
 	 */
 
+//	typedef struct
+//	{
+//		UINT8		identifier;
+//		UINT8		sID;															// Secondary ID
+//		INT16		altitude;													// .1m increments
+//		INT16		maxAltitude;											// .1m increments
+//	} STRU_TELE_ALT;	
+	
 	private short altitudeInTenthOfMeter;
 
 	public AltitudeBlock(byte[] rawData) {
 		super(rawData);
 		decode(rawData);
+		measurementNames.add("Altitude A");
+		measurementUnits.add("m");
+		measurementFactors.add(0.1);
 	}
 
 	@Override
 	public boolean areValuesEquals(DataBlock block) {
 		if (block instanceof AltitudeBlock) {
 			AltitudeBlock alt = (AltitudeBlock) block;
-			return alt.getAltitudeInTenthOfMeter() == this.altitudeInTenthOfMeter;
+			return alt.altitudeInTenthOfMeter == this.altitudeInTenthOfMeter;
 		}
 		return false;
 	}
@@ -34,6 +45,7 @@ public final class AltitudeBlock extends DataBlock {
 
 	private void decode(byte[] rawData) {
 		altitudeInTenthOfMeter = Shorts.fromBytes(rawData[6], rawData[7]);
+		measurementValues.add((int)getAltitudeInTenthOfMeter());
 	}
 
 }

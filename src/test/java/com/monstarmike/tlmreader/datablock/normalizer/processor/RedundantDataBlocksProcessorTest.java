@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.monstarmike.tlmreader.datablock.DataBlock;
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 import com.monstarmike.tlmreader.datablock.StandardBlock;
 
 public class RedundantDataBlocksProcessorTest {
@@ -59,7 +59,7 @@ public class RedundantDataBlocksProcessorTest {
 	}
 
 	private DataBlock createRxMock(final int timestamp, final boolean equalsToLast) {
-		final DataBlock mock = Mockito.mock(RXBlock.class);
+		final DataBlock mock = Mockito.mock(RxBlock.class);
 		Mockito.when(mock.areValuesEquals(Mockito.any(DataBlock.class))).thenReturn(equalsToLast);
 		Mockito.when(mock.getTimestamp()).thenReturn(timestamp);
 		Mockito.when(mock.getSequence()).thenReturn(timestamp);

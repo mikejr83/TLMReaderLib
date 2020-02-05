@@ -1,9 +1,9 @@
 package com.monstarmike.tlmreader.datablock.normalizer.processor;
 
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 import com.monstarmike.tlmreader.datablock.normalizer.util.MyFrequency;
 
-public class SpectrumTelemetryDetector extends AbstractProcessor<RXBlock> {
+public class SpectrumTelemetryDetector extends AbstractProcessor<RxBlock> {
 	final MyFrequency frequencyA = new MyFrequency();
 
 	public boolean isSpectrumTelemetry() {
@@ -16,13 +16,13 @@ public class SpectrumTelemetryDetector extends AbstractProcessor<RXBlock> {
 		return belowOrEquals50 > between50And100;
 	}
 
-	public void preprocess(RXBlock dataBlock) {
+	public void preprocess(RxBlock dataBlock) {
 		if (dataBlock.hasValidDataLostPacketsReceiverA()) {
 			frequencyA.addValue(dataBlock.getLostPacketsReceiverA());
 		}
 	}
 
-	public Class<RXBlock> getClassOfDataBlock() {
-		return RXBlock.class;
+	public Class<RxBlock> getClassOfDataBlock() {
+		return RxBlock.class;
 	}
 }

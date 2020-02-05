@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import com.monstarmike.tlmreader.DataBlockBuilder;
 import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRxBlock;
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 
 public class SignalNormalizerTest {
 
@@ -43,7 +43,7 @@ public class SignalNormalizerTest {
 	
 	private DataBlock createRx(int timestamp, int a) {
 		final byte[] testBlock = new DataBlockBuilder(timestamp, 0).setValue(a, POS_A).get();
-		return new RXBlock(testBlock);
+		return new RxBlock(testBlock);
 	}
 
 }

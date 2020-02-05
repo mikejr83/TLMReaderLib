@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.monstarmike.tlmreader.DataBlockBuilder;
 
-public class PowerboxBlockTest {
+public class PowerBoxBlockTest {
 
 	private static final short POWERBOX_DATABLOCK_MAKER = (short) 0x0a00;
 
@@ -14,14 +14,14 @@ public class PowerboxBlockTest {
 	public void testGetVoltageOne() {
 		short valueInHunderthOfVolt = 473; // = 4.73 Volt
 		byte[] testBlock = new DataBlockBuilder(0, POWERBOX_DATABLOCK_MAKER).setValue(valueInHunderthOfVolt, 0x06).get();
-		PowerboxBlock powerBoxBlock = (PowerboxBlock) DataBlock.createDataBlock(testBlock, null);
+		PowerBoxBlock powerBoxBlock = (PowerBoxBlock) DataBlock.createDataBlock(testBlock, null);
 		assertEquals(valueInHunderthOfVolt , powerBoxBlock.getVoltageOneInHunderthOfVolts());
 	}
 	@Test
 	public void testGetVoltageTwo() {
 		short valueInHunderthOfVolt = 1620; // = 16.20 Volt
 		byte[] testBlock = new DataBlockBuilder(0, POWERBOX_DATABLOCK_MAKER).setValue(valueInHunderthOfVolt, 0x08).get();
-		PowerboxBlock powerBoxBlock = (PowerboxBlock) DataBlock.createDataBlock(testBlock, null);
+		PowerBoxBlock powerBoxBlock = (PowerBoxBlock) DataBlock.createDataBlock(testBlock, null);
 		assertEquals(valueInHunderthOfVolt, powerBoxBlock.getVoltageTwoInHunderthOfVolts());
 	}
 	
@@ -29,7 +29,7 @@ public class PowerboxBlockTest {
 	public void testGetCapacityOne() {
 		short valueIn_mAh = 15;
 		byte[] testBlock = new DataBlockBuilder(0, POWERBOX_DATABLOCK_MAKER).setValue(valueIn_mAh, 0x0A).get();
-		PowerboxBlock powerBoxBlock = (PowerboxBlock) DataBlock.createDataBlock(testBlock, null);
+		PowerBoxBlock powerBoxBlock = (PowerBoxBlock) DataBlock.createDataBlock(testBlock, null);
 		assertEquals(valueIn_mAh, (short) powerBoxBlock.getCapacityOneInmAh());
 	}
 	
@@ -37,7 +37,7 @@ public class PowerboxBlockTest {
 	public void testGetCapacityTwo() {
 		short valueIn_mAh = 763;
 		byte[] testBlock = new DataBlockBuilder(0, POWERBOX_DATABLOCK_MAKER).setValue(valueIn_mAh, 0x0C).get();
-		PowerboxBlock powerBoxBlock = (PowerboxBlock) DataBlock.createDataBlock(testBlock, null);
+		PowerBoxBlock powerBoxBlock = (PowerBoxBlock) DataBlock.createDataBlock(testBlock, null);
 		assertEquals(valueIn_mAh, (short) powerBoxBlock.getCapacityTwoInmAh());
 	}
 

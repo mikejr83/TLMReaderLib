@@ -7,13 +7,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 
 public class SpectrumTelemetryDetectorTest {
 
 	@Test
 	public void testIsSpectrumTelemetry() {
-		final List<RXBlock> blocks = createBlocks(0, 1, 1, 7, 10, 500, 10);
+		final List<RxBlock> blocks = createBlocks(0, 1, 1, 7, 10, 500, 10);
 		SpectrumTelemetryDetector processor = new SpectrumTelemetryDetector();
 		process(processor, blocks);
 		Assert.assertTrue(processor.isSpectrumTelemetry());
@@ -21,7 +21,7 @@ public class SpectrumTelemetryDetectorTest {
 
 	@Test
 	public void testIsNotSpectrumTelemetry() {
-		final List<RXBlock> blocks = createBlocks(100,100,95,90,100,95,40,30,90,100);
+		final List<RxBlock> blocks = createBlocks(100,100,95,90,100,95,40,30,90,100);
 		SpectrumTelemetryDetector processor = new SpectrumTelemetryDetector();
 		process(processor, blocks);
 		Assert.assertFalse(processor.isSpectrumTelemetry());
@@ -29,7 +29,7 @@ public class SpectrumTelemetryDetectorTest {
 	
 	@Test
 	public void testIsNotSpectrumTelemetryIgnoreInvalid() {
-		final List<RXBlock> blocks = createBlocks(-1,-1,-1,-1,-1,-1,100,70,90,100);
+		final List<RxBlock> blocks = createBlocks(-1,-1,-1,-1,-1,-1,100,70,90,100);
 		Mockito.when(blocks.get(0).hasValidDataLostPacketsReceiverA()).thenReturn(Boolean.FALSE);
 		Mockito.when(blocks.get(1).hasValidDataLostPacketsReceiverA()).thenReturn(Boolean.FALSE);
 		Mockito.when(blocks.get(2).hasValidDataLostPacketsReceiverA()).thenReturn(Boolean.FALSE);
@@ -43,23 +43,23 @@ public class SpectrumTelemetryDetectorTest {
 
 	@Test
 	public void testGetClassOfDataBlock() {
-		Assert.assertEquals(RXBlock.class, new SpectrumTelemetryDetector().getClassOfDataBlock());
+		Assert.assertEquals(RxBlock.class, new SpectrumTelemetryDetector().getClassOfDataBlock());
 	}
 
-	private List<Boolean> process(final AbstractProcessor<RXBlock> processor, final List<RXBlock> blocks) {
-		for (RXBlock block : blocks) {
+	private List<Boolean> process(final AbstractProcessor<RxBlock> processor, final List<RxBlock> blocks) {
+		for (RxBlock block : blocks) {
 			processor.preprocess(block);
 		}
 		processor.preprocessFinished();
 		List<Boolean> actual = new ArrayList<Boolean>();
-		for (RXBlock block : blocks) {
+		for (RxBlock block : blocks) {
 			actual.add(processor.isBad(block));
 		}
 		return actual;
 	}
 
-	private List<RXBlock> createBlocks(final int... values) {
-		final List<RXBlock> blocks = new ArrayList<RXBlock>();
+	private List<RxBlock> createBlocks(final int... values) {
+		final List<RxBlock> blocks = new ArrayList<RxBlock>();
 		int timestamp = 0;
 		for (final int value : values) {
 			blocks.add(createRxMock(timestamp++, value));
@@ -67,8 +67,8 @@ public class SpectrumTelemetryDetectorTest {
 		return blocks;
 	}
 
-	private RXBlock createRxMock(final int timestamp, final int value) {
-		final RXBlock mock = Mockito.mock(RXBlock.class);
+	private RxBlock createRxMock(final int timestamp, final int value) {
+		final RxBlock mock = Mockito.mock(RxBlock.class);
 		Mockito.when(mock.hasValidDataLostPacketsReceiverA()).thenReturn(Boolean.TRUE);
 		Mockito.when(mock.getLostPacketsReceiverA()).thenReturn((short) value);
 		Mockito.when(mock.getTimestamp()).thenReturn(timestamp);

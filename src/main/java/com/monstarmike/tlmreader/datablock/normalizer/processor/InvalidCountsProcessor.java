@@ -1,8 +1,8 @@
 package com.monstarmike.tlmreader.datablock.normalizer.processor;
 
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 
-public class InvalidCountsProcessor extends AbstractProcessor<RXBlock> {
+public class InvalidCountsProcessor extends AbstractProcessor<RxBlock> {
 	private double lessThan10Percent = 0.1;
 	private int countA = 0;
 	private int countB = 0;
@@ -10,7 +10,7 @@ public class InvalidCountsProcessor extends AbstractProcessor<RXBlock> {
 	private int countR = 0;
 	private int totalCount = 0;
 
-	public void preprocess(RXBlock rxBlock) {
+	public void preprocess(RxBlock rxBlock) {
 		if (rxBlock.hasValidDataLostPacketsReceiverA()) {
 			countA++;
 		}
@@ -26,7 +26,7 @@ public class InvalidCountsProcessor extends AbstractProcessor<RXBlock> {
 		totalCount++;
 	}
 
-	public boolean isBad(RXBlock rxBlock) {
+	public boolean isBad(RxBlock rxBlock) {
 		boolean remove = false;
 		boolean badBlock = true;
 		if (rxBlock.hasValidDataLostPacketsReceiverA()) {
@@ -59,8 +59,8 @@ public class InvalidCountsProcessor extends AbstractProcessor<RXBlock> {
 		return false;
 	}
 
-	public Class<RXBlock> getClassOfDataBlock() {
-		return RXBlock.class;
+	public Class<RxBlock> getClassOfDataBlock() {
+		return RxBlock.class;
 	}
 
 	private double calculatePercent(int count) {

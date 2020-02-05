@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.monstarmike.tlmreader.datablock.DataBlock;
 import com.monstarmike.tlmreader.datablock.HeaderRxBlock;
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.DebugOutputProcessor;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.DiscountinuousBlocksProcessor;
 import com.monstarmike.tlmreader.datablock.normalizer.processor.InvalidCountsProcessor;
@@ -21,7 +21,7 @@ public class SignalNormalizer implements DataNormalizer {
 	}
 
 	public void normalize(final List<DataBlock> dataBlocks) {
-		ProcessorEvaluator<RXBlock> evaluator = new ProcessorEvaluator<>();
+		ProcessorEvaluator<RxBlock> evaluator = new ProcessorEvaluator<>();
 		evaluator.registerProcessor(new DebugOutputProcessor());
 		evaluator.registerProcessor(new InvalidDataBlocksProcessor());
 		evaluator.registerProcessor(new DiscountinuousBlocksProcessor());

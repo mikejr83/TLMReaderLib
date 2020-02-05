@@ -1,5 +1,7 @@
 package com.monstarmike.tlmreader.util;
 
+import java.util.regex.Pattern;
+
 public class StringUtils {
 	final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -20,6 +22,27 @@ public class StringUtils {
 			decParts[i * 2] = new Integer(bytes[i] & 0xff).toString();
 			decParts[i * 2 + 1] = " ";
 		}
-		return org.apache.commons.lang.StringUtils.join(decParts);
+		return String.join(", ",decParts);
 	}
+	
+
+	/**
+	 * convert a byte array inverted into BCD character string representation
+	 * @param bytes array of bytes
+	 * @param start start position  (start + size - 1) 
+	 * @param size iteration length
+	 * @return string with converted characters
+	 */
+	public static String bcdEncodeInverted(byte[] bytes, int start, int size) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = start+size-1; i >= start; --i) {
+			sb.append(String.format("%02X", bytes[i])); //$NON-NLS-1$
+		}
+		if (Pattern.compile(".*[ABCDEF]").matcher(sb.toString()).find()) {
+			System.err.println("invalid input " + sb);
+			return "0";
+		}
+		return sb.toString();
+	}
+
 }

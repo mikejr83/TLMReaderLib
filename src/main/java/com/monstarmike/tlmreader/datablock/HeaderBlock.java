@@ -3,7 +3,7 @@ package com.monstarmike.tlmreader.datablock;
 import com.monstarmike.tlmreader.datablock.normalizer.DataNormalizer;
 import com.monstarmike.tlmreader.datablock.normalizer.NoneNormalizer;
 
-public abstract class HeaderBlock implements Block {
+public abstract class HeaderBlock {
 
 	public static boolean isHeaderBlock(byte[] bytes) {
 		return bytes[0] == bytes[1] && bytes[1] == bytes[2]

@@ -1,12 +1,12 @@
 package com.monstarmike.tlmreader.datablock.normalizer.processor;
 
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 
-public class DebugOutputProcessor extends AbstractProcessor<RXBlock> {
+public class DebugOutputProcessor extends AbstractProcessor<RxBlock> {
 
-	RXBlock lastBlock = null;
+	RxBlock lastBlock = null;
 
-	public void preprocess(RXBlock rxBlock) {
+	public void preprocess(RxBlock rxBlock) {
 		if (rxBlock.hasValidDataLostPacketsReceiverA() && rxBlock.getLostPacketsReceiverA() > 200) {
 			if (lastBlock != null) {
 				System.out.println("LAST: " + lastBlock.getTimestamp() + " " + lastBlock.getLostPacketsReceiverA());
@@ -14,7 +14,7 @@ public class DebugOutputProcessor extends AbstractProcessor<RXBlock> {
 		}
 	}
 
-	public Class<RXBlock> getClassOfDataBlock() {
-		return RXBlock.class;
+	public Class<RxBlock> getClassOfDataBlock() {
+		return RxBlock.class;
 	}
 }

@@ -8,15 +8,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.monstarmike.tlmreader.datablock.RXBlock;
+import com.monstarmike.tlmreader.datablock.RxBlock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InvalidDataBlocksProcessorTest {
 
 	@Mock
-	private RXBlock validRxBlock;
+	private RxBlock validRxBlock;
 	@Mock
-	private RXBlock invalidRxBlock;
+	private RxBlock invalidRxBlock;
 
 	@Before
 	public void setup() {
@@ -40,7 +40,7 @@ public class InvalidDataBlocksProcessorTest {
 		InvalidDataBlocksProcessor processor = new InvalidDataBlocksProcessor();
 		processor.preprocess(null);
 		processor.preprocessFinished();
-		Assert.assertEquals(RXBlock.class, processor.getClassOfDataBlock());
+		Assert.assertEquals(RxBlock.class, processor.getClassOfDataBlock());
 	}
 
 }
